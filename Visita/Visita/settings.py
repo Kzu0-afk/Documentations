@@ -38,13 +38,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'admin_entity',
+    'user_entity',
+    'customer_entity',
     'booking',
-    'customer',
     'hotel',
     'payment',
     'room',
-    'user',
+    
 ]
+
+AUTH_USER_MODEL = 'user_entity.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

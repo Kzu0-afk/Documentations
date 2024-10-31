@@ -20,9 +20,10 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('user/', include('user.urls')),
-    path('customer/', include('customer.urls')),
-    path('admin_entity/', include('admin_entity.urls')),
+    path('user/', include('user_entity.urls')),
+    path('auth/', include('django.contrib.auth.urls')),
+    path('customer/', include('customer_entity.urls')),
+    path('admin_page/', include('admin_entity.urls')),
     path('hotel/', include('hotel.urls')),
     path('booking/', include('booking.urls')),
     path('payment/', include('payment.urls')),
