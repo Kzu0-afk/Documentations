@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</title>
+    <style>
+        /* Basic styling for form and button */
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .submit-button {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .submit-button:hover {
+            background-color: #45a049;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            color: blue;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</h1>
+
+    <!-- Form to create or edit a room -->
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            {{ form.roomNumber.label_tag }}
+            {{ form.roomNumber }}
+            {{ form.roomNumber.errors }}
+        </div>
+        <div>
+            {{ form.roomType.label_tag }}
+            {{ form.roomType }}
+            {{ form.roomType.errors }}
+        </div>
+        <div>
+            {{ form.roomPrice.label_tag }}
+            {{ form.roomPrice }}
+            {{ form.roomPrice.errors }}
+        </div>
+        <div>
+            {{ form.isAvailable.label_tag }}
+            {{ form.isAvailable }}
+            {{ form.isAvailable.errors }}
+        </div>
+        <!-- room_form.html -->
+       <div>
+            {{ form.hotel.label_tag }}
+            {{ form.hotel }}
+            {{ form.hotel.errors }}
+       </div>
+
+        
+        <button type="submit" class="submit-button">{% if form.instance.pk %}Update Room{% else %}Create Room{% endif %}</button>
+    </form>
+
+    <a href="{% url 'room_list' %}" class="back-link">Back to Room List</a>
+</body>
+</html>
