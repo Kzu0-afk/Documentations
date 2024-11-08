@@ -1,0 +1,252 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visita Cebu - Hotel and Leisure Management System</title>
+    <style>
+        /* General Reset and inline styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            background-color: #e0f7ff;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background-color: #e0f7ff;
+        }
+
+        header h1 {
+            color: #ff9800;
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #333;
+            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #add8e6;
+            background-color: #fff;
+        }
+
+        .register-button {
+            padding: 8px 16px;
+            color: #000000;
+            background-color: #ff9800;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-button:hover {
+            background-color: #e68a00;
+        }
+
+        /* Main Section */
+        main {
+            text-align: left;
+            padding: 80px 40px;
+            color: #333;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            z-index: -1;
+            transition: opacity 1s ease;
+        }
+
+        main h2 {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff6b00;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        main p {
+            font-size: 18px;
+            color: #000000;
+            margin-bottom: 30px;
+            max-width: 600px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-button {
+            padding: 10px 20px;
+            background-color: #ff6b00;
+            color: #333;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-button:hover {
+            background-color: #e66000;
+        }
+
+        /* Founders Section */
+        .founders-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            background-color: #ffffff;
+        }
+
+        .founders-section h3 {
+            font-size: 36px;
+            color: #ff9800;
+            margin-bottom: 20px;
+        }
+
+        .founders-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .founder {
+            text-align: center;
+            width: 200px;
+        }
+
+        .founder img {
+            width: 100%;
+            height: auto;
+            border-radius: 50%;
+            border: 3px solid #ff9800;
+            margin-bottom: 10px;
+        }
+
+        .founder h4 {
+            font-size: 20px;
+            margin: 10px 0 5px;
+            color: #333;
+        }
+
+        .founder p {
+            font-size: 16px;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <h1>VisitaCebu</h1>
+        <nav class="nav-links">
+            <a href="#">Recommended Places</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+            <a href="#" class="register-button">Register</a>
+        </nav>
+    </header>
+
+    <!-- Main Content Section -->
+    <main>
+        <div class="slideshow" id="slideshow"></div>
+        <h2>Visita Cebu</h2>
+        <p>Enjoy world-class comfort in the heart of Cebu. Our hotel provides the perfect blend of luxury and convenience for every traveler.</p>
+        <a href="{% url 'login' %}" class="login-button">Get Started</a>
+    </main>
+
+    <!-- Founders Section -->
+    <section class="founders-section">
+        <h3>Founders</h3>
+        <div class="founders-container">
+            <div class="founder">
+                <img src="{% static 'images/founder1.jpg' %}" alt="Founder 1">
+                <h4>Vince debil</h4>
+                <p>CEO & Founder</p>
+            </div>
+            <div class="founder">
+                <img src="{% static 'images/founder2.jpg' %}" alt="Founder 2">
+                <h4>Renz Estillors</h4>
+                <p>Co-Founder & CTO</p>
+            </div>
+            <div class="founder">
+                <img src="{% static 'images/founder2.jpg' %}" alt="Founder 2">
+                <h4>Juds Opps</h4>
+                <p>Co-Founder & CTO</p>
+            </div>
+            <!-- Add more founders as needed -->
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>&copy; 2024 Visita Cebu. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const images = [
+            "{% static 'images/Beach1.jpg' %}",
+            "{% static 'images/mountain.png' %}",
+            "{% static 'images/Food1.png' %}"
+        ];
+        let currentIndex = 0;
+
+        function changeImage() {
+            const slideshow = document.getElementById('slideshow');
+            slideshow.style.opacity = 0;  // Fade out
+
+            setTimeout(() => {
+                slideshow.style.backgroundImage = `url('${images[currentIndex]}')`;
+                slideshow.style.opacity = 1;  // Fade in
+                currentIndex = (currentIndex + 1) % images.length;
+            }, 500); // Time for fade out effect
+        }
+
+        setInterval(changeImage, 5000); // Change every 5 seconds
+        changeImage();
+    </script>
+</body>
+</html>

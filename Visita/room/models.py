@@ -11,3 +11,4 @@ class Room(models.Model):
 
     def __str__(self):
         return f"Room {self.roomNumber} - {self.roomType}"
+    

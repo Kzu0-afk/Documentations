@@ -5,6 +5,9 @@ from .models import Hotel
 from .forms import HotelForm  # Create a form for Hotel in forms.py
 from django.shortcuts import render
 
+def landing_page(request):
+    return render(request, 'hotel/landing_page.html')
+
 def hotel_home(request):
     return HttpResponse("Hotel home page")
 

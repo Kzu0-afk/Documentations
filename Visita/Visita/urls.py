@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from django.http import HttpResponse
+from hotel.views import landing_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +29,6 @@ urlpatterns = [
     path('booking/', include('booking.urls')),
     path('payment/', include('payment.urls')),
     path('room/', include('room.urls')),
-    path('', lambda request: HttpResponse("Welcome to Visita Hotel!")),
+    path('', landing_page, name='home'),
 ]
+
