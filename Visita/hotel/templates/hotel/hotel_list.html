@@ -4,21 +4,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel List</title>
+    <title>VisitaCebu - Hotel List</title>
+    <style>
+        /* Base Styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0f7ff; /* Light blue theme */
+        }
+
+        /* Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff; /* White card background */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF9800; /* Orange color for header */
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        .btn-add {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #FF9800; /* Orange button */
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+        }
+
+        .btn-add:hover {
+            background-color: #e68900; /* Darker orange on hover */
+        }
+
+        /* Hotel List */
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        .no-hotels {
+            text-align: center;
+            color: #888;
+            margin: 20px 0;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            color: #007BFF; /* Blue links for actions */
+            font-weight: bold;
+        }
+
+        .actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .actions {
+                margin-top: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hotel List</h1>
-    <a href="{% url 'hotel_create' %}">Add New Hotel</a>
-    <ul>
-        {% for hotel in hotels %}
-            <li>
-                {{ hotel.hotelName }}
-                <a href="{% url 'hotel_update' hotel.pk %}">Edit</a> |
-                <a href="{% url 'hotel_delete' hotel.pk %}">Delete</a>
-            </li>
-        {% empty %}
-            <li>No hotels available.</li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Available Hotels</h1>
+        <a href="{% url 'hotel_create' %}" class="btn-add">Add New Hotel</a>
+        <ul>
+            {% for hotel in hotels %}
+                <li>
+                    <span>{{ hotel.hotelName }}</span>
+                    <div class="actions">
+                        <a href="{% url 'hotel_update' hotel.pk %}">Edit</a>
+                        <a href="{% url 'hotel_delete' hotel.pk %}">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <p class="no-hotels">No hotels available.</p>
+            {% endfor %}
+        </ul>
+    </div>
 </body>
 </html>
