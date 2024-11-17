@@ -1,5 +1,12 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Create Booking</h2>
 <form method="post">
     {% csrf_token %}
+    <label>Customer:</label>
+    {{ form.customer }}
+
     <label>Room:</label>
     {{ form.room }}
 
@@ -7,30 +14,33 @@
     {{ form.number_of_guests }}
 
     <label for="check_in_date">Check-In Date:</label>
-    <input type="date" 
-           id="check_in_date" 
-           name="check_in_date" 
+    <input type="date"
+           id="check_in_date"
+           name="check_in_date"
+           value="{{ form.check_in_date.value }}"
            min="{{ today }}" required>
 
     <label for="check_out_date">Check-Out Date:</label>
-    <input type="date" 
-           id="check_out_date" 
+    <input type="date"
+           id="check_out_date"
            name="check_out_date"
+           value="{{ form.check_out_date.value }}"
            min="{{ today }}" required>
 
-    <button type="submit">Submit</button>
+    <button type="submit" class="btn btn-success">Submit</button>
+    <a href="{% url 'booking_list' %}" class="btn btn-secondary">Back to List</a>
 </form>
 <script>
     const today = new Date().toISOString().split('T')[0];
-    
     const checkInDateField = document.getElementById('check_in_date');
     const checkOutDateField = document.getElementById('check_out_date');
-    
+
     checkInDateField.setAttribute("min", today);
     checkOutDateField.setAttribute("min", today);
-    
-    checkInDateField.addEventListener('change', function() {
+
+    checkInDateField.addEventListener('change', function () {
         const checkInDate = checkInDateField.value;
         checkOutDateField.setAttribute("min", checkInDate);
     });
 </script>
+{% endblock %}
