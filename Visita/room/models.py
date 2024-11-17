@@ -3,7 +3,7 @@ from hotel.models import Hotel
 
 class Room(models.Model):
     roomID = models.AutoField(primary_key=True)
-    roomNumber = models.IntegerField()
+    roomNumber = models.IntegerField(unique=True)
     roomType = models.CharField(max_length=50)
     roomPrice = models.DecimalField(max_digits=10, decimal_places=2)
     isAvailable = models.BooleanField(default=True)

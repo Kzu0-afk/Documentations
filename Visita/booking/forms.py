@@ -1,11 +1,15 @@
 from django import forms
 from .models import Booking
 
+
 class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
-        fields = ['customer', 'room', 'bookingStatus', 'numberOfGuests', 'checkInDate', 'checkOutDate']
-        widgets = {
-            'checkInDate': forms.DateInput(attrs={'type': 'date'}),
-            'checkOutDate': forms.DateInput(attrs={'type': 'date'}),
-        }
+        fields = ['room', 'number_of_guests', 'check_in_date', 'check_out_date']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+
+        # Dynamically filter room options based on availability
+        self.fields['room'].queryset = self.fields['room'].queryset.filter(isAvailable=True)

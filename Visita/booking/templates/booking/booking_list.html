@@ -1,35 +1,28 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Bookings</h2>
+<h2>Your Bookings</h2>
 <a href="{% url 'booking_create' %}" class="btn btn-primary">Create New Booking</a>
 <table class="table table-striped" style="background-color: #fff5e1;">
     <thead>
         <tr>
             <th>ID</th>
-            <th>Customer</th>
             <th>Room</th>
-            <th>Status</th>
             <th>Guests</th>
-            <th>Check-In Date</th>
-            <th>Check-Out Date</th>
-            <th>Actions</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Status</th>
         </tr>
     </thead>
     <tbody>
         {% for booking in bookings %}
         <tr>
             <td>{{ booking.id }}</td>
-            <td>{{ booking.customer }}</td>
             <td>{{ booking.room }}</td>
-            <td>{{ booking.bookingStatus }}</td>
-            <td>{{ booking.numberOfGuests }}</td>
-            <td>{{ booking.checkInDate }}</td>
-            <td>{{ booking.checkOutDate }}</td>
-            <td>
-                <a href="{% url 'booking_edit' booking.id %}" class="btn btn-secondary">Edit</a>
-                <a href="{% url 'booking_delete' booking.id %}" class="btn btn-danger">Delete</a>
-            </td>
+            <td>{{ booking.number_of_guests }}</td>
+            <td>{{ booking.check_in_date }}</td>
+            <td>{{ booking.check_out_date }}</td>
+            <td>{{ booking.booking_status }}</td>
         </tr>
         {% endfor %}
     </tbody>
