@@ -1,0 +1,150 @@
+Index: Visita/hotel/models.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.db import models\r\n\r\nclass Hotel(models.Model):\r\n    hotelID = models.AutoField(primary_key=True)\r\n    hotelName = models.CharField(max_length=255)\r\n\r\n    def __str__(self):\r\n        return self.hotelName\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Visita/hotel/models.py b/Visita/hotel/models.py
+--- a/Visita/hotel/models.py	(revision 4d6dae5b4d07b5ddfe95b05adc4c72811950547f)
++++ b/Visita/hotel/models.py	(date 1731115635349)
+@@ -1,6 +1,8 @@
+ from django.db import models
++from admin_entity.models import AdminEntity
+ 
+ class Hotel(models.Model):
++    admin = models.ForeignKey(AdminEntity, on_delete=models.CASCADE, related_name='hotel')
+     hotelID = models.AutoField(primary_key=True)
+     hotelName = models.CharField(max_length=255)
+ 
+Index: Visita/booking/urls.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.urls import path\r\nfrom . import views\r\n\r\nurlpatterns = [\r\n    path('', views.booking_home, name='booking_home'),\r\n]\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Visita/booking/urls.py b/Visita/booking/urls.py
+--- a/Visita/booking/urls.py	(revision 4d6dae5b4d07b5ddfe95b05adc4c72811950547f)
++++ b/Visita/booking/urls.py	(date 1731115635347)
+@@ -2,5 +2,8 @@
+ from . import views
+ 
+ urlpatterns = [
+-    path('', views.booking_home, name='booking_home'),
++    path('', views.booking_list, name='booking_list'),
++    path('create/', views.booking_create, name='booking_create'),
++    path('<int:pk>/edit/', views.booking_update, name='booking_edit'),
++    path('<int:pk>/delete/', views.booking_delete, name='booking_delete'),
+ ]
+Index: Visita/booking/views.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.shortcuts import render\r\nfrom django.http import  HttpResponse\r\n\r\ndef booking_home(request):\r\n    return HttpResponse(\"Booking home page\")\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Visita/booking/views.py b/Visita/booking/views.py
+--- a/Visita/booking/views.py	(revision 4d6dae5b4d07b5ddfe95b05adc4c72811950547f)
++++ b/Visita/booking/views.py	(date 1731115635348)
+@@ -3,3 +3,41 @@
+ 
+ def booking_home(request):
+     return HttpResponse("Booking home page")
++
++from django.shortcuts import render, get_object_or_404, redirect
++from django.urls import reverse_lazy
++from .models import Booking
++from .forms import BookingForm  # Create this form based on the model
++
++def booking_list(request):
++    bookings = Booking.objects.all()
++    return render(request, 'booking/booking_list.html', {'bookings': bookings})
++
++def booking_create(request):
++    if request.method == 'POST':
++        form = BookingForm(request.POST)
++        if form.is_valid():
++            form.save()
++            return redirect('booking_list')
++    else:
++        form = BookingForm()
++    return render(request, 'booking/booking_form.html', {'form': form})
++
++def booking_update(request, pk):
++    booking = get_object_or_404(Booking, pk=pk)
++    if request.method == 'POST':
++        form = BookingForm(request.POST, instance=booking)
++        if form.is_valid():
++            form.save()
++            return redirect('booking_list')
++    else:
++        form = BookingForm(instance=booking)
++    return render(request, 'booking/booking_form.html', {'form': form})
++
++def booking_delete(request, pk):
++    booking = get_object_or_404(Booking, pk=pk)
++    if request.method == 'POST':
++        booking.delete()
++        return redirect('booking_list')
++    return render(request, 'booking/booking_confirm_delete.html', {'booking': booking})
++
+Index: Visita/booking/admin.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.contrib import admin\r\n\r\n# Register your models here.\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Visita/booking/admin.py b/Visita/booking/admin.py
+--- a/Visita/booking/admin.py	(revision 4d6dae5b4d07b5ddfe95b05adc4c72811950547f)
++++ b/Visita/booking/admin.py	(date 1731115635343)
+@@ -1,3 +1,6 @@
+ from django.contrib import admin
++from .models import Booking
+ 
+-# Register your models here.
++@admin.register(Booking)
++class BookingAdmin(admin.ModelAdmin):
++    list_display = ('id', 'customer', 'room', 'bookingStatus', 'numberOfGuests', 'checkInDate', 'checkOutDate', 'createdAt', 'updatedAt')
+Index: Visita/booking/models.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>from django.db import models\r\n\r\n# Create your models here.\r\n\r\nclass Booking(models.Model):\r\n    #foreignkey for customer\r\n    #foreignkey for rooms\r\n    \r\n    bookingStatus = models.BooleanField(default=False)\r\n    bookingStatus = models.CharField(max_length=255)\r\n    numberOfGuests = models.IntegerField(default=0)\r\n    \r\n    checkInDate = models.DateTimeField(null=True, blank=True)\r\n    checkOutDate = models.DateTimeField(null=True, blank=True)\r\n\r\n    createdAt = models.DateTimeField(auto_now_add=True)\r\n    updatedAt = models.DateField(auto_now=True)\r\n\r\n    def __str__(self):\r\n        return f\"Booking {self.id} for Room #roomId - #userID\"
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Visita/booking/models.py b/Visita/booking/models.py
+--- a/Visita/booking/models.py	(revision 4d6dae5b4d07b5ddfe95b05adc4c72811950547f)
++++ b/Visita/booking/models.py	(date 1731115635344)
+@@ -1,12 +1,12 @@
+ from django.db import models
+-
+-# Create your models here.
++from customer_entity.models import Customer
++from room.models import Room
+ 
+ class Booking(models.Model):
+-    #foreignkey for customer
+-    #foreignkey for rooms
++    # Foreign keys for customer and room
++    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name='bookings', null=True)
++    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='bookings', null=True)
+     
+-    bookingStatus = models.BooleanField(default=False)
+     bookingStatus = models.CharField(max_length=255)
+     numberOfGuests = models.IntegerField(default=0)
+     
+@@ -14,7 +14,8 @@
+     checkOutDate = models.DateTimeField(null=True, blank=True)
+ 
+     createdAt = models.DateTimeField(auto_now_add=True)
+-    updatedAt = models.DateField(auto_now=True)
++    updatedAt = models.DateTimeField(auto_now=True)
+ 
+     def __str__(self):
+-        return f"Booking {self.id} for Room #roomId - #userID"
+\ No newline at end of file
++        return f"Booking {self.id} for Room {self.room.roomNumber} - Customer {self.customer.username}"
++    
+\ No newline at end of file
