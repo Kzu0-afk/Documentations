@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisitaCebu - Hotel List</title>
+    <title>VisitaCebu - Lists of Hotels</title>
     <style>
         /* Base Styling */
         body {
@@ -115,7 +115,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Available Hotels</h1>
+        <h1>AVAILABLE HOTELS</h1>
         <a href="{% url 'hotel_create' %}" class="btn-add">Add New Hotel</a>
         <ul>
             {% for hotel in hotels %}
