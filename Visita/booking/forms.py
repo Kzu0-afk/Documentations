@@ -1,15 +1,14 @@
 from django import forms
 from .models import Booking
-
+from customer_entity.models import Customer
 
 class BookingForm(forms.ModelForm):
+    customer = forms.ModelChoiceField(
+        queryset=Customer.objects.all(),
+        empty_label="Select Customer",
+        required=True
+    )
+
     class Meta:
         model = Booking
-        fields = ['room', 'number_of_guests', 'check_in_date', 'check_out_date']
-
-    def __init__(self, *args, **kwargs):
-        user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-
-        # Dynamically filter room options based on availability
-        self.fields['room'].queryset = self.fields['room'].queryset.filter(isAvailable=True)
+        fields = ['customer', 'room', 'number_of_guests', 'check_in_date', 'check_out_date']
