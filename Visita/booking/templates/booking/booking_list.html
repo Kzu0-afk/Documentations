@@ -1,36 +1,90 @@
-{% extends "base_generic.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking List - Visita Cebu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>VisitaCebu</h1>
+        <nav>
+            <a href="#">Recommended Places</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact</a>
+        </nav>
+        <button class="register">Register</button>
+    </header>
 
-{% block content %}
-<h2>Your Bookings</h2>
-<a href="{% url 'booking_create' %}" class="btn btn-primary">Create New Booking</a>
-<table class="table table-striped" style="background-color: #fff5e1; margin-top: 20px;">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Customer</th>
-            <th>Room</th>
-            <th>Guests</th>
-            <th>Check-In</th>
-            <th>Check-Out</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for booking in bookings %}
-        <tr>
-            <td>{{ booking.id }}</td>
-            <td>{{ booking.customer }}</td>
-            <td>{{ booking.room }}</td>
-            <td>{{ booking.number_of_guests }}</td>
-            <td>{{ booking.check_in_date }}</td>
-            <td>{{ booking.check_out_date }}</td>
-            <td>{{ booking.booking_status }}</td>
-            <td>
-                <a href="{% url 'booking_delete' booking.id %}" class="btn btn-danger btn-sm">Delete</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% endblock %}
+    <section class="booking-overview">
+        <h2>All Bookings</h2>
+        <div class="booking-list">
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <div class="booking-details">
+                                <p><strong>Booking ID:</strong> {{ booking.id }}</p>
+                                <p><strong>Customer:</strong> {{ booking.customer }}</p>
+                                <p><strong>Room:</strong> {{ booking.room }}</p>
+                                <p><strong>Status:</strong> {{ booking.booking_status }}</p>
+                                <p><strong>Guests:</strong> {{ booking.number_of_guests }}</p>
+                                <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
+                                <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
+                                <a href="{% url 'booking_detail' booking.id %}" class="view-details">View Details</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bookings available. Please make a new booking.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Visita Cebu. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+<style>
+    .booking-overview {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.booking-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.booking-list li {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: left;
+}
+
+.booking-details p {
+    margin: 5px 0;
+}
+
+.view-details {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #ff7f27;
+    color: white;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view-details:hover {
+    background-color: #ff9933;
+}
+
+</style>
