@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h1>Welcome to the Booking Page</h1>
+    <p>Click the button below to create a new booking.</p>
+    <a href="{% url 'booking_create' %}" class="btn btn-primary">Create Booking</a>
+</div>
+{% endblock %}
