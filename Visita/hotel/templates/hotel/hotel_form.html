@@ -4,15 +4,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if form.instance.pk %}Edit Hotel{% else %}Add Hotel{% endif %}</title>
+    <title>{% if form.instance.pk %}Edit Hotel{% else %}VisitaCebu - Add a Hotel{% endif %}</title>
+    <style>
+        /* Base styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7ff; /* Light blue theme */
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Container styling */
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #ffffff; /* White background for form card */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Header styling */
+        .header {
+            background-color: #FF9800; /* Orange theme */
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        /* Form styling */
+        form {
+            padding: 20px;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+
+        form input:focus, form select:focus, form textarea:focus {
+            outline: none;
+            border-color: #FF9800; /* Orange focus */
+            box-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .form-actions button {
+            background-color: #FF9800; /* Orange button */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-actions button:hover {
+            background-color: #e68900; /* Slightly darker orange */
+        }
+
+        .form-actions a {
+            color: #FF9800; /* Link matches orange theme */
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .form-actions a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive styling */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+            }
+
+            .form-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .form-actions button, .form-actions a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>{% if form.instance.pk %}Edit Hotel{% else %}Add Hotel{% endif %}</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Save</button>
-    </form>
-    <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
+    <div class="container">
+        <div class="header">
+            <h1>{% if form.instance.pk %}Edit Hotel{% else %}ADD HOTEL{% endif %}</h1>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-actions">
+                <button type="submit">Save</button>
+                <a href="{% url 'hotel_list' %}">Back to Hotel List</a>
+            </div>
+        </form>
+    </div>
 </body>
 </html>
