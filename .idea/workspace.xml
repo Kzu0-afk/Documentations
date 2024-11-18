@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7545eac-db31-4da8-9a9d-e5a4830782b0" name="Changes" comment="Booking list, form and confirm delete" />
+    <list default="true" id="e7545eac-db31-4da8-9a9d-e5a4830782b0" name="Changes" comment="Login - Signup Almost working but not fully working">
+      <change beforePath="$PROJECT_DIR$/.idea/Documentations.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Documentations.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Visita/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/Visita/db.sqlite3" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,39 +18,126 @@
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="vincent-parts" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;beansint&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Kzu0-afk/Documentations.git&quot;,
+    &quot;accountId&quot;: &quot;105d0ab3-29d4-4de1-af87-b1c44a26c3ff&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 7
 }</component>
   <component name="ProjectId" id="2oZTcTQlyzMJyTVES25Svp9M4uj" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
     <option name="showScratchesAndConsoles" value="false" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenDjangoStructureViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;Django Server.Documentations.executor&quot;: &quot;Run&quot;,
+    &quot;Python.makemigrations.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenDjangoStructureViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;django.template.preview.state&quot;: &quot;SHOW_EDITOR_AND_PREVIEW&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Vincent/Documents/School/3rd_yr-1st_sem/Python/Documentations/Visita/user_entity&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;discord-application&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita\user_entity" />
+      <recent name="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita\customer_entity" />
+      <recent name="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita\admin_entity\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita\admin_entity\templates\admin_entity" />
+      <recent name="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita\customer_entity\templates\customer_entity" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Django Server.Documentations">
+    <configuration name="makemigrations" type="PythonConfigurationType" factoryName="Python">
+      <module name="Documentations" />
+      <option name="ENV_FILES" value="$PROJECT_DIR$" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (Documentations)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="manage.py" />
+      <option name="PARAMETERS" value="makemigrations" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="migrate" type="PythonConfigurationType" factoryName="Python">
+      <module name="Documentations" />
+      <option name="ENV_FILES" value="$PROJECT_DIR$" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (Documentations)" />
+      <option name="WORKING_DIRECTORY" value="C:\Users\Vincent\Documents\School\3rd_yr-1st_sem\Python\Documentations\Visita" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="manage.py" />
+      <option name="PARAMETERS" value="migrate" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="Documentations" type="Python.DjangoServer" factoryName="Django server">
       <module name="Documentations" />
       <option name="ENV_FILES" value="" />
@@ -56,6 +148,7 @@
         <env name="DJANGO_SETTINGS_MODULE" value="Visita.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.11 (Documentations)" />
       <option name="WORKING_DIRECTORY" value="" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -71,6 +164,11 @@
       <option name="customRunCommand" value="" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Django Server.Documentations" />
+      <item itemvalue="Python.makemigrations" />
+      <item itemvalue="Python.migrate" />
+    </list>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -91,6 +189,10 @@
       <workItem from="1731752736411" duration="1397000" />
       <workItem from="1731767486071" duration="617000" />
       <workItem from="1731768116640" duration="1856000" />
+      <workItem from="1731785379824" duration="4325000" />
+      <workItem from="1731825729687" duration="8511000" />
+      <workItem from="1731842506361" duration="5270000" />
+      <workItem from="1731856734631" duration="16051000" />
     </task>
     <task id="LOCAL-00001" summary="Booking list, form and confirm delete">
       <option name="closed" value="true" />
@@ -100,7 +202,55 @@
       <option name="project" value="LOCAL" />
       <updated>1731768354254</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create booking page get not working yet, with adjusted models for booking and room, need to make migrations">
+      <option name="closed" value="true" />
+      <created>1731849866731</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1731849866731</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Temporary fix for booking to not require a customer but still lacking">
+      <option name="closed" value="true" />
+      <created>1731857904556</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1731857904556</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Working booking page with create booking, booking list with delete, and links">
+      <option name="closed" value="true" />
+      <created>1731859831252</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1731859831252</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated Working booking page with create booking, booking list with delete, and links">
+      <option name="closed" value="true" />
+      <created>1731861100980</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1731861100980</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Fixed customer_entity user_entity init.py">
+      <option name="closed" value="true" />
+      <created>1731863523901</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1731863523901</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Login - Signup Almost working but not fully working">
+      <option name="closed" value="true" />
+      <created>1731889953294</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1731889953294</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -131,6 +281,12 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Booking list, form and confirm delete" />
-    <option name="LAST_COMMIT_MESSAGE" value="Booking list, form and confirm delete" />
+    <MESSAGE value="Create booking page get not working yet, with adjusted models for booking and room, need to make migrations" />
+    <MESSAGE value="Temporary fix for booking to not require a customer but still lacking" />
+    <MESSAGE value="Working booking page with create booking, booking list with delete, and links" />
+    <MESSAGE value="Updated Working booking page with create booking, booking list with delete, and links" />
+    <MESSAGE value="Fixed customer_entity user_entity init.py" />
+    <MESSAGE value="Login - Signup Almost working but not fully working" />
+    <option name="LAST_COMMIT_MESSAGE" value="Login - Signup Almost working but not fully working" />
   </component>
 </project>

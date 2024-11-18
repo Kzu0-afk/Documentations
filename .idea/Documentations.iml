@@ -8,7 +8,7 @@
     <option name="TEMPLATE_CONFIGURATION" value="Django" />
     <option name="TEMPLATE_FOLDERS">
       <list>
-        <option value="$MODULE_DIR$/Visita/admin_entity/templates" />
+        <option value="$MODULE_DIR$/Visita/booking/templates" />
       </list>
     </option>
   </component>
