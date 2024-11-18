@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h2>Booking Successful</h2>
+<p><strong>Customer:</strong> {{ booking.customer }}</p>
+<p><strong>Room:</strong> {{ booking.room }}</p>
+<p><strong>Number of Guests:</strong> {{ booking.number_of_guests }}</p>
+<p><strong>Check-In Date:</strong> {{ booking.check_in_date }}</p>
+<p><strong>Check-Out Date:</strong> {{ booking.check_out_date }}</p>
+<a href="{% url 'booking_create' %}">Create Another Booking</a>
+{% endblock %}

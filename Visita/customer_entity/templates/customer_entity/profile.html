@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
+</head>
+<body>
+    {% include 'includes/header.html' %}
+    <div class="wrapper">
+        <div class="profile-container">
+            <a href="#" class="back-btn">&larr; Return to Dashboard</a>
+            <div class="profile-header">
+                <img src="{% static 'images/customer-avatar.png' %}" alt="Customer Avatar" class="profile-avatar">
+                <div class="profile-info">
+                    <h1>{{ customer.username }}</h1>
+                    <p><strong>Email:</strong> {{ customer.email }}</p>
+                    <p><strong>Address:</strong> {{ customer.address }}</p>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a href="{% url 'customer_entity:delete_account' %}" class="btn delete-btn">Delete Account</a>
+                <a href="{% url 'customer_entity:logout' %}" class="btn logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to bottom, #e6f7ff, #ffffff);
+        margin: 0;
+        padding: 0;
+    }
+
+    .wrapper {
+        display: grid;
+        place-items: center;
+        min-height: calc(100vh - 80px); /* Adjust height based on header */
+    }
+
+    .profile-container {
+        max-width: 600px;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .back-btn {
+        text-decoration: none;
+        font-weight: bold;
+        color: #007bff;
+        display: inline-block;
+        margin-bottom: 20px;
+        transition: color 0.3s ease;
+    }
+
+    .back-btn:hover {
+        color: #0056b3;
+    }
+
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .profile-avatar {
+        border-radius: 50%;
+        width: 120px;
+        height: 120px;
+        margin-bottom: 15px;
+        border: 3px solid #007bff;
+    }
+
+    .profile-info h1 {
+        font-size: 28px;
+        color: #333;
+        margin: 0 0 10px;
+    }
+
+    .profile-info p {
+        font-size: 16px;
+        color: #555;
+        margin: 5px 0;
+    }
+
+    .profile-actions {
+        margin-top: 20px;
+    }
+
+    .profile-actions .btn {
+        text-decoration: none;
+        padding: 12px 25px;
+        margin: 5px;
+        display: inline-block;
+        font-weight: bold;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+    }
+
+    .delete-btn:hover {
+        background-color: #e63939;
+    }
+
+    .logout-btn {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .logout-btn:hover {
+        background-color: #1e7e34;
+    }
+</style>
+</html>

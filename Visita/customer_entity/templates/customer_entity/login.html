@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Login</title>
+</head>
+<body>
+    {% include 'includes/header.html' %}
+
+    <div class="container">
+        <div class="left-section">
+            <h1>Did you know?</h1>
+            <p>Cebu is known as the "Queen City of the South" and was the first capital of the Philippines!</p>
+        </div>
+        <div class="right-section">
+            <h1>Welcome Back, Customer!</h1>
+            <form method="post">
+                {% csrf_token %}
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+            <a href="{% url 'customer_entity:signup' %}">Don't have an account? Sign Up</a>
+        </div>
+    </div>
+</body>
+</html>
+
+
+    <style>
+        /* General Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #e0f7ff, #ffffff);
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: row;
+            height: 100vh;
+        }
+
+        .left-section {
+            width: 50%;
+            {#background-image: url("{% static 'images/login-signup-bg.png' %}"); /* Replace with your background image path */#}
+            background-color: #f8fafc;
+            background-size: cover ;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .right-section {
+            width: 50%;
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .right-section h1 {
+            color: #ff9800;
+            margin-bottom: 20px;
+        }
+
+        form {
+            width: 80%;
+            max-width: 400px;
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        form input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            width: 100%;
+            padding: 10px;
+            background: #ff9800;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background: #e68a00;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+    </style>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Home - Visita Cebu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <h1>VisitaCebu</h1>
+        <nav>
+            <a href="#">Recommended Places</a><!--place holder-->
+            <a href="#">About Us</a><!--place holder-->
+            <a href="#">Contact</a><!--place holder-->
+        </nav>
+        <button class="register">Register</button>
+    </header>
+    
+    <section class="hero">
+        <h2>Welcome to Visita Cebu Booking</h2>
+        <p>Experience comfort and convenience with our easy booking process. Start your journey in Cebu with us today.</p>
+        <button class="get-started" onclick="window.location.href=#">Get Started</button> <!--place holder-->
+    </section>
+
+    <section class="booking-overview">
+        <h2>Recent Bookings</h2>
+        <div class="booking-list">
+            {% if bookings %}
+                <ul>
+                    {% for booking in bookings %}
+                        <li>
+                            <strong>Booking ID:</strong> {{ booking.id }}<br>
+                            <strong>Customer:</strong> {{ booking.customer }}<br>
+                            <strong>Room:</strong> {{ booking.room }}<br>
+                            <strong>Status:</strong> {{ booking.booking_status }}<br>
+                            <strong>Check-in:</strong> {{ booking.check_in_date }}<br>
+                            <strong>Check-out:</strong> {{ booking.check_out_date }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No bookings found. Start by making a new booking!</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 Visita Cebu. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
+
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #e0f7ff;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #e0f7ff;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #ff7f27;
+}
+
+header nav a {
+    margin: 0 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+button.register {
+    background-color: #ff7f27;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.hero {
+    background: url('/static/images/cebu_background.jpg') no-repeat center center/cover;
+    text-align: center;
+    padding: 100px 20px;
+    color: #ff7f27;
+}
+
+button.get-started {
+    background-color: #ff7f27;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.booking-overview {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.booking-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.booking-list li {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #e0f7ff;
+}
+
+</style>
