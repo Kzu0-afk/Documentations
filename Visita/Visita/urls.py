@@ -21,6 +21,7 @@ from hotel.views import landing_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin_page/', include('admin_entity.urls')),  # Make sure this matches exactly
     path('user/', include('user_entity.urls')),
     path('auth/', include('django.contrib.auth.urls')),
     path('customer/', include('customer_entity.urls')),
