@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Customer Signup</title>
+</head>
+<body>
+    <h1>Customer Signup</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign Up</button>
+    </form>
+    <a href="{% url 'customer_entity:login' %}">Already have an account? Login</a>
+</body>
+</html>

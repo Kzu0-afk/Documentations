@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Profile</title>
+</head>
+<body>
+    <h1>Welcome, {{ admin.username }}</h1>
+    <p>Email: {{ admin.email }}</p>
+    <p>Department Role: {{ admin.departmentRole }}</p>
+    <a href="{% url 'admin_entity:update_profile' %}">Update Profile</a>
+    <a href="{% url 'admin_entity:delete_account' %}">Delete Account</a>
+    <a href="{% url 'admin_entity:logout' %}">Logout</a>
+</body>
+</html>

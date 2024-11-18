@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Customer Profile</title>
+</head>
+<body>
+    <h1>Update Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div>
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+        </div>
+        <div>
+            <label for="id_address">Address:</label>
+            {{ form.address }}
+        </div>
+        <button type="submit">Update Profile</button>
+    </form>
+    <a href="{% url 'customer_entity:profile' %}">Back to Profile</a>
+</body>
+</html>
