@@ -9,11 +9,12 @@ def customer_signup_view(request):
         form = CustomerSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('customer_entity:signup')
+            login(request, user)  # Log the user in after signup
+            return redirect('customer_entity:profile')  # Redirect to profile
     else:
         form = CustomerSignupForm()
     return render(request, 'customer_entity/signup.html', {'form': form})
+
 
 def customer_login_view(request):
     if request.method == 'POST':
@@ -21,22 +22,23 @@ def customer_login_view(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
-        if user and hasattr(user, 'address'):  # Ensure it's a Customer
-            login(request, user)
-            return redirect('customer_entity:profile')
+        if user and isinstance(user, Customer):  # Ensure the user is a Customer
+            login(request, user)  # Log the user in
+            return redirect('customer_entity:profile')  # Redirect to profile page
         else:
             return render(request, 'customer_entity/login.html', {'error': 'Invalid username or password'})
-
     return render(request, 'customer_entity/login.html')
+
+
 
 
 
 @login_required
 def customer_profile_view(request):
     # Ensure the user is treated as a Customer object
-    print(f"Logged in user: {request.user.username}, Email: {request.user.email}")
     customer = get_object_or_404(Customer, id=request.user.id)
     return render(request, 'customer_entity/profile.html', {'customer': customer})
+
 
 
 @login_required
@@ -61,3 +63,8 @@ def customer_delete_account_view(request):
         logout(request)
         return redirect('customer_entity:signup')
     return render(request, 'customer_entity/delete_account.html')
+
+@login_required
+def customer_logout_view(request):
+    logout(request)  # Log out the user
+    return redirect('customer_entity:login')  # Redirect to the customer login page

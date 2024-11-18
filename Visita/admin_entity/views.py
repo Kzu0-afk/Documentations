@@ -9,11 +9,12 @@ def admin_signup_view(request):
         form = AdminSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('admin_entity:profile')
+            login(request, user)  # Log the user in after signup
+            return redirect('admin_entity:profile')  # Redirect to profile
     else:
         form = AdminSignupForm()
     return render(request, 'admin_entity/signup.html', {'form': form})
+
 
 def admin_login_view(request):
     if request.method == 'POST':
@@ -21,21 +22,22 @@ def admin_login_view(request):
         password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
-        if user and hasattr(user, 'departmentRole'):  # Ensure it's an Admin
-            login(request, user)
-            return redirect('admin_entity:profile')
+        if user and isinstance(user, AdminEntity):  # Ensure the user is an Admin
+            login(request, user)  # Log the user in
+            return redirect('admin_entity:profile')  # Redirect to profile page
         else:
             return render(request, 'admin_entity/login.html', {'error': 'Invalid username or password'})
-
     return render(request, 'admin_entity/login.html')
+
+
 
 
 
 @login_required
 def admin_profile_view(request):
-    print(f"Logged in user: {request.user.username}, Email: {request.user.email}")
     admin = get_object_or_404(AdminEntity, id=request.user.id)
     return render(request, 'admin_entity/profile.html', {'admin': admin})
+
 
 @login_required
 def update_admin_profile_view(request):
@@ -59,3 +61,9 @@ def admin_delete_account_view(request):
         logout(request)
         return redirect('admin_entity:signup')
     return render(request, 'admin_entity/delete_account.html')
+
+@login_required
+def admin_logout_view(request):
+    logout(request)  # Log out the user
+    return redirect('admin_entity:login')  # Redirect to the admin login page
+
