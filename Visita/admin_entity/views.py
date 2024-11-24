@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, get_backends
 from django.contrib.auth.decorators import login_required
+from user_entity.backends import AdminBackend
 from .forms import AdminSignupForm, UpdateAdminForm
 from .models import AdminEntity
 # Create your views here.
@@ -68,11 +69,20 @@ def update_admin_profile_view(request):
                 user.set_password(form.cleaned_data['password'])
 
             user.save()
+
+            # Explicitly set the backend for the admin
+            backends = get_backends()
+            for backend in backends:
+                if isinstance(backend, AdminBackend):
+                    user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
+                    break
+
             login(request, user)  # Re-log the user after password change
             return redirect('admin_entity:profile')
     else:
         form = UpdateAdminForm(instance=admin)
     return render(request, 'admin_entity/edit_profile.html', {'form': form})
+
 
 
 

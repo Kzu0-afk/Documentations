@@ -1,8 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
+
+from user_entity.backends import CustomerBackend
 from .forms import CustomerSignupForm, UpdateCustomerForm
 from .models import Customer
+from django.contrib.auth import get_backends
 
 def customer_signup_view(request):
     if request.method == 'POST':
@@ -58,6 +61,14 @@ def update_customer_profile_view(request):
                 user.set_password(form.cleaned_data['password'])
 
             user.save()
+
+            # Explicitly set the backend for the customer
+            backends = get_backends()
+            for backend in backends:
+                if isinstance(backend, CustomerBackend):
+                    user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
+                    break
+
             login(request, user)  # Re-log the user after password change
             return redirect('customer_entity:profile')
     else:
