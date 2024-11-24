@@ -11,12 +11,13 @@
             <img src="{% static 'images/Logo.png' %}" alt="Logo" class="visita-sidebar-logo">
         </a>
         <ul class="visita-sidebar-menu">
-            <li><i class="fas fa-home"></i> Dashboard</li>
-            <li><i class="fas fa-concierge-bell"></i> Front Desk</li>
-            <li><i class="fas fa-user"></i> Guest</li>
-            <li><i class="fas fa-bed"></i> Rooms</li>
-            <li><i class="fas fa-briefcase"></i> Deal</li>
-            <li><i class="fas fa-money-bill-wave"></i> Rate</li>
+            <li href="{% url 'customer_entity:landing_page' %}">Dashboard</li>
+            <li>Profile</li>
+            <li>Booking History</li>
+            <li>New Booking</li>
+            <li>Rooms</li>
+            <li>Payments</li>
+            <li>Sign-out</li>
         </ul>
     </div>
 </div>
@@ -67,16 +68,15 @@
     /* Toggle Button and Icons */
     .visita-sidebar-toggle {
         position: fixed;
-        top: 20px;
-        left: 20px;
+        top: 10px;
+        left: 15px;
         background-color: #ff9800;
         color: white;
         border: none;
         border-radius: 10%;
-        width: 50px;
-        height: 50px;
+        width: 40px;
+        height: 40px;
         cursor: pointer;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
         transition: all 0.3s ease;
         z-index: 1001;
         pointer-events: auto;

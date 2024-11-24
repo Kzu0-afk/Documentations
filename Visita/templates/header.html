@@ -9,7 +9,10 @@
                     <i class="fas fa-bars"></i>
                 </button>
                 <div class="visita-cebu-nav-brand">
-                    <img src="{% static 'images/logo.png' %}" alt="VisitaCebu Logo" class="visita-cebu-nav-logo">
+                    <a href="{% url 'customer_entity:landing_page' %}">
+                        <img src="{% static 'images/logo.png' %}" alt="VisitaCebu Logo" class="visita-cebu-nav-logo">
+                    </a>
+
                 </div>
             </div>
             <div class="visita-cebu-nav-links">
@@ -85,12 +88,13 @@
 }
 
 .visita-cebu-nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: var(--visita-cebu-primary);
+    position: absolute;
+    left: 60px; /* Adjust this value to move it further to the left */
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--visita-cebu-primary);
 }
 
 .visita-cebu-nav-logo {
