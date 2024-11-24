@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VisitaCebu - Hotel and Leisure Management System</title>
+    
     <style>
         /* General Reset and inline styling */
         * {
@@ -180,16 +181,7 @@
 </head>
 <body>
     <!-- Header Section -->
-    <header>
-        <h1>VisitaCebu</h1>
-        <nav class="nav-links">
-            <a href="#">Recommended Places</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-            <a href="{% url 'customer_entity:signup' %}" class="register-button">Register</a>
-        </nav>
-    </header>
-
+    {% include 'header.html' %}
     <!-- Main Content Section -->
     <main>
         <div class="slideshow" id="slideshow"></div>

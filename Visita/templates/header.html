@@ -1,62 +1,304 @@
-<div class="customer-header">
-    <div class="header-left">
-        <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
-    </div>
-    <nav>
-        <a href="#">Recommended Places</a>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
+{% load static %}
+{% block content %}
+<div class="visita-cebu-customer-landing">
+    <!-- Top Navigation -->
+    <nav class="visita-cebu-top-nav">
+        <div class="visita-cebu-nav-content">
+            <div class="visita-cebu-nav-left">
+                <button class="visita-cebu-sidebar-toggle" aria-label="Toggle Sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="visita-cebu-nav-brand">
+                    <img src="{% static 'images/logo.png' %}" alt="VisitaCebu Logo" class="visita-cebu-nav-logo">
+                </div>
+            </div>
+            <div class="visita-cebu-nav-links">
+                <a href="#" class="visita-cebu-nav-link">Recommended Places</a>
+                <a href="#" class="visita-cebu-nav-link">About Us</a>
+                <a href="#" class="visita-cebu-nav-link">Contact</a>
+                <button class="visita-cebu-register-btn">Register</button>
+            </div>
+        </div>
     </nav>
-    <button class="register">Register</button>
 </div>
+{% endblock %}
 
 
 
 <style>
-.customer-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 40px;
-    background-color: #e0f7ff;
-    position: sticky; /* Ensures it stays at the top */
-    top: 0;
-    z-index: 1000;
+:root {
+  --visita-cebu-primary: #ff7f27;
+  --visita-cebu-primary-hover: #e56710;
+  --visita-cebu-background: #f5f7fa;
+  --visita-cebu-text: #333333;
+  --visita-cebu-text-light: #666666;
+  --visita-cebu-card-bg: #ffffff;
+  --visita-cebu-border-radius: 8px;
+  --visita-cebu-transition: all 0.3s ease;
+  --visita-cebu-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+  --visita-cebu-shadow-md: 0 4px 6px rgba(0,0,0,0.1);
 }
 
-.customer-header .header-left {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Spacing between the toggle button and the title */
+.visita-cebu-customer-landing {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background-color: var(--visita-cebu-background);
+  color: var(--visita-cebu-text);
+  line-height: 1.5;
+  min-height: 5vh;
+  
 }
 
-.customer-header h1 {
-    font-size: 24px;
-    color: #ff7f27;
-    margin: 0;
+/* Top Navigation */
+.visita-cebu-top-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: var(--visita-cebu-card-bg);
+  box-shadow: var(--visita-cebu-shadow-sm);
+  z-index: 1000;
 }
 
-.customer-header nav a {
-    margin: 0 15px;
-    color: #333;
-    text-decoration: none;
+.visita-cebu-nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-.customer-header nav a:hover {
-    text-decoration: underline;
+.visita-cebu-nav-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
 }
 
-.customer-header .register {
-    background-color: #ff7f27;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
+.visita-cebu-sidebar-toggle {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: var(--visita-cebu-text);
+  cursor: pointer;
 }
 
-.customer-header .register:hover {
-    background-color: #e56710;
+.visita-cebu-nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--visita-cebu-primary);
 }
+
+.visita-cebu-nav-logo {
+  height: 32px;
+  width: auto;
+}
+
+.visita-cebu-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.visita-cebu-nav-link {
+  color: var(--visita-cebu-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-nav-link:hover {
+  color: var(--visita-cebu-primary);
+}
+
+.visita-cebu-register-btn {
+  background-color: var(--visita-cebu-primary);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--visita-cebu-border-radius);
+  border: none;
+  cursor: pointer;
+  transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-register-btn:hover {
+  background-color: var(--visita-cebu-primary-hover);
+}
+
+/* Main Content */
+.visita-cebu-main-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.visita-cebu-welcome-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.visita-cebu-welcome-section h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Quick Actions */
+.visita-cebu-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.visita-cebu-action-card {
+  background: var(--visita-cebu-card-bg);
+  padding: 1.5rem;
+  border-radius: var(--visita-cebu-border-radius);
+  box-shadow: var(--visita-cebu-shadow-sm);
+  text-decoration: none;
+  color: var(--visita-cebu-text);
+  transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--visita-cebu-shadow-md);
+}
+
+.visita-cebu-action-icon {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.visita-cebu-action-card h3 {
+  margin-bottom: 0.5rem;
+}
+
+.visita-cebu-action-card p {
+  color: var(--visita-cebu-text-light);
+  font-size: 0.9rem;
+}
+
+/* Hotel Section */
+.visita-cebu-hotel-section {
+  margin-top: 2rem;
+}
+
+.visita-cebu-hotel-section h2 {
+  margin-bottom: 1rem;
+}
+
+.visita-cebu-hotel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.visita-cebu-hotel-card {
+  background: var(--visita-cebu-card-bg);
+  border-radius: var(--visita-cebu-border-radius);
+  overflow: hidden;
+  box-shadow: var(--visita-cebu-shadow-sm);
+  transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-hotel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--visita-cebu-shadow-md);
+}
+
+.visita-cebu-hotel-image {
+  height: 200px;
+  background-color: #e9ecef;
+}
+
+.visita-cebu-hotel-image.visita-cebu-placeholder {
+  background: linear-gradient(45deg, #f0f0f0 25%, #e6e6e6 25%, #e6e6e6 50%, #f0f0f0 50%, #f0f0f0 75%, #e6e6e6 75%, #e6e6e6 100%);
+  background-size: 20px 20px;
+}
+
+.visita-cebu-hotel-content {
+  padding: 1rem;
+}
+
+.visita-cebu-hotel-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.visita-cebu-stars {
+  color: #ffc107;
+}
+
+.visita-cebu-hotel-price {
+  font-weight: 600;
+  color: var(--visita-cebu-primary);
+  margin: 0.5rem 0;
+}
+
+.visita-cebu-hotel-features {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.visita-cebu-hotel-features span {
+  background-color: #e9ecef;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .visita-cebu-nav-links {
+    display: none;
+  }
+  
+  .visita-cebu-quick-actions {
+    grid-template-columns: 1fr;
+  }
+  
+  .visita-cebu-hotel-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
+
+/* Focus States */
+a:focus,
+button:focus {
+  outline: 2px solid var(--visita-cebu-primary);
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .visita-cebu-top-nav {
+    position: static;
+  }
+  
+  .visita-cebu-customer-landing {
+    padding-top: 0;
+  }
+  
+  .visita-cebu-action-card,
+  .visita-cebu-hotel-card {
+    break-inside: avoid;
+  }
+}
+
 
 </style>

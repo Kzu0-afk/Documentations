@@ -116,14 +116,14 @@
 <body>
     <div class="container">
         <h1>AVAILABLE HOTELS</h1>
-        <a href="{% url 'hotel_create' %}" class="btn-add">Add New Hotel</a>
+        <a href="{% url 'hotel:hotel_create' %}" class="btn-add">Add New Hotel</a>
         <ul>
             {% for hotel in hotels %}
                 <li>
                     <span>{{ hotel.hotelName }}</span>
                     <div class="actions">
-                        <a href="{% url 'hotel_update' hotel.pk %}">Edit</a>
-                        <a href="{% url 'hotel_delete' hotel.pk %}">Delete</a>
+                        <a href="{% url 'hotel:hotel_update' hotel.pk %}">Edit</a>
+                        <a href="{% url 'hotel:hotel_delete' hotel.pk %}">Delete</a>
                     </div>
                 </li>
             {% empty %}
