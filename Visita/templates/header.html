@@ -1,0 +1,63 @@
+<div class="customer-header">
+    <div class="header-left">
+        <button class="sidebar-toggle"><i class="fas fa-bars"></i></button>
+        <h1>VisitaCebu</h1>
+    </div>
+    <nav>
+        <a href="#">Recommended Places</a>
+        <a href="#">About Us</a>
+        <a href="#">Contact</a>
+    </nav>
+    <button class="register">Register</button>
+</div>
+
+
+
+<style>
+.customer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    background-color: #e0f7ff;
+    position: sticky; /* Ensures it stays at the top */
+    top: 0;
+    z-index: 1000;
+}
+
+.customer-header .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Spacing between the toggle button and the title */
+}
+
+.customer-header h1 {
+    font-size: 24px;
+    color: #ff7f27;
+    margin: 0;
+}
+
+.customer-header nav a {
+    margin: 0 15px;
+    color: #333;
+    text-decoration: none;
+}
+
+.customer-header nav a:hover {
+    text-decoration: underline;
+}
+
+.customer-header .register {
+    background-color: #ff7f27;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.customer-header .register:hover {
+    background-color: #e56710;
+}
+
+</style>
