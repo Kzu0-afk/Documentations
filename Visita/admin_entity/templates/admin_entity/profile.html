@@ -4,120 +4,313 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Profile</title>
+    <title>Hotel Admin Profile</title>
 </head>
-<body>
-    {% include 'includes/header.html' %}
-    <div class="wrapper">
-        <div class="profile-container">
-            <a href="#" class="back-btn">&larr; Return to Dashboard</a>
-            <div class="profile-header">
-                <img src="{% static 'images/admin-avatar.png' %}" alt="Admin Avatar" class="profile-avatar">
-                <div class="profile-info">
-                    <h1>{{ admin.username }}</h1>
-                    <p><strong>Email:</strong> {{ admin.email }}</p>
-                    <p><strong>Department Role:</strong> {{ admin.departmentRole }}</p>
+<body class="hotel-admin-body">
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
+
+    <div class="hotel-admin-container">
+        <div class="hotel-admin-wrapper">
+            <nav class="hotel-admin-navigation">
+                <a href="{% url 'admin_entity:admin-dashboard' %}" class="hotel-admin-back-link">
+                    <span class="hotel-admin-back-arrow">&larr;</span>
+                    <span>Return to Dashboard</span>
+                </a>
+            </nav>
+
+            <section class="hotel-admin-hero">
+                <div class="hotel-admin-card">
+                    <div class="hotel-admin-avatar-container">
+                        <img src="{% static 'images/admin-avatar.png' %}" alt="Admin Profile" class="hotel-admin-avatar">
+                        <span class="hotel-admin-status">Administrator</span>
+                    </div>
+                    <div class="hotel-admin-header">
+                        <h1 class="hotel-admin-name">{{ admin.username }}</h1>
+                        <div class="hotel-admin-metadata">
+                            <span class="hotel-admin-joined">Member since {{ admin.registerDate|date:"F Y" }}</span>
+                            <span class="hotel-admin-activity">Last active: {{ admin.last_login|date:"F j, Y H:i" }}</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="profile-actions">
-                <a href="{% url 'admin_entity:delete_account' %}" class="btn delete-btn">Delete Account</a>
-                <a href="{% url 'admin_entity:logout' %}" class="btn logout-btn">Logout</a>
-            </div>
+            </section>
+
+            <section class="hotel-admin-details">
+                <h2 class="hotel-admin-section-title">Profile Details</h2>
+                <div class="hotel-admin-info-grid">
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Email Address</h3>
+                        <p class="hotel-admin-info-content">{{ admin.email }}</p>
+                    </div>
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Contact Number</h3>
+                        <p class="hotel-admin-info-content">{{ admin.contactNumber|default:"Not provided" }}</p>
+                    </div>
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Department Role</h3>
+                        <p class="hotel-admin-info-content">{{ admin.departmentRole }}</p>
+                    </div>
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Account Status</h3>
+                        <p class="hotel-admin-info-content">
+                            <span class="hotel-admin-status-indicator {% if admin.is_active %}active{% else %}inactive{% endif %}">
+                                {{ admin.is_active|yesno:"Active,Inactive" }}
+                            </span>
+                        </p>
+                    </div>
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Registration Date</h3>
+                        <p class="hotel-admin-info-content">{{ admin.registerDate|date:"F j, Y" }}</p>
+                    </div>
+                    <div class="hotel-admin-info-card">
+                        <h3 class="hotel-admin-info-title">Last Login</h3>
+                        <p class="hotel-admin-info-content">{{ admin.last_login|date:"F j, Y H:i" }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="hotel-admin-actions">
+                <a href="{% url 'admin_entity:edit_profile' %}" class="hotel-admin-btn hotel-admin-btn-edit">Edit Profile</a>
+                <a href="{% url 'admin_entity:logout' %}" class="hotel-admin-btn hotel-admin-btn-logout">Sign Out</a>
+                <a href="{% url 'admin_entity:delete_account' %}" class="hotel-admin-btn hotel-admin-btn-delete">Delete Account</a>
+            </section>
         </div>
     </div>
+
+    <style>
+        /* General Body Styling */
+        .hotel-admin-body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+
+        .hotel-admin-container {
+            min-height: 100vh;
+            padding: 1rem;
+            transition: margin-left 0.3s ease;
+        }
+
+        .hotel-admin-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        /* Navigation Styling */
+        .hotel-admin-navigation {
+            margin-bottom: 2rem;
+        }
+
+        .hotel-admin-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s ease;
+        }
+
+        .hotel-admin-back-link:hover {
+            color: #0ea5e9;
+        }
+
+        .hotel-admin-back-arrow {
+            font-size: 1.25rem;
+        }
+
+        /* Hero Section Styling */
+        .hotel-admin-hero {
+            margin-bottom: 3rem;
+        }
+
+        .hotel-admin-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+
+        .hotel-admin-avatar-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .hotel-admin-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #0ea5e9;
+        }
+
+        .hotel-admin-status {
+            position: absolute;
+            bottom: 0.5rem;
+            right: 0.5rem;
+            background: #0ea5e9;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .hotel-admin-header {
+            flex-grow: 1;
+        }
+
+        .hotel-admin-name {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        .hotel-admin-metadata {
+            margin-top: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .hotel-admin-joined,
+        .hotel-admin-activity {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        /* Profile Details Section */
+        .hotel-admin-section-title {
+            font-size: 1.25rem;
+            color: #0f172a;
+            margin: 0 0 1.5rem 0;
+            font-weight: 600;
+        }
+
+        .hotel-admin-info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .hotel-admin-info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hotel-admin-info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        .hotel-admin-info-title {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.875rem;
+            color: #64748b;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .hotel-admin-info-content {
+            margin: 0;
+            font-size: 1rem;
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .hotel-admin-status-indicator {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .hotel-admin-status-indicator.active {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .hotel-admin-status-indicator.inactive {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* Actions Section */
+        .hotel-admin-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-start;
+        }
+
+        .hotel-admin-btn {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .hotel-admin-btn-edit {
+            background: #0ea5e9;
+            color: white;
+        }
+
+        .hotel-admin-btn-edit:hover {
+            background: #0284c7;
+        }
+
+        .hotel-admin-btn-logout {
+            background: #6b7280;
+            color: white;
+        }
+
+        .hotel-admin-btn-logout:hover {
+            background: #4b5563;
+        }
+
+        .hotel-admin-btn-delete {
+            background: #ef4444;
+            color: white;
+        }
+
+        .hotel-admin-btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hotel-admin-container {
+                padding: 1rem;
+            }
+
+            .hotel-admin-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hotel-admin-actions {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .hotel-admin-btn {
+                width: 100%;
+            }
+        }
+    </style>
 </body>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(to bottom, #f7fbff, #ffffff);
-        margin: 0;
-        padding: 0;
-    }
-
-    .wrapper {
-        display: grid;
-        place-items: center;
-        min-height: calc(100vh - 80px); /* Adjust height based on header */
-    }
-
-    .profile-container {
-        max-width: 600px;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
-
-    .back-btn {
-        text-decoration: none;
-        font-weight: bold;
-        color: #007bff;
-        display: inline-block;
-        margin-bottom: 20px;
-        transition: color 0.3s ease;
-    }
-
-    .back-btn:hover {
-        color: #0056b3;
-    }
-
-    .profile-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-avatar {
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        margin-bottom: 15px;
-        border: 3px solid #28a745;
-    }
-
-    .profile-info h1 {
-        font-size: 28px;
-        color: #333;
-        margin: 0 0 10px;
-    }
-
-    .profile-info p {
-        font-size: 16px;
-        color: #555;
-        margin: 5px 0;
-    }
-
-    .profile-actions {
-        margin-top: 20px;
-    }
-
-    .profile-actions .btn {
-        text-decoration: none;
-        padding: 12px 25px;
-        margin: 5px;
-        display: inline-block;
-        font-weight: bold;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .delete-btn {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .delete-btn:hover {
-        background-color: #a71d2a;
-    }
-
-    .logout-btn {
-        background-color: #007bff;
-        color: white;
-    }
-
-    .logout-btn:hover {
-        background-color: #0056b3;
-    }
-</style>
 </html>

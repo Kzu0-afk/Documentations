@@ -22,7 +22,6 @@ def customer_login_view(request):
         password = request.POST.get('password')
 
         user = authenticate(request, username=username, password=password)
-        print(f"Username: {username}, Authenticated user: {user}")
 
         # Check if the user is authenticated and is a Customer
         if user is not None:
@@ -52,13 +51,18 @@ def update_customer_profile_view(request):
     if request.method == 'POST':
         form = UpdateCustomerForm(request.POST, instance=customer)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+
+            # Update password only if provided
+            if form.cleaned_data['password']:
+                user.set_password(form.cleaned_data['password'])
+
+            user.save()
+            login(request, user)  # Re-log the user after password change
             return redirect('customer_entity:profile')
-        else:
-            print("Form Errors:", form.errors)  # Debugging
     else:
         form = UpdateCustomerForm(instance=customer)
-    return render(request, 'customer_entity/update_profile.html', {'form': form})
+    return render(request, 'customer_entity/edit_profile.html', {'form': form})
 
 
 @login_required

@@ -4,120 +4,350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Profile</title>
+    <title>Hotel Customer Profile</title>
 </head>
-<body>
-    {% include 'includes/header.html' %}
-    <div class="wrapper">
-        <div class="profile-container">
-            <a href="#" class="back-btn">&larr; Return to Dashboard</a>
-            <div class="profile-header">
-                <img src="{% static 'images/customer-avatar.png' %}" alt="Customer Avatar" class="profile-avatar">
-                <div class="profile-info">
-                    <h1>{{ customer.username }}</h1>
-                    <p><strong>Email:</strong> {{ customer.email }}</p>
-                    <p><strong>Address:</strong> {{ customer.address }}</p>
-                </div>
-            </div>
-            <div class="profile-actions">
-                <a href="{% url 'customer_entity:delete_account' %}" class="btn delete-btn">Delete Account</a>
-                <a href="{% url 'customer_entity:logout' %}" class="btn logout-btn">Logout</a>
-            </div>
+<body class="hotel-profile-body">
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
+
+    <div class="hotel-profile-container">
+        <div class="hotel-profile-wrapper">
+            <nav class="hotel-profile-navigation">
+                <a href="{% url 'customer_entity:landing_page' %}" class="hotel-profile-back-link">
+                    <span class="hotel-profile-back-arrow">&larr;</span>
+                    <span>Return to Dashboard</span>
+                </a>
+            </nav>
+
+            <main class="hotel-profile-content">
+                <section class="hotel-profile-hero">
+                    <div class="hotel-profile-card">
+                        <div class="hotel-profile-avatar-container">
+                            <img
+                                src="{% static 'images/customer-avatar.png' %}"
+                                alt="Customer Profile"
+                                class="hotel-profile-avatar"
+                            >
+                            <span class="hotel-profile-status">Customer</span>
+                        </div>
+                        <div class="hotel-profile-header">
+                            <h1 class="hotel-profile-name">{{ customer.username }}</h1>
+                            <div class="hotel-profile-metadata">
+                                <span class="hotel-profile-joined">Member since {{ customer.registerDate|date:"F Y" }}</span>
+                                <span class="hotel-profile-activity">Last active: {{ customer.last_login|date:"F j, Y H:i" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hotel-profile-details">
+                    <h2 class="hotel-profile-section-title">Personal Information</h2>
+                    <div class="hotel-profile-info-grid">
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Email Address</h3>
+                            <p class="hotel-profile-info-content">{{ customer.email }}</p>
+                        </div>
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Contact Number</h3>
+                            <p class="hotel-profile-info-content">{{ customer.contactNumber|default:"Not provided" }}</p>
+                        </div>
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Residential Address</h3>
+                            <p class="hotel-profile-info-content">{{ customer.address|default:"Not provided" }}</p>
+                        </div>
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Account Status</h3>
+                            <p class="hotel-profile-info-content">
+                                <span class="hotel-profile-status-indicator {% if customer.is_active %}active{% else %}inactive{% endif %}">
+                                    {{ customer.is_active|yesno:"Active,Inactive" }}
+                                </span>
+                            </p>
+                        </div>
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Register Date</h3>
+                            <p class="hotel-profile-info-content">{{ customer.registerDate|date:"F j, Y" }}</p>
+                        </div>
+                        <div class="hotel-profile-info-card">
+                            <h3 class="hotel-profile-info-title">Last Login</h3>
+                            <p class="hotel-profile-info-content">{{ customer.last_login|date:"F j, Y H:i" }}</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="hotel-profile-actions">
+                    <a href="{% url 'customer_entity:edit_profile' %}" class="hotel-profile-btn hotel-profile-btn-edit">
+                        Edit Profile
+                    </a>
+                    <a href="{% url 'customer_entity:logout' %}" class="hotel-profile-btn hotel-profile-btn-logout">
+                        Sign Out
+                    </a>
+                    <a href="{% url 'customer_entity:delete_account' %}" class="hotel-profile-btn hotel-profile-btn-delete">
+                        Delete Account
+                    </a>
+                </section>
+            </main>
         </div>
     </div>
-</body>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        background: linear-gradient(to bottom, #e6f7ff, #ffffff);
+    .hotel-profile-body {
         margin: 0;
         padding: 0;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        line-height: 1.5;
     }
 
-    .wrapper {
+    .hotel-profile-container {
+        min-height: 100vh;
+        padding: 1rem;
+        transition: margin-left 0.3s ease;
+    }
+
+    .hotel-profile-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 1.5rem;
+    }
+
+    .hotel-profile-navigation {
+        margin-bottom: 2rem;
+    }
+
+    .hotel-profile-back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #64748b;
+        text-decoration: none;
+        font-size: 0.875rem;
+        transition: color 0.2s ease;
+    }
+
+    .hotel-profile-back-link:hover {
+        color: #0ea5e9;
+    }
+
+    .hotel-profile-back-arrow {
+        font-size: 1.25rem;
+    }
+
+    .hotel-profile-section-title {
+        font-size: 1.25rem;
+        color: #0f172a;
+        margin: 0 0 1.5rem 0;
+        font-weight: 600;
+    }
+
+    .hotel-profile-hero {
+        margin-bottom: 3rem;
+    }
+
+    .hotel-profile-card {
+        background: white;
+        border-radius: 1rem;
+        padding: 2rem;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+        display: flex;
+        align-items: center;
+        gap: 2.5rem;
+    }
+
+    .hotel-profile-avatar-container {
+        position: relative;
+        flex-shrink: 0;
+    }
+
+    .hotel-profile-avatar {
+        width: 140px;
+        height: 140px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #0ea5e9;
+    }
+
+    .hotel-profile-status {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        background: #0ea5e9;
+        color: white;
+        padding: 0.25rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    .hotel-profile-header {
+        flex-grow: 1;
+    }
+
+    .hotel-profile-name {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+        color: #0f172a;
+    }
+
+    .hotel-profile-metadata {
+        margin-top: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .hotel-profile-joined,
+    .hotel-profile-activity {
+        color: #64748b;
+        font-size: 0.875rem;
+    }
+
+    .hotel-profile-info-grid {
         display: grid;
-        place-items: center;
-        min-height: calc(100vh - 80px); /* Adjust height based on header */
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
     }
 
-    .profile-container {
-        max-width: 600px;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    .hotel-profile-info-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.75rem;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hotel-profile-info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    }
+
+    .hotel-profile-info-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.875rem;
+        color: #64748b;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .hotel-profile-info-content {
+        margin: 0;
+        font-size: 1rem;
+        color: #0f172a;
+        font-weight: 500;
+    }
+
+    .hotel-profile-status-indicator {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.875rem;
+        font-weight: 500;
+    }
+
+    .hotel-profile-status-indicator.active {
+        background-color: #dcfce7;
+        color: #166534;
+    }
+
+    .hotel-profile-status-indicator.inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+    }
+
+    .hotel-profile-actions {
+        display: flex;
+        gap: 1rem;
+        justify-content: flex-start;
+    }
+
+    .hotel-profile-btn {
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease;
         text-align: center;
     }
 
-    .back-btn {
-        text-decoration: none;
-        font-weight: bold;
-        color: #007bff;
-        display: inline-block;
-        margin-bottom: 20px;
-        transition: color 0.3s ease;
-    }
-
-    .back-btn:hover {
-        color: #0056b3;
-    }
-
-    .profile-header {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .profile-avatar {
-        border-radius: 50%;
-        width: 120px;
-        height: 120px;
-        margin-bottom: 15px;
-        border: 3px solid #007bff;
-    }
-
-    .profile-info h1 {
-        font-size: 28px;
-        color: #333;
-        margin: 0 0 10px;
-    }
-
-    .profile-info p {
-        font-size: 16px;
-        color: #555;
-        margin: 5px 0;
-    }
-
-    .profile-actions {
-        margin-top: 20px;
-    }
-
-    .profile-actions .btn {
-        text-decoration: none;
-        padding: 12px 25px;
-        margin: 5px;
-        display: inline-block;
-        font-weight: bold;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .delete-btn {
-        background-color: #ff4d4d;
+    .hotel-profile-btn-edit {
+        background: #0ea5e9;
         color: white;
     }
 
-    .delete-btn:hover {
-        background-color: #e63939;
+    .hotel-profile-btn-edit:hover {
+        background: #0284c7;
     }
 
-    .logout-btn {
-        background-color: #28a745;
+    .hotel-profile-btn-logout {
+        background: #6b7280;
         color: white;
     }
 
-    .logout-btn:hover {
-        background-color: #1e7e34;
+    .hotel-profile-btn-logout:hover {
+        background: #4b5563;
+    }
+
+    .hotel-profile-btn-delete {
+        background: #ef4444;
+        color: white;
+    }
+
+    .hotel-profile-btn-delete:hover {
+        background: #dc2626;
+    }
+
+    @media (max-width: 1024px) {
+        .hotel-profile-container {
+            margin-left: 0;
+        }
+
+        .hotel-profile-info-grid {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .hotel-profile-wrapper {
+            padding: 1rem;
+        }
+
+        .hotel-profile-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .hotel-profile-metadata {
+            align-items: center;
+        }
+
+        .hotel-profile-actions {
+            flex-direction: column;
+        }
+
+        .hotel-profile-btn {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hotel-profile-container {
+            padding: 0.5rem;
+        }
+
+        .hotel-profile-avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .hotel-profile-info-grid {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
+</body>
 </html>

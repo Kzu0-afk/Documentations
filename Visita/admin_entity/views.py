@@ -49,10 +49,6 @@ def admin_login_view(request):
     return render(request, 'admin_entity/login.html')
 
 
-
-
-
-
 @login_required
 def admin_profile_view(request):
     admin = get_object_or_404(AdminEntity, id=request.user.id)
@@ -65,13 +61,19 @@ def update_admin_profile_view(request):
     if request.method == 'POST':
         form = UpdateAdminForm(request.POST, instance=admin)
         if form.is_valid():
-            form.save()
+            user = form.save(commit=False)
+
+            # Update password only if provided
+            if form.cleaned_data['password']:
+                user.set_password(form.cleaned_data['password'])
+
+            user.save()
+            login(request, user)  # Re-log the user after password change
             return redirect('admin_entity:profile')
-        else:
-            print("Form Errors:", form.errors)  # Debugging
     else:
         form = UpdateAdminForm(instance=admin)
-    return render(request, 'admin_entity/update_profile.html', {'form': form})
+    return render(request, 'admin_entity/edit_profile.html', {'form': form})
+
 
 
 @login_required

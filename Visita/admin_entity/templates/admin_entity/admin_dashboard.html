@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -214,20 +215,23 @@
 </head>
 <body>
     <!-- Sidebar -->
-    <div class="sidebar">
-        <h1>VisitaCebu</h1>
-        <ul>
-            <li><i class="fas fa-home"></i> Dashboard</li>
-            <li><i class="fas fa-concierge-bell"></i> Front Desk</li>
-            <li><i class="fas fa-user"></i> Guest</li>
-            <li><i class="fas fa-bed"></i> Rooms</li>
-            <li><i class="fas fa-briefcase"></i> Deal</li>
-            <li><i class="fas fa-money-bill-wave"></i> Rate</li>
-        </ul>
-    </div>
+{#    <div class="sidebar">#}
+{#        <h1>VisitaCebu</h1>#}
+{#        <ul>#}
+{#            <li><i class="fas fa-home"></i> Dashboard</li>#}
+{#            <li><i class="fas fa-concierge-bell"></i> Front Desk</li>#}
+{#            <li><i class="fas fa-user"></i> Guest</li>#}
+{#            <li><i class="fas fa-bed"></i> Rooms</li>#}
+{#            <li><i class="fas fa-briefcase"></i> Deal</li>#}
+{#            <li><i class="fas fa-money-bill-wave"></i> Rate</li>#}
+{#        </ul>#}
+{#    </div>#}
+
+
 
     <!-- Main Content -->
     <div class="main">
+        {% include 'sidebar.html' %}
         <div class="header">
             <input type="text" placeholder="Search for rooms and offers">
             <span class="welcome">Welcome, Admin!</span>

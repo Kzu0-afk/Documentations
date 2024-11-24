@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Admin Profile</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+{% include 'header.html' %}
+{% include 'sidebar.html' %}
+
+<div class="edit-profile-container">
+    <h1>Edit Admin Profile</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="profile-info-grid">
+            <div class="profile-info-card">
+                <label for="username">Username:</label>
+                {{ form.username }}
+            </div>
+            <div class="profile-info-card">
+                <label for="email">Email:</label>
+                {{ form.email }}
+            </div>
+            <div class="profile-info-card">
+                <label for="contactNumber">Contact Number:</label>
+                {{ form.contactNumber }}
+            </div>
+            <div class="profile-info-card">
+                <label for="departmentRole">Department Role:</label>
+                {{ form.departmentRole }}
+            </div>
+            <div class="profile-info-card">
+                <label for="password">Password:</label>
+                {{ form.password }}
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <a href="{% url 'admin_entity:profile' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+    </form>
+</div>
+
+<style>
+    .edit-profile-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .profile-info-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .profile-info-card {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .profile-info-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-actions {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: white;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background-color: #565e64;
+    }
+
+    @media (max-width: 768px) {
+        .profile-info-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</body>
+</html>
