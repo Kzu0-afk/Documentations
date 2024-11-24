@@ -20,8 +20,7 @@ from django.http import HttpResponse
 from hotel.views import landing_page
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('admin_page/', include('admin_entity.urls')),  # Make sure this matches exactly
+    path('admin/', include('admin_entity.urls')),  # Make sure this matches exactly
     #admin_django for the main admin if you want to edit the database
     path('admin_django/', admin.site.urls),
     path('customer/', include('customer_entity.urls', namespace='customer_entity')),

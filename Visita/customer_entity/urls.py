@@ -10,4 +10,5 @@ urlpatterns = [
     path('update_profile/', views.update_customer_profile_view, name='update_profile'),
     path('delete_account/', views.customer_delete_account_view, name='delete_account'),
     path('logout/', views.customer_logout_view, name='logout'),  # Add this line
+    path('landing_page/', views.customer_landing_page, name='landing_page'),
 ]

@@ -1,138 +1,298 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Admin Login - VisitaCebu</title>
 </head>
 <body>
-    {% include 'includes/header.html' %}
     <div class="container">
-        <div class="left-section">
-            <h1>Did you know?</h1>
-            <p>Cebu is known as the "Queen City of the South" and was the first capital of the Philippines!</p>
+        <div class="left-column">
+            <div class="info">
+                <h1>VisitaCebu Admin</h1>
+                <h2>Did you know?</h2>
+                <p>Cebu is known as the "Queen City of the South" and was the first capital of the Philippines!</p>
+                <button>Learn More</button>
+            </div>
         </div>
-        <div class="right-section">
-            <h1>Welcome Back, Admin!</h1>
-            <form method="post">
-                {% csrf_token %}
-                {% if error %}
-                    <p class="error">{{ error }}</p>
-                {% endif %}
-                <input type="text" name="username" placeholder="Username" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <button type="submit">Login</button>
-            </form>
-            <a href="{% url 'admin_entity:signup' %}">Don't have an account? Sign Up</a>
+        <div class="right-column">
+            <div class="auth-form">
+                <div class="admin-badge">Admin Portal</div>
+                <h1>Welcome Back</h1>
+                <p>Enter your credentials to access the admin dashboard</p>
+                <form method="post">
+                    {% csrf_token %}
+                    {% if error %}
+                        <div class="error">{{ error }}</div>
+                    {% endif %}
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" required>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <p>Need an admin account? <a href="{% url 'admin_entity:signup' %}">Sign Up</a></p>
+            </div>
         </div>
     </div>
 </body>
 </html>
 
 <style>
-    /* General Styling */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #ecf0f1;
+    --accent-color: #e74c3c;
+    --text-color: #2c3e50;
+    --background-color: #f5f6fa;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(to bottom, #e0f7ff, #ffffff);
     margin: 0;
-    padding: 0;
+    font-family: 'Poppins', Arial, sans-serif;
+    background-color: var(--background-color);
+    transition: background-color 0.3s ease;
 }
 
 .container {
     display: flex;
-    flex-direction: row;
     height: 100vh;
+    overflow: hidden;
 }
 
-.left-section {
-    width: 50%;
-    {#background-image: url('your-background-image-path.jpg'); /* Replace with your background image path */#}
+.left-column {
+    flex: 1;
+    background-image: url('/static/images/admin-bg.png');
     background-size: cover;
+    background-position: center;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    color: #333;
-    padding: 20px;
-    box-sizing: border-box;
+    justify-content: center;
+    color: white;
     text-align: center;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
 }
 
-.right-section {
-    width: 50%;
-    background: #ffffff;
+.left-column::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(44, 62, 80, 0.7);
+    z-index: 1;
+}
+
+.info {
+    position: relative;
+    z-index: 2;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.8s forwards 0.5s;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.left-column h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.left-column h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.left-column p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+}
+
+.left-column button {
+    background-color: var(--accent-color);
+    border: none;
+    padding: 10px 20px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+
+.left-column button:hover {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.right-column {
+    flex: 1;
+    background-color: var(--secondary-color);
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: 20px;
-    box-sizing: border-box;
 }
 
-.right-section h1 {
-    color: #ff9800;
-    margin-bottom: 20px;
-}
-
-form {
-    width: 80%;
-    max-width: 400px;
-    background: #f9f9f9;
-    padding: 20px;
+.auth-form {
+    background-color: white;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    opacity: 0;
+    transform: translateX(20px);
+    animation: slideIn 0.8s forwards;
+    position: relative;
 }
 
-form input {
+.admin-badge {
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 8px rgba(231, 76, 60, 0.2);
+}
+
+@keyframes slideIn {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.auth-form h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    margin-top: 1rem;
+}
+
+.auth-form p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #666;
+}
+
+.auth-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.auth-form input {
     width: 100%;
-    padding: 10px;
-    margin: 10px 0;
+    padding: 12px;
+    margin-bottom: 1rem;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
+    transition: border-color 0.3s ease;
 }
 
-form button {
+.auth-form input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1);
+}
+
+.auth-form button {
     width: 100%;
-    padding: 10px;
-    background: #ff9800;
+    padding: 12px;
+    background-color: var(--primary-color);
     border: none;
-    border-radius: 5px;
-    color: #fff;
-    font-size: 18px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-form button:hover {
-    background: #e68a00;
+.auth-form button:hover {
+    background-color: #34495e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-a {
-    color: #007BFF;
+.auth-form a {
+    color: var(--accent-color);
     text-decoration: none;
-    display: inline-block;
-    margin-top: 10px;
+    transition: color 0.3s ease;
 }
 
-a:hover {
+.auth-form a:hover {
+    color: #c0392b;
     text-decoration: underline;
 }
 
 .error {
-    color: red;
-    margin-bottom: 10px;
+    color: var(--accent-color);
+    font-size: 0.875rem;
+    margin-top: -0.5rem;
+    margin-bottom: 1rem;
+    padding: 8px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border-radius: 4px;
 }
 
-/* Responsive Styling */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
     }
 
-    .left-section, .right-section {
-        width: 100%;
+    .left-column, .right-column {
+        flex: none;
+        height: 50vh;
+    }
+
+    .auth-form {
+        max-width: 100%;
     }
 }
 
+/* Dark mode styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #ecf0f1;
+        --background-color: #1a1a1a;
+    }
+
+    body {
+        color: var(--text-color);
+    }
+
+    .auth-form {
+        background-color: #2a2a2a;
+    }
+
+    .auth-form input {
+        background-color: #333;
+        color: var(--text-color);
+        border-color: #444;
+    }
+
+    .auth-form input:focus {
+        box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.2);
+    }
+}
 </style>

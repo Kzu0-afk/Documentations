@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 
+app_name = 'payment'
+
 urlpatterns = [
     path('', views.PaymentListView.as_view(), name='payment_list'),  # List view
     path('new/', views.PaymentCreateView.as_view(), name='payment_create'),  # Create view

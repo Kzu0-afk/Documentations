@@ -5,7 +5,7 @@ from .models import Customer
 class CustomerSignupForm(UserCreationForm):
     class Meta:
         model = Customer
-        fields = ['username', 'password1', 'password2', 'email', 'address']
+        fields = ['username', 'email', 'address', 'password1', 'password2']
 
 class UpdateCustomerForm(forms.ModelForm):
     class Meta:

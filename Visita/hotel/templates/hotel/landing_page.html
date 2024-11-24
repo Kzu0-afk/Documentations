@@ -186,7 +186,7 @@
             <a href="#">Recommended Places</a>
             <a href="#">About Us</a>
             <a href="#">Contact</a>
-            <a href="#" class="register-button">Register</a>
+            <a href="{% url 'customer_entity:signup' %}" class="register-button">Register</a>
         </nav>
     </header>
 
@@ -195,7 +195,7 @@
         <div class="slideshow" id="slideshow"></div>
         <h2>Visita Cebu</h2>
         <p>Enjoy world-class comfort in the heart of Cebu. Our hotel provides the perfect blend of luxury and convenience for every traveler.</p>
-        <a href="{% url 'login' %}" class="login-button">Get Started</a>
+        <a href="{% url 'customer_entity:login' %}" class="login-button">Get Started</a>
     </main>
 
     <!-- Founders Section -->

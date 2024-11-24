@@ -5,7 +5,7 @@ from .models import AdminEntity
 class AdminSignupForm(UserCreationForm):
     class Meta:
         model = AdminEntity
-        fields = ['username', 'password1', 'password2', 'email', 'departmentRole']
+        fields = ['username', 'email', 'departmentRole', 'password1', 'password2']
 
 class UpdateAdminForm(forms.ModelForm):
     class Meta:

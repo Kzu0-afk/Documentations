@@ -9,6 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     contactNumber = models.CharField(max_length=15, blank=True, null=True)
     registerDate = models.DateTimeField(default=now)
+    pass
     
     def __str__(self):
         return self.username

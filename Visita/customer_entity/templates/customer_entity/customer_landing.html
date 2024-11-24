@@ -1,0 +1,103 @@
+{% block content %}
+<div class="customer-landing-page">
+    <!-- Include the header -->
+    {% include 'header.html' %}
+
+    <!-- Include the sidebar -->
+    {% include 'sidebar.html' %}
+
+    <div class="customer-main-content">
+        <h1>Welcome, {{ user.username }}!</h1>
+        <p>Here are the links to test all the features available for customers:</p>
+
+        <div class="customer-links-container">
+            <a href="{% url 'customer_entity:profile' %}" class="customer-link-button">View Profile</a>
+            <a href="{% url 'customer_entity:update_profile' %}" class="customer-link-button">Update Profile</a>
+            <a href="{% url 'customer_entity:delete_account' %}" class="customer-link-button">Delete Account</a>
+            <a href="{% url 'booking:booking_home' %}" class="customer-link-button">Booking Home</a>
+            <a href="{% url 'booking:booking_list' %}" class="customer-link-button">View Bookings</a>
+            <a href="{% url 'booking:booking_create' %}" class="customer-link-button">Create Booking</a>
+            <a href="{% url 'room:room_list' %}" class="customer-link-button">Rooms List</a>
+            <a href="{% url 'payment:payment_list' %}" class="customer-link-button">Payment History</a>
+            <a href="{% url 'hotel:hotel_list' %}" class="customer-link-button">Hotels</a>
+            <a href="{% url 'customer_entity:logout' %}" class="customer-logout-button">Logout</a>
+        </div>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+        <p>test</p>
+    </div>
+</div>
+{% endblock %}
+
+
+
+<style>
+.customer-landing-page {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.customer-main-content {
+    margin-top: 80px; /* Adds space below the sticky header */
+    padding: 20px;
+    flex: 1;
+    background-color: #f9f9f9;
+}
+
+.customer-main-content h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.customer-main-content p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #555;
+}
+
+.customer-links-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.customer-link-button, .customer-logout-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: white;
+    background-color: #007bff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.customer-link-button:hover {
+    background-color: #0056b3;
+}
+
+.customer-logout-button {
+    background-color: #dc3545;
+}
+
+.customer-logout-button:hover {
+    background-color: #a71d2a;
+}
+
+</style>
