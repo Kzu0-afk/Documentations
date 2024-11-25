@@ -11,13 +11,13 @@
             <img src="{% static 'images/Logo.png' %}" alt="Logo" class="visita-sidebar-logo">
         </a>
         <ul class="visita-sidebar-menu">
-            <li href="{% url 'customer_entity:landing_page' %}">Dashboard</li>
-            <li>Profile</li>
-            <li>Booking History</li>
+            <li><a href="{% url 'customer_entity:landing_page' %}">Dashboard</a></li>
+            <li><a href="{% url 'customer_entity:profile' %}">Profile</a></li>
+            <li><a href="{% url 'booking:booking_list' %}">Booking History</a></li>    
             <li>New Booking</li>
-            <li>Rooms</li>
-            <li>Payments</li>
-            <li>Sign-out</li>
+            <li><a href="{% url 'room:room_list' %}">Rooms</a></li>      
+            <li><a href="{% url 'payment:payment_list' %}">Payments</a></li>
+            <li><a href="{% url 'customer_entity:logout' %}">Sign-out</a></li>
         </ul>
     </div>
 </div>

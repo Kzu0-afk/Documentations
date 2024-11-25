@@ -32,7 +32,7 @@ class HotelCreateView(View):
         form = HotelForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('hotel_list')  # Redirect to the hotel list after saving
+            return redirect('hotel:hotel_list')  # Redirect to the hotel list after saving
         return render(request, 'hotel/hotel_form.html', {'form': form})  # Return form with errors
 
 class HotelUpdateView(View):
@@ -46,11 +46,11 @@ class HotelUpdateView(View):
         form = HotelForm(request.POST, instance=hotel)
         if form.is_valid():
             form.save()
-            return redirect('hotel_list')  # Redirect after successful update
+            return redirect('hotel:hotel_list')  # Redirect after successful update
         return render(request, 'hotel/hotel_form.html', {'form': form})
 
 class HotelDeleteView(View):
     def get(self, request, pk):
         hotel = get_object_or_404(Hotel, pk=pk)  # Fetch the hotel object
         hotel.delete()  # Delete the object
-        return redirect('hotel_list')  # Redirect to the list view
+        return redirect('hotel:hotel_list')  # Redirect to the list view

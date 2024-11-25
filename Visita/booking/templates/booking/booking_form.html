@@ -1,7 +1,15 @@
-{% extends "base_generic.html" %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Home - Visita Cebu</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
 <h2>Create Booking</h2>
+{% include 'header.html' %}
+<body>
 <form method="post">
     {% csrf_token %}
     <label>Customer:</label>
@@ -28,7 +36,7 @@
            min="{{ today }}" required>
 
     <button type="submit" class="btn btn-success">Submit</button>
-    <a href="{% url 'booking_list' %}" class="btn btn-secondary">Back to List</a>
+    <a href="{% url 'booking:booking_list' %}" class="btn btn-secondary">Back to List</a>
 </form>
 <script>
     const today = new Date().toISOString().split('T')[0];
@@ -43,4 +51,5 @@
         checkOutDateField.setAttribute("min", checkInDate);
     });
 </script>
-{% endblock %}
+</body>
+</html>

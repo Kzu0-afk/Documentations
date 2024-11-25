@@ -7,7 +7,7 @@
     <title>Room List</title>
 </head>
 <body>
-    {% include 'includes/../../../templates/header.html' %}
+    {% include 'header.html' %}
     <div class="list-container">
         <h1>Room List</h1>
         <table>
@@ -30,8 +30,8 @@
                         <td>${{ room.roomPrice }}</td>
                         <td>{{ room.isAvailable|yesno:"Available,Not Available" }}</td>
                         <td>
-                            <a href="{% url 'room_update' room.pk %}" class="action-link edit-link">Edit</a>
-                            <a href="{% url 'room_delete' room.pk %}" class="action-link delete-link" onclick="return confirm('Are you sure you want to delete this room?');">Delete</a>
+                            <a href="{% url 'room:room_update' room.pk %}" class="action-link edit-link">Edit</a>
+                            <a href="{% url 'room:room_delete' room.pk %}" class="action-link delete-link" onclick="return confirm('Are you sure you want to delete this room?');">Delete</a>
                         </td>
                     </tr>
                 {% empty %}
@@ -41,7 +41,7 @@
                 {% endfor %}
             </tbody>
         </table>
-        <a href="{% url 'room_create' %}" class="create-button">Create New Room</a>
+        <a href="{% url 'room:room_create' %}" class="create-button">Create New Room</a>
     </div>
 </body>
 <style>

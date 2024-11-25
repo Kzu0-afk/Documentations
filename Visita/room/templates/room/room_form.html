@@ -7,15 +7,15 @@
     <title>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</title>
 </head>
 <body>
-    {% include 'includes/../../../templates/header.html' %}
+    {% include 'header.html' %}
     <div class="wrapper">
         <div class="form-container">
-            <h1>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</h1>
-            <form method="post" novalidate>
+            <h1>{% if form.instance.pk %}Edit Room{% else %}CREATE ROOM{% endif %}</h1>
+            <form method="post" class="form-credentials" novalidate>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
                 <div>
-                    {{ form.roomNumber.label_tag }}
+                    {{ form.roomNumber.label_tag }} 
                     {{ form.roomNumber }}
                     {{ form.roomNumber.errors }}
                 </div>
@@ -43,7 +43,7 @@
                     {% if form.instance.pk %}Update Room{% else %}Create Room{% endif %}
                 </button>
             </form>
-            <a href="{% url 'room_list' %}" class="back-link">Back to Room List</a>
+            <a href="{% url 'room:room_list' %}" class="back-link">Back to Room List</a>
         </div>
     </div>
 </body>
@@ -64,13 +64,19 @@
     }
 
     .form-container {
-        max-width: 600px;
+        width: 300px; /*max-width*/
         background: #ffffff;
         padding: 30px;
         border-radius: 15px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        text-align: center;
+        text-align: center; 
     }
+
+    .form-credentials {
+    width: 260px;
+    display: inline-block;
+    }
+
 
     h1 {
         font-size: 28px;

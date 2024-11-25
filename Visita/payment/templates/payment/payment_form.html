@@ -1,4 +1,4 @@
-{% include 'includes/../../../templates/header.html' %}
+{% include 'header.html' %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +23,7 @@
             </button>
         </form>
 
-        <a href="{% url 'payment_list' %}" class="back-link">Back to Payment List</a>
+        <a href="{% url 'payment:payment_list' %}" class="back-link">Back to Payment List</a>
     </div>
 </body>
 <style>

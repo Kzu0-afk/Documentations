@@ -8,16 +8,8 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <header>
-        <h1>VisitaCebu</h1>
-        <nav>
-            <a href="#">Recommended Places</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact</a>
-        </nav>
-        <button class="register">Register</button>
-    </header>
-
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
     <section class="booking-overview">
         <h2>All Bookings</h2>
         <div class="booking-list">
