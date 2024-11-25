@@ -10,15 +10,29 @@
         <a href="{% url 'customer_entity:landing_page' %}" class="visita-logo-link">
             <img src="{% static 'images/Logo.png' %}" alt="Logo" class="visita-sidebar-logo">
         </a>
-        <ul class="visita-sidebar-menu">
-            <li><a href="{% url 'customer_entity:landing_page' %}">Dashboard</a></li>
-            <li><a href="{% url 'customer_entity:profile' %}">Profile</a></li>
-            <li><a href="{% url 'booking:booking_list' %}">Booking History</a></li>    
-            <li>New Booking</li>
-            <li><a href="{% url 'room:room_list' %}">Rooms</a></li>      
-            <li><a href="{% url 'payment:payment_list' %}">Payments</a></li>
-            <li><a href="{% url 'customer_entity:logout' %}">Sign-out</a></li>
-        </ul>
+        <nav class="visita-sidebar-menu">
+            <a href="{% url 'customer_entity:landing_page' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Dashboard</span>
+            </a>
+            <a href="{% url 'customer_entity:profile' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Profile</span>
+            </a>
+            <a href="{% url 'booking:booking_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Booking History</span>
+            </a>
+            <a href="#" class="visita-menu-item">
+                <span class="visita-menu-text">New Booking</span>
+            </a>
+            <a href="{% url 'room:room_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Rooms</span>
+            </a>
+            <a href="{% url 'payment:payment_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Payments</span>
+            </a>
+            <a href="{% url 'customer_entity:logout' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Sign-out</span>
+            </a>
+        </nav>
     </div>
 </div>
 
@@ -35,16 +49,16 @@
 
     /* Sidebar Styles */
     .visita-sidebar {
-        width: 260px;
-        background-color: #d5d5d5;
-        color: #555;
+        width: 280px;
+        background-color: #ffffff;
+        color: #1a1a1a;
         height: 100%;
         transform: translateX(-100%);
         display: flex;
         flex-direction: column;
-        padding: 30px 20px;
-        transition: transform 0.3s ease-in-out;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 24px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         pointer-events: auto;
     }
 
@@ -55,11 +69,12 @@
     /* Logo Link */
     .visita-logo-link {
         display: block;
-        margin-bottom: 20px;
+        margin-bottom: 32px;
+        text-decoration: none;
     }
 
     .visita-sidebar-logo {
-        max-width: 100%;
+        max-width: 160px;
         height: auto;
         display: block;
         margin: 0 auto;
@@ -68,32 +83,32 @@
     /* Toggle Button and Icons */
     .visita-sidebar-toggle {
         position: fixed;
-        top: 10px;
-        left: 15px;
+        top: 16px;
+        left: 16px;
         background-color: #ff9800;
-        color: white;
         border: none;
-        border-radius: 10%;
+        border-radius: 8px;
         width: 40px;
         height: 40px;
         cursor: pointer;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         z-index: 1001;
         pointer-events: auto;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 0;
+        margin-bottom: -5px;
     }
 
     .visita-sidebar-toggle:hover {
-        background-color: #e68a00;
-        transform: scale(1.1);
+        background-color: #f57c00;
+        transform: translateY(-1px);
     }
 
     .visita-toggle-icon {
-        width: 32px;
-        height: 32px;
+        width: 24px;
+        height: 24px;
         display: block;
         object-fit: contain;
     }
@@ -101,16 +116,22 @@
     .visita-close-button {
         background: none;
         border: none;
-        padding: 0;
+        padding: 8px;
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 12px;
+        right: 12px;
         cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
+
+    .visita-close-button:hover {
+        opacity: 1;
     }
 
     .visita-close-icon {
-        width: 32px;
-        height: 32px;
+        width: 20px;
+        height: 20px;
         object-fit: contain;
     }
 
@@ -120,35 +141,31 @@
 
     /* Sidebar Menu */
     .visita-sidebar-menu {
-        list-style: none;
-        margin-top: 20px;
-        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
     }
 
-    .visita-sidebar-menu li {
+    .visita-menu-item {
         display: flex;
         align-items: center;
-        gap: 15px;
-        padding: 15px;
-        font-size: 16px;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: #1a1a1a;
         border-radius: 8px;
-        transition: all 0.3s ease;
-        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 15px;
+        font-weight: 500;
     }
 
-    .visita-sidebar-menu li:hover {
-        background-color: #ff9800;
-        color: #fff;
+    .visita-menu-item:hover {
+        background-color: #ff980020;
+        color: #ff9800;
     }
 
-    .visita-sidebar-menu li:hover i {
-        color: #fff;
-    }
-
-    .visita-sidebar-menu li i {
-        color: #000;
-        font-size: 18px;
-        transition: color 0.3s ease;
+    .visita-menu-item:active {
+        background-color: #ff980040;
     }
 
     /* Overlay */
@@ -159,11 +176,12 @@
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.3);
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
+        transition: all 0.3s ease;
         pointer-events: none;
+        backdrop-filter: blur(2px);
     }
 
     .visita-sidebar-container.active::before {
@@ -180,21 +198,30 @@
         const toggleButton = document.querySelector(".visita-sidebar-toggle");
         const closeButton = document.querySelector(".visita-close-button");
 
-        toggleButton.addEventListener("click", () => {
+        function openSidebar() {
             sidebar.classList.add("active");
             sidebarContainer.classList.add("active");
-        });
+        }
 
-        closeButton.addEventListener("click", () => {
+        function closeSidebar() {
             sidebar.classList.remove("active");
             sidebarContainer.classList.remove("active");
-        });
+        }
 
-        // Close sidebar when clicking outside
+        toggleButton.addEventListener("click", openSidebar);
+        closeButton.addEventListener("click", closeSidebar);
+
+        // Close sidebar when clicking overlay
         sidebarContainer.addEventListener("click", (e) => {
             if (e.target === sidebarContainer) {
-                sidebar.classList.remove("active");
-                sidebarContainer.classList.remove("active");
+                closeSidebar();
+            }
+        });
+
+        // Add escape key support
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && sidebar.classList.contains("active")) {
+                closeSidebar();
             }
         });
     });
