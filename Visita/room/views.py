@@ -17,7 +17,7 @@ class RoomCreateView(View):
         form = RoomForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('room_list')
+            return redirect('room:room_list')
         return render(request, 'room/room_form.html', {'form': form})
 
 class RoomUpdateView(View):
@@ -31,11 +31,11 @@ class RoomUpdateView(View):
         form = RoomForm(request.POST, instance=room)
         if form.is_valid():
             form.save()
-            return redirect('room_list')
+            return redirect('room:room_list')
         return render(request, 'room/room_form.html', {'form': form})
 
 class RoomDeleteView(View):
     def get(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
         room.delete()
-        return redirect('room_list')
+        return redirect('room:room_list')

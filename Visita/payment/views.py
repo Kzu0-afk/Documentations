@@ -17,7 +17,7 @@ class PaymentCreateView(View):
         form = PaymentForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('payment_list')  # Ensure this redirect is correct
+            return redirect('payment:payment_list')  # Ensure this redirect is correct
         return render(request, 'payment/payment_form.html', {'form': form})
     
 class PaymentUpdateView(View):
@@ -31,11 +31,11 @@ class PaymentUpdateView(View):
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
             form.save()
-            return redirect('payment_list')
+            return redirect('payment:payment_list')
         return render(request, 'payment/payment_form.html', {'form': form})
 
 class PaymentDeleteView(View):
     def get(self, request, pk):
         payment = get_object_or_404(Payment, pk=pk)
         payment.delete()
-        return redirect('payment_list')
+        return redirect('payment:payment_list')
