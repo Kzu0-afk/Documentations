@@ -4,133 +4,290 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room List</title>
+    <title>Room List - VisitaCebu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #f57c00;
+            --price-blue: #0066ff;
+            --star-color: #ffc107;
+            --tag-bg: #f0f0f0;
+            --text-color: #333;
+            --background-color: #f8f9fa;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --delete-color: #dc3545;
+            --delete-hover: #c82333;
+        }
+
+        * { 
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+
+        .room-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .room-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-container {
+            position: relative;
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background-image: repeating-linear-gradient(
+                45deg,
+                #f0f0f0,
+                #f0f0f0 10px,
+                #f8f8f8 10px,
+                #f8f8f8 20px
+            );
+        }
+
+        .hotel-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.25rem;
+        }
+
+        .room-details {
+            padding: 1.5rem;
+        }
+
+        .room-type {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: var(--star-color);
+            letter-spacing: 2px;
+        }
+
+        .rating-number {
+            color: #666;
+        }
+
+        .room-price {
+            color: var(--price-blue);
+            font-weight: 500;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .amenities {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .amenity-tag {
+            background: var(--tag-bg);
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .action-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .edit-button {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .edit-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        .delete-button {
+            background-color: var(--delete-color);
+            color: white;
+        }
+
+        .delete-button:hover {
+            background-color: var(--delete-hover);
+            transform: translateY(-2px);
+        }
+
+        .create-button-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .create-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .create-button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .room-grid {
+                grid-template-columns: 1fr;
+                padding: 0.5rem;
+            }
+        }
+    </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    <div class="list-container">
-        <h1>Room List</h1>
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Room Number</th>
-                    <th>Room Type</th>
-                    <th>Price</th>
-                    <th>Availability</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for room in rooms %}
-                    <tr>
-                        <td>{{ room.roomID }}</td>
-                        <td>{{ room.roomNumber }}</td>
-                        <td>{{ room.roomType }}</td>
-                        <td>${{ room.roomPrice }}</td>
-                        <td>{{ room.isAvailable|yesno:"Available,Not Available" }}</td>
-                        <td>
-                            <a href="{% url 'room:room_update' room.pk %}" class="action-link edit-link">Edit</a>
-                            <a href="{% url 'room:room_delete' room.pk %}" class="action-link delete-link" onclick="return confirm('Are you sure you want to delete this room?');">Delete</a>
-                        </td>
-                    </tr>
-                {% empty %}
-                    <tr>
-                        <td colspan="6">No rooms found.</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <a href="{% url 'room:room_create' %}" class="create-button">Create New Room</a>
-    </div>
-</body>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(to bottom, #e0f7ff, #ffffff);
-        margin: 0;
-        padding: 20px;
-    }
+   {% include 'header.html' %}
+   {% include 'sidebar.html' %}    
 
-    .list-container {
-        max-width: 1100px;
-        margin: 20px auto;
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        text-align: center;
-    }
+    <div class="container">
+        <div class="room-grid">
+            {% for room in rooms %}
+                <div class="room-card">
+                    <div class="image-container">
+                        <div class="image-placeholder"></div>
+                    </div>
+                    <div class="room-details">
+                        <h2 class="hotel-name">VisitaCebu</h2>
+                        <div class="room-type">{{ room.roomType }}</div>
+                        <div class="rating">
+                            <div class="stars">★★★★☆</div>
+                            <span class="rating-number">4.5</span>
+                        </div>
+                        <div class="room-price">From ₱{{ room.roomPrice }}/night</div>
+                        <div class="amenities">
+                            <span class="amenity-tag">Pool</span>
+                            <span class="amenity-tag">WiFi</span>
+                            <span class="amenity-tag">Restaurant</span>
+                        </div>
+                        <div class="card-actions">
+                            <a href="{% url 'room:room_update' room.pk %}" class="action-button edit-button">Edit</a>
+                            <a href="{% url 'room:room_delete' room.pk %}" 
+                               class="action-button delete-button" 
+                               onclick="return confirm('Are you sure you want to delete this room?');">
+                                Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No rooms available at the moment.</p>
+            {% endfor %}
+        </div>
 
-    h1 {
-        font-size: 28px;
-        color: #ff9800;
-        margin-bottom: 20px;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-    }
-
-    table th, table td {
-        padding: 15px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    table th {
-        background-color: #ff9800;
-        color: white;
-    }
-
-    table tr:nth-child(even) {
-        background-color: #f9f9f9;
-    }
-
-    .action-link {
-        text-decoration: none;
-        font-weight: bold;
-        padding: 5px 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .edit-link {
-        background-color: #28a745;
-        color: white;
-    }
-
-    .edit-link:hover {
-        background-color: #1e7e34;
-        transform: scale(1.05);
-    }
-
-    .delete-link {
-        background-color: #dc3545;
-        color: white;
-    }
-
-    .delete-link:hover {
-        background-color: #a71d2a;
-        transform: scale(1.05);
-    }
-
-    .create-button {
-        display: inline-block;
-        padding: 12px 20px;
-        background-color: #ff9800;
-        color: white;
-        font-size: 16px;
-        text-decoration: none;
-        font-weight: bold;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    .create-button:hover {
-        background-color: #e68a00;
-    }
-</style>
-</html>
+        <div class="create-button-container">
+            <a href="{% url 'room:room_create' %}" class="create-button">Create New Room 
