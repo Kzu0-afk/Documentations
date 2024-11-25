@@ -4,41 +4,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</title>
+    <title>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %} | VisitaCebu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     {% include 'header.html' %}
     <div class="wrapper">
         <div class="form-container">
-            <h1>{% if form.instance.pk %}Edit Room{% else %}CREATE ROOM{% endif %}</h1>
+            <h1>{% if form.instance.pk %}Edit Room{% else %}Create Room{% endif %}</h1>
+            <p class="form-description">Please fill in the room details below</p>
             <form method="post" class="form-credentials" novalidate>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-                <div>
-                    {{ form.roomNumber.label_tag }} 
+                
+                <div class="form-group">
+                    <label for="{{ form.roomNumber.id_for_label }}">Room Number <span class="required">*</span></label>
                     {{ form.roomNumber }}
-                    {{ form.roomNumber.errors }}
+                    {% if form.roomNumber.errors %}
+                        <span class="error-message">{{ form.roomNumber.errors|join:", " }}</span>
+                    {% endif %}
+                    <span class="form-hint">Enter the unique identifier for this room</span>
                 </div>
-                <div>
-                    {{ form.roomType.label_tag }}
+                
+                <div class="form-group">
+                    <label for="{{ form.roomType.id_for_label }}">Room Type <span class="required">*</span></label>
                     {{ form.roomType }}
-                    {{ form.roomType.errors }}
+                    {% if form.roomType.errors %}
+                        <span class="error-message">{{ form.roomType.errors|join:", " }}</span>
+                    {% endif %}
+                    <span class="form-hint">Select the type of room (e.g., Single, Double, Suite)</span>
                 </div>
-                <div>
-                    {{ form.roomPrice.label_tag }}
-                    {{ form.roomPrice }}
-                    {{ form.roomPrice.errors }}
+                
+                <div class="form-group">
+                    <label for="{{ form.roomPrice.id_for_label }}">Room Price (PHP) <span class="required">*</span></label>
+                    <div class="input-group">
+                        <span class="input-prefix">₱</span>
+                        {{ form.roomPrice }}
+                    </div>
+                    {% if form.roomPrice.errors %}
+                        <span class="error-message">{{ form.roomPrice.errors|join:", " }}</span>
+                    {% endif %}
+                    <span class="form-hint">Enter the nightly rate for this room</span>
                 </div>
-                <div>
-                    {{ form.isAvailable.label_tag }}
+                
+                <div class="form-group checkbox-group">
                     {{ form.isAvailable }}
-                    {{ form.isAvailable.errors }}
+                    <label for="{{ form.isAvailable.id_for_label }}">Available for Booking</label>
+                    {% if form.isAvailable.errors %}
+                        <span class="error-message">{{ form.isAvailable.errors|join:", " }}</span>
+                    {% endif %}
+                    <span class="form-hint">Check if the room is currently available for booking</span>
                 </div>
-                <div>
-                    {{ form.hotel.label_tag }}
+                
+                <div class="form-group">
+                    <label for="{{ form.hotel.id_for_label }}">Associated Hotel <span class="required">*</span></label>
                     {{ form.hotel }}
-                    {{ form.hotel.errors }}
+                    {% if form.hotel.errors %}
+                        <span class="error-message">{{ form.hotel.errors|join:", " }}</span>
+                    {% endif %}
+                    <span class="form-hint">Select the hotel where this room is located</span>
                 </div>
+                
                 <button type="submit" class="submit-button">
                     {% if form.instance.pk %}Update Room{% else %}Create Room{% endif %}
                 </button>
@@ -46,100 +72,222 @@
             <a href="{% url 'room:room_list' %}" class="back-link">Back to Room List</a>
         </div>
     </div>
+
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: #1a1a1a;
+            line-height: 1.5;
+        }
+
+        .wrapper {
+            min-height: calc(100vh - 80px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 480px;
+            background: #ffffff;
+            padding: 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .form-description {
+            text-align: center;
+            color: #666666;
+            margin-bottom: 24px;
+        }
+
+        .form-credentials {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 500;
+            color: #1a1a1a;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .required {
+            color: #ff5757;
+        }
+
+        input, select {
+            padding: 12px 16px;
+            border: 2px solid #e4e9f2;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        input:hover, select:hover {
+            border-color: #ff9800;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #ff9800;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 16px;
+            color: #666666;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            padding-left: 32px;
+        }
+
+        .checkbox-group {
+            flex-direction: row;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+        }
+
+        .form-hint {
+            font-size: 13px;
+            color: #666666;
+        }
+
+        .error-message {
+            color: #ff5757;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .submit-button {
+            padding: 14px 24px;
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .submit-button:hover {
+            background-color: #f57c00;
+            transform: translateY(-1px);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 24px;
+            color: #666666;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: #ff9800;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 480px) {
+            .form-container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            input, select {
+                padding: 10px 14px;
+            }
+
+            .submit-button {
+                padding: 12px 20px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('.form-credentials');
+            const submitButton = document.querySelector('.submit-button');
+
+            form.addEventListener('submit', function(e) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'Processing...';
+            });
+
+            // Format room price input
+            const roomPriceInput = document.getElementById('{{ form.roomPrice.id_for_label }}');
+            roomPriceInput.addEventListener('input', function(e) {
+                let value = this.value.replace(/[^\d.]/g, '');
+                const parts = value.split('.');
+                if (parts[0].length > 3) {
+                    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                }
+                if (parts.length > 1) {
+                    parts[1] = parts[1].slice(0, 2);
+                }
+                this.value = parts.join('.');
+            });
+        });
+    </script>
 </body>
-<style>
-    body {
-        font-family: 'Arial', sans-serif;
-        background: linear-gradient(to bottom, #e0f7ff, #ffffff);
-        margin: 0;
-        padding: 0;
-    }
-
-    .wrapper {
-        min-height: calc(100vh - 80px); /* Adjust based on the header height */
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .form-container {
-        width: 300px; /*max-width*/
-        background: #ffffff;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        text-align: center; 
-    }
-
-    .form-credentials {
-    width: 260px;
-    display: inline-block;
-    }
-
-
-    h1 {
-        font-size: 28px;
-        color: #ff9800;
-        margin-bottom: 20px;
-    }
-
-    form div {
-        margin-bottom: 15px;
-        text-align: left;
-    }
-
-    form label {
-        font-weight: bold;
-        display: block;
-        margin-bottom: 5px;
-        color: #555;
-    }
-
-    form input, form select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        font-size: 16px;
-        transition: box-shadow 0.3s ease;
-    }
-
-    form input:focus, form select:focus {
-        box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-        outline: none;
-    }
-
-    .submit-button {
-        width: 100%;
-        padding: 12px;
-        background-color: #ff9800;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .submit-button:hover {
-        background-color: #e68a00;
-        transform: scale(1.02);
-    }
-
-    .back-link {
-        display: inline-block;
-        margin-top: 15px;
-        color: #333;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: bold;
-        transition: color 0.3s ease;
-    }
-
-    .back-link:hover {
-        color: #ff9800;
-    }
-</style>
 </html>
