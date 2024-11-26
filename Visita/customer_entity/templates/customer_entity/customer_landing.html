@@ -1,17 +1,17 @@
 {% load static %}
 {% block content %}
 <div class="customer-landing-page">
-    <!--import header-->
     {% include 'header.html' %}
     {% include 'sidebar.html' %}
-    <!-- Main Content -->
+    
     <div class="customer-main-content">
+        <!-- Welcome Section -->
         <div class="welcome-section">
             <h1>Welcome, {{ user.username }}!</h1>
             <p>Explore and manage your bookings with our comprehensive tools.</p>
         </div>
 
-        <!-- Quick Actions -->
+        <!-- Quick Actions Section -->
         <div class="quick-actions">
             <a href="{% url 'customer_entity:profile' %}" class="action-card">
                 <div class="action-icon">👤</div>
@@ -35,36 +35,39 @@
             </a>
         </div>
 
-        <!-- Hotel Listings -->
+        <!-- Hotel Section -->
         <div class="hotel-section">
             <h2>Featured Hotels</h2>
             <div class="hotel-grid">
-                {% for i in '123456'|make_list %}
-                <div class="hotel-card">
-                    <div class="hotel-image placeholder"></div>
-                    <div class="hotel-content">
-                        <h3>Sample Hotel {{ i }}</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="rating">4.5</span>
-                        </div>
-                        <p class="hotel-price">From ₱2,000/night</p>
-                        <div class="hotel-features">
-                            <span>Pool</span>
-                            <span>WiFi</span>
-                            <span>Restaurant</span>
+                {% if featured_hotels.exists %}
+                    {% for hotel in featured_hotels %}
+                    <div class="hotel-card">
+                        <img src="{{ hotel.image_url }}" alt="{{ hotel.name }}" class="hotel-image">
+                        <div class="hotel-content">
+                            <h3>{{ hotel.name }}</h3>
+                            <div class="hotel-rating">
+                                <span class="stars">★★★★☆</span>
+                                <span class="rating">{{ hotel.rating|default:"4.5" }}</span>
+                            </div>
+                            <p class="hotel-price">From ₱{{ hotel.lowest_price|default:"2,000" }}/night</p>
+                            <div class="hotel-features">
+                                {% for feature in hotel.features|slice:":3" %}
+                                <span>{{ feature }}</span>
+                                {% empty %}
+                                <span>No special features available</span>
+                                {% endfor %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                {% endfor %}
+                    {% endfor %}
+                {% else %}
+                    <p>No featured hotels available at the moment.</p>
+                {% endif %}
             </div>
         </div>
     </div>
 </div>
 {% endblock %}
-
-
-
 
 <style>
 /* Root Variables */
@@ -334,5 +337,5 @@ button:focus {
     break-inside: avoid;
   }
 }
-
 </style>
+

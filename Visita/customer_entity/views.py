@@ -1,11 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-
+from .models import Hotel
 from user_entity.backends import CustomerBackend
 from .forms import CustomerSignupForm, UpdateCustomerForm
 from .models import Customer
 from django.contrib.auth import get_backends
+
+def customer_landing_page(request):
+    hotels = Hotel.objects.all()  # Fetch all hotels
+    return render(request, 'customer_landing.html', {'hotels':hotels})
 
 def customer_signup_view(request):
     if request.method == 'POST':
@@ -39,14 +43,11 @@ def customer_login_view(request):
 
     return render(request, 'customer_entity/login.html')
 
-
-
 @login_required
 def customer_profile_view(request):
     # Ensure the user is treated as a Customer object
     customer = get_object_or_404(Customer, id=request.user.id)
     return render(request, 'customer_entity/profile.html', {'customer': customer})
-
 
 @login_required
 def update_customer_profile_view(request):
@@ -75,7 +76,6 @@ def update_customer_profile_view(request):
         form = UpdateCustomerForm(instance=customer)
     return render(request, 'customer_entity/edit_profile.html', {'form': form})
 
-
 @login_required
 def customer_delete_account_view(request):
     if request.method == 'POST':
@@ -84,7 +84,6 @@ def customer_delete_account_view(request):
         return redirect('customer_entity:signup')
     return render(request, 'customer_entity/delete_account.html')
 
-
 @login_required
 def customer_logout_view(request):
     logout(request)  # Log out the user
@@ -92,4 +91,5 @@ def customer_logout_view(request):
 
 @login_required
 def customer_landing_page(request):
-    return render(request, 'customer_entity/customer_landing.html')
+    hotels = Hotel.objects.all() #Fetch all hotels
+    return render(request, 'customer_entity/customer_landing.html', {'hotels':hotels})
