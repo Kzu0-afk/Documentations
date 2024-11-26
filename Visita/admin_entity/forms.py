@@ -1,36 +1,36 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
+from django.contrib.auth.forms import UserCreationForm
 from .models import AdminEntity
 
 class AdminSignupForm(UserCreationForm):
-    class Meta:
-        model = AdminEntity
-        fields = ['username', 'email', 'departmentRole', 'password1', 'password2']
+    contactNumber = forms.CharField(
+        max_length=15,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter contact number'}),
+        help_text="Enter a valid contact number."
+    )
 
-class UpdateAdminForm(forms.ModelForm):
-    password = forms.CharField(
-        required=False,
-        widget=forms.PasswordInput(attrs={'placeholder': 'Leave blank to keep unchanged'}),
-        help_text="Leave blank if you don't want to change the password.",
+    departmentRole = forms.CharField(
+        max_length=100,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter department role'}),
+        help_text="Enter the role in the department."
     )
 
     class Meta:
         model = AdminEntity
-        fields = ['username', 'email', 'contactNumber', 'departmentRole', 'password']
+        #i think the error is password1 and password 2
+        fields = ['username', 'email', 'contactNumber', 'departmentRole', 'password1', 'password2']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Pre-fill the password field with the existing hashed password (not visible to the user).
-        if self.instance and self.instance.pk:
-            self.fields['password'].initial = self.instance.password
 
-    def save(self, commit=True):
-        user = super().save(commit=False)
-        if not self.cleaned_data['password']:
-            # If the password field is left blank, retain the existing password.
-            user.password = self.instance.password
-        elif commit:
-            user.set_password(self.cleaned_data['password'])  # Hash the new password.
-        if commit:
-            user.save()
-        return user
+class UpdateAdminForm(forms.ModelForm):
+    contactNumber = forms.CharField(
+        max_length=15,
+        required=True,
+        widget=forms.TextInput(attrs={'placeholder': 'Enter contact number'}),
+        help_text="Enter a valid contact number."
+    )
+
+    class Meta:
+        model = AdminEntity
+        fields = ['username', 'email', 'contactNumber', 'departmentRole']

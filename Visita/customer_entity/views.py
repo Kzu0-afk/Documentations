@@ -16,7 +16,6 @@ def customer_signup_view(request):
         form = CustomerSignupForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Log the user in after signup
             return redirect('customer_entity:login')  # Redirect to profile
     else:
         form = CustomerSignupForm()
@@ -57,21 +56,17 @@ def update_customer_profile_view(request):
         if form.is_valid():
             user = form.save(commit=False)
 
-            # Update password only if provided
-            if form.cleaned_data['password']:
-                user.set_password(form.cleaned_data['password'])
+            # Validate using the backend
+            backend = CustomerBackend()
+            authenticated_user = backend.get_user(user.id)
 
-            user.save()
-
-            # Explicitly set the backend for the customer
-            backends = get_backends()
-            for backend in backends:
-                if isinstance(backend, CustomerBackend):
-                    user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
-                    break
-
-            login(request, user)  # Re-log the user after password change
-            return redirect('customer_entity:profile')
+            if authenticated_user:
+                # Save the user only if authenticated
+                user.save()
+                return redirect('customer_entity:profile')
+            else:
+                # Handle invalid backend authentication
+                form.add_error(None, "Authentication failed during profile update.")
     else:
         form = UpdateCustomerForm(instance=customer)
     return render(request, 'customer_entity/edit_profile.html', {'form': form})

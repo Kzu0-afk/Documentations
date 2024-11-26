@@ -64,21 +64,17 @@ def update_admin_profile_view(request):
         if form.is_valid():
             user = form.save(commit=False)
 
-            # Update password only if provided
-            if form.cleaned_data['password']:
-                user.set_password(form.cleaned_data['password'])
+            # Validate using the backend
+            backend = AdminBackend()
+            authenticated_user = backend.get_user(user.id)
 
-            user.save()
-
-            # Explicitly set the backend for the admin
-            backends = get_backends()
-            for backend in backends:
-                if isinstance(backend, AdminBackend):
-                    user.backend = f"{backend.__module__}.{backend.__class__.__name__}"
-                    break
-
-            login(request, user)  # Re-log the user after password change
-            return redirect('admin_entity:profile')
+            if authenticated_user:
+                # Save the user only if authenticated
+                user.save()
+                return redirect('admin_entity:profile')
+            else:
+                # Handle invalid backend authentication
+                form.add_error(None, "Authentication failed during profile update.")
     else:
         form = UpdateAdminForm(instance=admin)
     return render(request, 'admin_entity/edit_profile.html', {'form': form})
