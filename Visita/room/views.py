@@ -1,13 +1,18 @@
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.decorators import method_decorator
 from django.views import View
 from .models import Room
-from .forms import RoomForm  # Make sure to create RoomForm in forms.py
+from .forms import RoomForm
+from user_entity.utils import admin_required  # Import admin_required
 
-class RoomListView(View):
+class PublicRoomListView(View):
     def get(self, request):
-        rooms = Room.objects.all()
+        rooms = Room.objects.all()  # Fetch all rooms
         return render(request, 'room/room_list.html', {'rooms': rooms})
 
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(admin_required, login_url='/admin_entity/login/'), name='dispatch')
 class RoomCreateView(View):
     def get(self, request):
         form = RoomForm()
@@ -20,6 +25,9 @@ class RoomCreateView(View):
             return redirect('room:room_list')
         return render(request, 'room/room_form.html', {'form': form})
 
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(admin_required, login_url='/admin_entity/login/'), name='dispatch')
 class RoomUpdateView(View):
     def get(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
@@ -34,8 +42,12 @@ class RoomUpdateView(View):
             return redirect('room:room_list')
         return render(request, 'room/room_form.html', {'form': form})
 
+
+@method_decorator(login_required, name='dispatch')
+@method_decorator(user_passes_test(admin_required, login_url='/admin_entity/login/'), name='dispatch')
 class RoomDeleteView(View):
     def get(self, request, pk):
         room = get_object_or_404(Room, pk=pk)
         room.delete()
         return redirect('room:room_list')
+
