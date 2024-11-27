@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import BookingForm
 from .models import Booking
+from django.urls import reverse
 
 def booking_list(request):
     bookings = Booking.objects.all()
@@ -11,10 +12,9 @@ def booking_create(request):
         form = BookingForm(request.POST)
         if form.is_valid():
             booking = form.save()
-            return redirect('booking:booking_list')
+            return redirect(reverse('payment:payment_create', kwargs={'booking_id': booking.id}))
     else:
         form = BookingForm()
-        return redirect('booking:booking_form')
     return render(request, 'booking/booking_form.html', {'form': form})
 
 def booking_delete(request, pk):
@@ -26,3 +26,4 @@ def booking_delete(request, pk):
 
 def booking_home(request):
     return render(request, 'booking/booking_home.html')
+
