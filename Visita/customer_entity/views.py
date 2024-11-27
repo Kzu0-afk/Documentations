@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .models import Hotel
+from hotel.models import Hotel
 from user_entity.backends import CustomerBackend
 from .forms import CustomerSignupForm, UpdateCustomerForm
 from .models import Customer
@@ -84,7 +84,3 @@ def customer_logout_view(request):
     logout(request)  # Log out the user
     return redirect('customer_entity:login')  # Redirect to the customer login page
 
-@login_required
-def customer_landing_page(request):
-    hotels = Hotel.objects.all() #Fetch all hotels
-    return render(request, 'customer_entity/customer_landing.html', {'hotels':hotels})
