@@ -8,6 +8,11 @@ from .forms import HotelForm  # Ensure this form is created in forms.py
 def landing_page(request):
     return render(request, 'hotel/landing_page.html')
 
+# New function to render the hotel homepage
+def hotel_homepage(request):
+    hotels = Hotel.objects.all()
+    return render(request, 'hotel/hotel_homepage.html', {'hotels': hotels})
+
 # Functional view for hotel list
 def hotel_list(request):
     hotels = Hotel.objects.all()
