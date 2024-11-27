@@ -30,9 +30,12 @@ class HotelCreateView(View):
     def post(self, request):
         form = HotelForm(request.POST)
         if form.is_valid():
-            form.save()
+            hotel = form.save(commit=False)  # Don't save to the database yet
+            hotel.admin = request.user  # Assign the currently logged-in admin entity
+            hotel.save()  # Save to the database
             return redirect('hotel:hotel_list')
         return render(request, 'hotel/hotel_form.html', {'form': form})
+
 
 
 @method_decorator(login_required, name='dispatch')
@@ -47,9 +50,10 @@ class HotelUpdateView(View):
         hotel = get_object_or_404(Hotel, pk=pk)
         form = HotelForm(request.POST, instance=hotel)
         if form.is_valid():
-            form.save()
+            form.save()  # No need to modify the `admin` field here
             return redirect('hotel:hotel_list')
         return render(request, 'hotel/hotel_form.html', {'form': form})
+
 
 
 @method_decorator(login_required, name='dispatch')

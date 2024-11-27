@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
-from .models import Hotel
+from hotel.models import Hotel
 from user_entity.backends import CustomerBackend
 from .forms import CustomerSignupForm, UpdateCustomerForm
 from .models import Customer
