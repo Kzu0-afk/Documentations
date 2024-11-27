@@ -299,7 +299,6 @@
             }
         }
     </style>
-</head>
 <body>
     {% include 'header.html' %}
     {% include 'sidebar.html' %}
@@ -311,7 +310,7 @@
                         <div class="image-placeholder"></div>
                     </div>
                     <div class="room-details">
-                        <h2 class="hotel-name">VisitaCebu</h2>
+                        <h2 class="hotel-name">{{ room.hotel.hotelName }}</h2>
                         <div class="room-type">{{ room.roomType }}</div>
                         <div class="rating">
                             <div class="stars">★★★★☆</div>
@@ -339,4 +338,7 @@
         </div>
 
         <div class="create-button-container">
-            <a href="{% url 'room:room_create' %}" class="create-button">Create New Room
+            <a href="{% url 'room:room_create' %}" class="create-button">Create New Room</a>
+        </div>
+    </div>
+</body>
