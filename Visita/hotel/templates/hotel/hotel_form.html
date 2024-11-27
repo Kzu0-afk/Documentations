@@ -6,7 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% if form.instance.pk %}Edit Hotel{% else %}VisitaCebu - Add a Hotel{% endif %}</title>
-    <style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>{% if form.instance.pk %}Edit Hotel{% else %}ADD HOTEL{% endif %}</h1>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div class="form-actions">
+                <button type="submit">Save</button>
+                <a href="{% url 'hotel:hotel_list' %}">Back to Hotel List</a>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
+
+<style>
         /* Base styling */
         body {
             font-family: Arial, sans-serif;
@@ -113,20 +131,3 @@
             }
         }
     </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>{% if form.instance.pk %}Edit Hotel{% else %}ADD HOTEL{% endif %}</h1>
-        </div>
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <div class="form-actions">
-                <button type="submit">Save</button>
-                <a href="{% url 'hotel:hotel_list' %}">Back to Hotel List</a>
-            </div>
-        </form>
-    </div>
-</body>
-</html>
