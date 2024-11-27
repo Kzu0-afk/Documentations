@@ -7,12 +7,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VisitaCebu - Our Hotels</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --primary-color: #ff9800;
             --primary-hover: #f57c00;
             --text-color: #333;
+            --text-secondary: #666;
             --background-color: #f8f9fa;
+            --card-background: #ffffff;
             --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             --border-radius: 12px;
             --transition: all 0.3s ease;
@@ -42,6 +45,7 @@
             color: var(--primary-color);
             margin-bottom: 2rem;
             font-size: 2.5rem;
+            font-weight: 700;
         }
 
         .hotel-grid {
@@ -51,11 +55,13 @@
         }
 
         .hotel-card {
-            background: white;
+            background: var(--card-background);
             border-radius: var(--border-radius);
             box-shadow: var(--card-shadow);
             overflow: hidden;
             transition: var(--transition);
+            display: flex;
+            flex-direction: column;
         }
 
         .hotel-card:hover {
@@ -72,6 +78,9 @@
 
         .hotel-content {
             padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .hotel-name {
@@ -81,10 +90,22 @@
             margin-bottom: 0.5rem;
         }
 
-        .hotel-location {
-            color: #666;
+        .hotel-description {
+            color: var(--text-secondary);
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            flex-grow: 1;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #ffc107;
+            font-size: 1.2rem;
         }
 
         .view-details {
@@ -95,6 +116,7 @@
             text-decoration: none;
             border-radius: var(--border-radius);
             transition: var(--transition);
+            text-align: center;
         }
 
         .view-details:hover {
@@ -112,13 +134,23 @@
     {% include 'header.html' %}
     {% include 'sidebar.html' %}
     <div class="container">
-        <h1>Welcome to Our Hotels</h1>
+        <h1>Available Hotels</h1>
         <div class="hotel-grid">
             {% for hotel in hotels %}
                 <div class="hotel-card">
                     <div class="image-placeholder"></div>
                     <div class="hotel-content">
                         <h2 class="hotel-name">{{ hotel.hotelName|default:"Hotel Name Not Available" }}</h2>
+                        <p class="hotel-description">{{ hotel.hotelDescription|default:"Description not available"|truncatewords:20 }}</p>
+                        <div class="hotel-rating">
+                            {% for i in "12345"|make_list %}
+                                {% if forloop.counter <= hotel.hotelRating %}
+                                    <i class="fas fa-star star"></i>
+                                {% else %}
+                                    <i class="far fa-star star"></i>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                      
                     </div>
                 </div>
@@ -127,8 +159,6 @@
             {% endfor %}
         </div>
     </div>
-
- 
 </body>
 </html>
 
