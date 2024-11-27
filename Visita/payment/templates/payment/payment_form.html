@@ -1,363 +1,99 @@
-{% include 'header.html' %}
-{% include 'sidebar.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ form.instance.pk|yesno:"Edit Payment,New Payment" }} | VisitaCebu</title>
-</head>
-<body>
-    <div class="container">
-        <div class="form-header">
-            <h1>{{ form.instance.pk|yesno:"Edit Payment,New Payment" }}</h1>
-            <p class="form-description">Please fill in the payment details below</p>
-        </div>
-
-        <form method="post" class="payment-form" id="paymentForm">
-            {% csrf_token %}
-            
-            <div class="form-group">
-                <label for="id_payment_method" class="form-label">
-                    Choose Payment Method
-                    <span class="required">*</span>
-                </label>
-                <select name="payment_method" id="id_payment_method" class="form-input" required>
-                    <option value="">Select a payment method</option>
-                    <option value="credit_card">Credit Card</option>
-                    <option value="debit_card">Debit Card</option>
-                    <option value="bank_transfer">Bank Transfer</option>
-                    <option value="gcash">GCash</option>
-                    <option value="maya">Maya</option>
-                </select>
-                <span class="form-hint">Select your preferred payment method</span>
-            </div>
-
-            <div class="form-group">
-                <label for="id_payment_amount" class="form-label">
-                    Payment Amount (PHP)
-                    <span class="required">*</span>
-                </label>
-                <div class="input-group">
-                    <span class="input-prefix">₱</span>
-                    <input 
-                        type="number" 
-                        name="payment_amount" 
-                        id="id_payment_amount" 
-                        class="form-input" 
-                        step="0.01" 
-                        min="0" 
-                        required
-                        placeholder="0.00"
-                    >
-                </div>
-                <span class="form-hint">Enter the amount to be paid</span>
-            </div>
-
-            <div class="form-group">
-                <label for="id_payment_date" class="form-label">
-                    Payment Date
-                    <span class="required">*</span>
-                </label>
-                <input 
-                    type="date" 
-                    name="payment_date" 
-                    id="id_payment_date" 
-                    class="form-input"
-                    required
-                >
-                <span class="form-hint">Select the date of payment</span>
-            </div>
-
-            <div class="form-group">
-                <label for="id_payment_status" class="form-label">
-                    Payment Status
-                    <span class="required">*</span>
-                </label>
-                <select name="payment_status" id="id_payment_status" class="form-input" required>
-                    <option value="">Select payment status</option>
-                    <option value="pending">Pending</option>
-                    <option value="processing">Processing</option>
-                    <option value="completed">Completed</option>
-                    <option value="failed">Failed</option>
-                </select>
-                <span class="form-hint">Current status of the payment</span>
-            </div>
-
-            <div class="form-actions">
-                <button type="submit" class="submit-button" id="submitButton">
-                    <span class="button-text">
-                        {% if form.instance.pk %}
-                            Update Payment
-                        {% else %}
-                            Create Payment
-                        {% endif %}
-                    </span>
-                    <span class="loading-spinner"></span>
-                </button>
-                <a href="{% url 'payment:payment_list' %}" class="back-link">
-                    Back to Payment List
-                </a>
-            </div>
-        </form>
-    </div>
-
+    <title>Payment Form</title>
     <style>
-        /* Reset and Base Styles */
-        * {
-            margin: 0;
-            padding: 0;
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-            color: #1a1a1a;
-            line-height: 1.5;
-        }
-
-        /* Container Styles */
-        .container {
-            max-width: 600px;
-            margin: 40px auto;
-            padding: 32px;
-            background: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        }
-
-        /* Form Header */
-        .form-header {
-            margin-bottom: 32px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #1a1a1a;
-            font-size: 28px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .form-description {
-            color: #666666;
-            font-size: 16px;
-        }
-
-        /* Form Styles */
-        .payment-form {
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-label {
-            font-weight: 500;
-            color: #1a1a1a;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .required {
-            color: #ff5757;
-        }
-
-        .form-input {
-            padding: 12px 16px;
-            border: 2px solid #e4e9f2;
-            border-radius: 8px;
-            font-size: 15px;
-            transition: all 0.2s ease;
-            width: 100%;
-            background: #ffffff;
-        }
-
-        .form-input:hover {
-            border-color: #ff9800;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #ff9800;
-            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.1);
-        }
-
-        .input-group {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .input-prefix {
-            position: absolute;
-            left: 16px;
-            color: #666666;
-            font-weight: 500;
-        }
-
-        .input-group .form-input {
-            padding-left: 32px;
-        }
-
-        .form-hint {
-            font-size: 13px;
-            color: #666666;
-        }
-
-        /* Button Styles */
-        .form-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-top: 8px;
-        }
-
-        .submit-button {
-            position: relative;
-            padding: 14px 24px;
-            background-color: #ff9800;
+        input[type="submit"] {
+            background-color: #3498db;
             color: white;
+            padding: 10px 15px;
             border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
+            border-radius: 4px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            font-size: 16px;
+            width: 100%;
         }
-
-        .submit-button:hover {
-            background-color: #f57c00;
-            transform: translateY(-1px);
+        input[type="submit"]:hover {
+            background-color: #2980b9;
         }
-
-        .submit-button:active {
-            transform: translateY(0);
-        }
-
-        .submit-button:disabled {
-            background-color: #cccccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .loading-spinner {
-            display: none;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #ffffff;
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .back-link {
-            text-align: center;
-            text-decoration: none;
-            color: #666666;
-            font-weight: 500;
-            font-size: 15px;
-            padding: 8px;
-            transition: color 0.2s ease;
-        }
-
-        .back-link:hover {
-            color: #ff9800;
-        }
-
-        /* Validation States */
-        .form-input:invalid:not(:placeholder-shown) {
-            border-color: #ff5757;
-        }
-
-        .form-input:valid:not(:placeholder-shown) {
-            border-color: #4caf50;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 640px) {
-            .container {
-                padding: 24px;
-                margin: 20px auto;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-
-            .form-input {
-                padding: 10px 14px;
-            }
-
-            .submit-button {
-                padding: 12px 20px;
-            }
+        .error {
+            color: #e74c3c;
+            margin-top: -15px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
     </style>
-
+</head>
+<body>
+    <h1>Payment Form</h1>
+    <form action="/submit-payment" method="post">
+        <div>
+            <label for="paymentMethod">Payment Method:</label>
+            <select id="paymentMethod" name="paymentMethod" required>
+                <option value="">Select a payment method</option>
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="bank_transfer">Bank Transfer</option>
+            </select>
+        </div>
+        <div>
+            <label for="paymentAmount">Payment Amount ($):</label>
+            <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0" required>
+        </div>
+        <div>
+            <input type="submit" value="Submit Payment">
+        </div>
+    </form>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('paymentForm');
-            const submitButton = document.getElementById('submitButton');
-            const buttonText = submitButton.querySelector('.button-text');
-            const loadingSpinner = submitButton.querySelector('.loading-spinner');
-
-            form.addEventListener('submit', function(e) {
-                // Disable button and show loading state
-                submitButton.disabled = true;
-                buttonText.style.opacity = '0.7';
-                loadingSpinner.style.display = 'block';
-
-                // Optional: Add form validation here
-            });
-
-            // Add input validation and formatting
-            const amountInput = document.getElementById('id_payment_amount');
-            amountInput.addEventListener('input', function(e) {
-                // Ensure only numbers and decimals
-                this.value = this.value.replace(/[^\d.]/g, '');
-                
-                // Ensure only one decimal point
-                const decimalCount = this.value.split('.').length - 1;
-                if (decimalCount > 1) {
-                    this.value = this.value.replace(/\.+$/, '');
-                }
-                
-                // Limit to 2 decimal places
-                if (this.value.includes('.')) {
-                    const parts = this.value.split('.');
-                    if (parts[1].length > 2) {
-                        this.value = parseFloat(this.value).toFixed(2);
-                    }
-                }
-            });
-
-            // Set min date to today for payment date
-            const dateInput = document.getElementById('id_payment_date');
-            const today = new Date().toISOString().split('T')[0];
-            dateInput.min = today;
+        document.querySelector('form').addEventListener('submit', function(e) {
+            let amount = document.getElementById('paymentAmount').value;
+            let method = document.getElementById('paymentMethod').value;
+            if (!method) {
+                e.preventDefault();
+                alert('Please select a payment method.');
+            }
+            if (amount <= 0) {
+                e.preventDefault();
+                alert('Please enter a valid payment amount.');
+            }
         });
     </script>
 </body>
 </html>
+

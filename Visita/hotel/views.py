@@ -10,7 +10,12 @@ from user_entity.utils import admin_required  # Import admin_required
 def landing_page(request):
     return render(request, 'hotel/landing_page.html')
 
-# Hotel list (accessible by all)
+# New function to render the hotel homepage
+def hotel_homepage(request):
+    hotels = Hotel.objects.all()
+    return render(request, 'hotel/hotel_homepage.html', {'hotels': hotels})
+
+# Functional view for hotel list
 def hotel_list(request):
     hotels = Hotel.objects.all()
     return render(request, 'hotel/hotel_list.html', {'hotels': hotels})

@@ -9,7 +9,7 @@ from django.contrib.auth import get_backends
 
 def customer_landing_page(request):
     hotels = Hotel.objects.all()  # Fetch all hotels
-    return render(request, 'customer_landing.html', {'hotels':hotels})
+    return render(request, 'customer_entity/customer_landing.html', {'hotels':hotels})
 
 def customer_signup_view(request):
     if request.method == 'POST':

@@ -1,0 +1,134 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisitaCebu - Our Hotels</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #f57c00;
+            --text-color: #333;
+            --background-color: #f8f9fa;
+            --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+        }
+
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .hotel-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f0f0f0 25%, #e6e6e6 25%, #e6e6e6 50%, #f0f0f0 50%, #f0f0f0 75%, #e6e6e6 75%, #e6e6e6 100%);
+            background-size: 20px 20px;
+        }
+
+        .hotel-content {
+            padding: 1.5rem;
+        }
+
+        .hotel-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .hotel-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .view-details {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .view-details:hover {
+            background-color: var(--primary-hover);
+        }
+
+        @media (max-width: 768px) {
+            .hotel-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <div class="container">
+        <h1>Welcome to Our Hotels</h1>
+        <div class="hotel-grid">
+            {% for hotel in hotels %}
+                <div class="hotel-card">
+                    <div class="image-placeholder"></div>
+                    <div class="hotel-content">
+                        <h2 class="hotel-name">{{ hotel.hotelName|default:"Hotel Name Not Available" }}</h2>
+                     
+                    </div>
+                </div>
+            {% empty %}
+                <p>No hotels are currently available.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+ 
+</body>
+</html>
+

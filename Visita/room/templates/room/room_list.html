@@ -1,3 +1,4 @@
+
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -68,7 +69,7 @@
             --delete-hover: #c82333;
         }
 
-        * {
+        * { 
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -300,9 +301,8 @@
     </style>
 </head>
 <body>
-   {% include 'header.html' %}
-   {% include 'sidebar.html' %}    
-
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
     <div class="container">
         <div class="room-grid">
             {% for room in rooms %}
@@ -325,8 +325,8 @@
                         </div>
                         <div class="card-actions">
                             <a href="{% url 'room:room_update' room.pk %}" class="action-button edit-button">Edit</a>
-                            <a href="{% url 'room:room_delete' room.pk %}" 
-                               class="action-button delete-button" 
+                            <a href="{% url 'room:room_delete' room.pk %}"
+                               class="action-button delete-button"
                                onclick="return confirm('Are you sure you want to delete this room?');">
                                 Delete
                             </a>
@@ -339,4 +339,4 @@
         </div>
 
         <div class="create-button-container">
-            <a href="{% url 'room:room_create' %}" class="create-button">Create New Room 
+            <a href="{% url 'room:room_create' %}" class="create-button">Create New Room
