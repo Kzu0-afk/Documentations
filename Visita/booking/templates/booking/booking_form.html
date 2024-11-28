@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Booking - VisitaCebu</title>
@@ -34,16 +36,17 @@
             background-color: var(--background-color);
             color: var(--text-color);
             line-height: 1.5;
-            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 1rem;
         }
 
         .container {
+            width: 100%;
             max-width: 640px;
-            margin: 4rem auto 2rem auto; /* Increased top margin to 4rem (64px) */
-            padding: 0 1rem;
-            min-height: calc(100vh - 180px); /* Account for header height */
-            display: flex;
-            flex-direction: column;
         }
 
         .card {
@@ -51,26 +54,15 @@
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
             padding: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .page-header {
-            margin-bottom: 2rem;
-            padding-top: 1rem;
+            width: 100%;
         }
 
         .page-title {
             color: var(--primary-color);
             font-size: 1.875rem;
             font-weight: 700;
-            margin-bottom: 0.5rem;
             text-align: center;
-        }
-
-        .page-subtitle {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
         .form-group {
@@ -80,10 +72,10 @@
 
         .form-label {
             display: block;
-            color: var(--text-color);
+            margin-bottom: 0.5rem;
             font-size: 0.875rem;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            color: var(--text-color);
         }
 
         .form-control {
@@ -91,16 +83,11 @@
             padding: 0.625rem 1rem 0.625rem 2.5rem;
             border: 1px solid var(--border-color);
             border-radius: var(--border-radius);
-            font-size: 0.875rem;
-            color: var(--text-color);
             background-color: var(--card-background);
-            transition: var(--transition);
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(255, 127, 39, 0.1);
+            font-size: 0.875rem;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
         }
 
         .form-icon {
@@ -108,79 +95,33 @@
             left: 0.75rem;
             top: 2.25rem;
             color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        select.form-control {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 0.75rem center;
-            background-size: 1rem;
-            padding-right: 2.5rem;
-        }
-
-        .error-message {
-            color: var(--error-color);
-            font-size: 0.75rem;
-            margin-top: 0.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-align: center;
-            text-decoration: none;
-            border-radius: var(--border-radius);
-            border: none;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
+            pointer-events: none;
         }
 
         .btn-primary {
             background-color: var(--primary-color);
             color: white;
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+            transition: background-color var(--transition);
         }
 
         .btn-primary:hover {
             background-color: var(--primary-hover);
-            transform: translateY(-1px);
-        }
-
-        @media (max-width: 640px) {
-            .container {
-                padding: 0 1rem;
-            }
-
-            .card {
-                padding: 1.5rem;
-            }
-
-            .page-title {
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
 <body>
-    {% include 'header.html' %}
-    {% include 'sidebar.html' %}
     <div class="container">
-        <div class="page-header">
-            <h1 class="page-title">Create Your Booking</h1>
-            <p class="page-subtitle">Fill in the details below to make your reservation</p>
-        </div>
-
         <div class="card">
+            <h1 class="page-title">Create Your Booking</h1>
             <form method="post" id="booking-form">
                 {% csrf_token %}
-
                 <div class="form-group">
                     <label class="form-label" for="hotel-select">Select Hotel</label>
                     <i class="fas fa-hotel form-icon"></i>
@@ -190,7 +131,6 @@
                             <option value="{{ hotel.hotelID }}">{{ hotel.hotelName }}</option>
                         {% endfor %}
                     </select>
-                    <div class="error-message" id="hotel-error"></div>
                 </div>
 
                 <div class="form-group">
@@ -199,134 +139,115 @@
                     <select class="form-control" id="room-select" name="room" required>
                         <option value="" disabled selected>Choose a room</option>
                     </select>
-                    <div class="error-message" id="room-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="number_of_guests">Number of Guests</label>
                     <i class="fas fa-users form-icon"></i>
                     <input type="number" class="form-control" id="number_of_guests" name="number_of_guests" min="1" required>
-                    <div class="error-message" id="guests-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="check_in_date">Check-In Date</label>
                     <i class="fas fa-calendar-alt form-icon"></i>
                     <input type="date" class="form-control" id="check_in_date" name="check_in_date" required>
-                    <div class="error-message" id="checkin-error"></div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label" for="check_out_date">Check-Out Date</label>
                     <i class="fas fa-calendar-alt form-icon"></i>
                     <input type="date" class="form-control" id="check_out_date" name="check_out_date" required>
-                    <div class="error-message" id="checkout-error"></div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
-                    <i class="fas fa-check mr-2"></i> Confirm Booking
-                </button>
+                <button type="submit" class="btn-primary">Confirm Booking</button>
             </form>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('booking-form');
-            const hotelSelect = document.getElementById('hotel-select');
-            const roomSelect = document.getElementById('room-select');
-            const checkInDate = document.getElementById('check_in_date');
-            const checkOutDate = document.getElementById('check_out_date');
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('booking-form');
+        const hotelSelect = document.getElementById('hotel-select');
+        const roomSelect = document.getElementById('room-select');
+        const checkInDate = document.getElementById('check_in_date');
+        const checkOutDate = document.getElementById('check_out_date');
+        const numberOfGuestsInput = document.getElementById("number_of_guests");
 
-            hotelSelect.addEventListener('change', function() {
-                const hotelId = this.value;
-                fetch(`/room/hotel/${hotelId}/`)
-                    .then(response => response.json())
-                    .then(data => {
-                        roomSelect.innerHTML = '<option value="" disabled selected>Choose a room</option>';
-                        data.rooms.forEach(room => {
-                            const option = document.createElement('option');
-                            option.value = room.id;
-                            option.textContent = `${room.roomType} - Room ${room.roomNumber}`;
-                            roomSelect.appendChild(option);
-                        });
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        showError('room-error', 'Failed to load rooms. Please try again.');
+        hotelSelect.addEventListener('change', function() {
+            const hotelId = this.value;
+            fetch(`/room/hotel/${hotelId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    roomSelect.innerHTML = '<option value="" disabled selected>Choose a room</option>';
+                    data.rooms.forEach(room => {
+                        const option = document.createElement('option');
+                        option.value = room.id;
+                        option.textContent = `${room.roomType} - Room ${room.roomNumber}`;
+                        roomSelect.appendChild(option);
                     });
-            });
-
-            const today = new Date().toISOString().split('T')[0];
-            checkInDate.min = today;
-
-            checkInDate.addEventListener('change', function() {
-                const minCheckOut = new Date(this.value);
-                minCheckOut.setDate(minCheckOut.getDate() + 1);
-                checkOutDate.min = minCheckOut.toISOString().split('T')[0];
-                
-                if (checkOutDate.value && new Date(checkOutDate.value) <= new Date(this.value)) {
-                    checkOutDate.value = '';
-                }
-            });
-
-            function showError(elementId, message) {
-                const errorElement = document.getElementById(elementId);
-                errorElement.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${message}`;
-            }
-
-            function clearError(elementId) {
-                document.getElementById(elementId).innerHTML = '';
-            }
-
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                let isValid = true;
-
-                // Clear all previous errors
-                ['hotel', 'room', 'guests', 'checkin', 'checkout'].forEach(field => {
-                    clearError(`${field}-error`);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
                 });
-
-                // Validate hotel selection
-                if (!hotelSelect.value) {
-                    showError('hotel-error', 'Please select a hotel');
-                    isValid = false;
-                }
-
-                // Validate room selection
-                if (!roomSelect.value) {
-                    showError('room-error', 'Please select a room');
-                    isValid = false;
-                }
-
-                // Validate number of guests
-                const guests = document.getElementById('number_of_guests');
-                if (!guests.value || guests.value < 1) {
-                    showError('guests-error', 'Please enter a valid number of guests');
-                    isValid = false;
-                }
-
-                // Validate check-in date
-                if (!checkInDate.value) {
-                    showError('checkin-error', 'Please select a check-in date');
-                    isValid = false;
-                }
-
-                // Validate check-out date
-                if (!checkOutDate.value) {
-                    showError('checkout-error', 'Please select a check-out date');
-                    isValid = false;
-                } else if (new Date(checkOutDate.value) <= new Date(checkInDate.value)) {
-                    showError('checkout-error', 'Check-out date must be after check-in date');
-                    isValid = false;
-                }
-
-                if (isValid) {
-                    this.submit();
-                }
-            });
         });
+
+        const today = new Date().toISOString().split("T")[0];
+        checkInDate.min = today;
+
+        checkInDate.addEventListener("change", function () {
+            const minCheckOut = new Date(this.value);
+            minCheckOut.setDate(minCheckOut.getDate() + 1);
+            checkOutDate.min = minCheckOut.toISOString().split("T")[0];
+
+            if (checkOutDate.value && new Date(checkOutDate.value) <= new Date(this.value)) {
+                checkOutDate.value = '';
+            }
+        });
+
+        numberOfGuestsInput.addEventListener("input", function () {
+            if (this.value < 0) {
+                this.value = 0; // Automatically reset to 0 if negative value is entered
+            }
+        });
+
+        form.addEventListener('submit', function(e) {
+            let isValid = true;
+
+            // Validate hotel selection
+            if (!hotelSelect.value) {
+                isValid = false;
+                alert('Please select a hotel');
+            }
+
+            // Validate room selection
+            if (!roomSelect.value) {
+                isValid = false;
+                alert('Please select a room');
+            }
+
+            // Validate number of guests
+            if (numberOfGuestsInput.value < 1) {
+                isValid = false;
+                alert('Please enter a valid number of guests');
+            }
+
+            // Validate check-in date
+            if (!checkInDate.value) {
+                isValid = false;
+                alert('Please select a check-in date');
+            }
+
+            // Validate check-out date
+            if (!checkOutDate.value || new Date(checkOutDate.value) <= new Date(checkInDate.value)) {
+                isValid = false;
+                alert('Check-out date must be after check-in date');
+            }
+
+            if (!isValid) {
+                e.preventDefault();
+            }
+        });
+    });
     </script>
 </body>
 </html>

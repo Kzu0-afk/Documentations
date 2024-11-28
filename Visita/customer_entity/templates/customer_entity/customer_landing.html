@@ -39,46 +39,34 @@
         <div class="hotel-section">
             <h2>Featured Hotels</h2>
             <div class="hotel-grid">
-                {% for hotel in featured_hotels %}
-                <div class="hotel-card">
-                    <div class="hotel-image placeholder"></div>
-                    <div class="hotel-content">
-                        <h3>{{ hotel.name }}</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="rating">{{ hotel.rating|default:"4.5" }}</span>
+                {% for hotel in hotels %}
+                    <article class="hotel-card">
+                        <div class="hotel-image">
+                            {% if hotel.image %}
+                                <img src="{{ hotel.image.url }}" alt="{{ hotel.hotelName }}">
+                            {% else %}
+                                <img src="{% static 'images/hotel-placeholder.jpg' %}" alt="Hotel image">
+                            {% endif %}
                         </div>
-                        <p class="hotel-price">From ₱{{ hotel.lowest_price|default:"2,000" }}/night</p>
-                        <div class="hotel-features">
-                            {% for feature in hotel.features|slice:":3" %}
-                                <span>{{ feature }}</span>
-                            {% empty %}
-                                <span>Pool</span>
-                                <span>WiFi</span>
-                                <span>Restaurant</span>
-                            {% endfor %}
+                        <div class="hotel-content">
+                            <h3>{{ hotel.hotelName|default:"Hotel Name Not Available" }}</h3>
+                            <div class="hotel-rating">
+                                <span class="stars">
+                                    {% for _ in ''|center:5 %}
+                                        <i class="{% if forloop.counter <= hotel.hotelRating|default:4 %}fas{% else %}far{% endif %} fa-star"></i>
+                                    {% endfor %}
+                                </span>
+                                <span class="rating">{{ hotel.hotelRating|default:"4.0" }}</span>
+                            </div>
+                            <p>{{ hotel.hotelDescription|default:"No description available"|truncatewords:20 }}</p>
+                            <a href="{% url 'booking:booking_create' %}" class="view-details">Book Now</a>
                         </div>
-                    </div>
-                </div>
+                    </article>
                 {% empty %}
-                {% for i in '123'|make_list %}
-                <div class="hotel-card">
-                    <div class="hotel-image placeholder"></div>
-                    <div class="hotel-content">
-                        <h3>Sample Hotel {{ i }}</h3>
-                        <div class="hotel-rating">
-                            <span class="stars">★★★★☆</span>
-                            <span class="rating">4.5</span>
-                        </div>
-                        <p class="hotel-price">From ₱2,000/night</p>
-                        <div class="hotel-features">
-                            <span>Pool</span>
-                            <span>WiFi</span>
-                            <span>Restaurant</span>
-                        </div>
+                    <div class="empty-state">
+                        <i class="fas fa-hotel"></i>
+                        <p>No hotels are currently available.</p>
                     </div>
-                </div>
-                {% endfor %}
                 {% endfor %}
             </div>
         </div>

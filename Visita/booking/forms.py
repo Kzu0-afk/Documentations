@@ -10,3 +10,5 @@ class BookingForm(forms.ModelForm):
             'check_out_date': forms.DateInput(attrs={'type': 'date'}),
         }
 
+
+
