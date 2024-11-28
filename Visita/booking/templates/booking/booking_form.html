@@ -10,46 +10,69 @@
 <h2>Create Booking</h2>
 {% include 'header.html' %}
 <body>
-<form method="post">
-    {% csrf_token %}
-    <label>Customer:</label>
-    {{ form.customer }}
+    <form method="post" id="booking-form">
+        {% csrf_token %}
 
-    <label>Room:</label>
-    {{ form.room }}
+        <label for="hotel-select">Select Hotel:</label>
+        <select id="hotel-select" name="hotel" required>
+            <option value="" disabled selected>Select a hotel</option>
+            {% for hotel in hotels %}
+                <option value="{{ hotel.hotelID }}">{{ hotel.hotelName }}</option>
+            {% endfor %}
+        </select>
 
-    <label>Number of Guests:</label>
-    {{ form.number_of_guests }}
+        <label for="room-select">Select Room:</label>
+        <select id="room-select" name="room" required>
+            <option value="" disabled selected>Select a room</option>
+        </select>
 
-    <label for="check_in_date">Check-In Date:</label>
-    <input type="date"
-           id="check_in_date"
-           name="check_in_date"
-           value="{{ form.check_in_date.value }}"
-           min="{{ today }}" required>
+        <label for="number_of_guests">Number of Guests:</label>
+        {{ form.number_of_guests }}
 
-    <label for="check_out_date">Check-Out Date:</label>
-    <input type="date"
-           id="check_out_date"
-           name="check_out_date"
-           value="{{ form.check_out_date.value }}"
-           min="{{ today }}" required>
+        <label for="check_in_date">Check-In Date:</label>
+        {{ form.check_in_date }}
 
-    <button type="submit" class="btn btn-success">Submit</button>
-    <a href="{% url 'booking:booking_list' %}" class="btn btn-secondary">Back to List</a>
-</form>
-<script>
-    const today = new Date().toISOString().split('T')[0];
-    const checkInDateField = document.getElementById('check_in_date');
-    const checkOutDateField = document.getElementById('check_out_date');
+        <label for="check_out_date">Check-Out Date:</label>
+        {{ form.check_out_date }}
 
-    checkInDateField.setAttribute("min", today);
-    checkOutDateField.setAttribute("min", today);
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
 
-    checkInDateField.addEventListener('change', function () {
-        const checkInDate = checkInDateField.value;
-        checkOutDateField.setAttribute("min", checkInDate);
-    });
-</script>
+    <script>
+        document.getElementById('hotel-select').addEventListener('change', function () {
+    const hotelId = this.value; // Get selected hotel ID
+
+    if (!hotelId) {
+        console.error('No hotel selected!');
+        return; // Exit if no hotel is selected
+    }
+
+    fetch(`/room/hotel/${hotelId}/`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const roomSelect = document.getElementById('room-select');
+            roomSelect.innerHTML = '<option value="" disabled selected>Select a room</option>'; // Reset options
+
+            if (data.rooms.length === 0) {
+                console.warn('No rooms available for this hotel.');
+            }
+
+            data.rooms.forEach(room => {
+                const option = document.createElement('option');
+                option.value = room.id;
+                option.textContent = `Room ${room.roomNumber} - ${room.roomType}`;
+                roomSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching rooms:', error);
+        });
+});
+    </script>
 </body>
 </html>

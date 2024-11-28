@@ -8,5 +8,5 @@ urlpatterns = [
     path('new/', views.RoomCreateView.as_view(), name='room_create'),
     path('<int:pk>/edit/', views.RoomUpdateView.as_view(), name='room_update'),
     path('<int:pk>/delete/', views.RoomDeleteView.as_view(), name='room_delete'),
-     path('hotel/<int:hotel_id>/', views.rooms_for_hotel, name='rooms_for_hotel'),  # Add this route
+    path('hotel/<int:hotel_id>/', views.rooms_for_hotel, name='rooms_for_hotel'),
 ]

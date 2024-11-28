@@ -12,8 +12,12 @@ class PaymentListView(View):
 class PaymentCreateView(View):
     def get(self, request, booking_id):
         booking = get_object_or_404(Booking, id=booking_id)
+        # Calculate payment amount based on room price and duration
+        stay_duration = (booking.check_out_date - booking.check_in_date).days
+        payment_amount = booking.room.roomPrice * stay_duration
+
         initial_data = {
-            'paymentAmount': booking.room.price * (booking.check_out_date - booking.check_in_date).days,
+            'paymentAmount': payment_amount,
             'booking': booking,
         }
         form = PaymentForm(initial=initial_data)
@@ -30,6 +34,8 @@ class PaymentCreateView(View):
             booking.save()
             return redirect('payment:payment_list')
         return render(request, 'payment/payment_form.html', {'form': form, 'booking': booking})
+
+
 
 class PaymentUpdateView(View):
     def get(self, request, pk):

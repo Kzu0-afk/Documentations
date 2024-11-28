@@ -8,5 +8,5 @@ urlpatterns = [
     path('list/', views.booking_list, name='booking_list'),
     path('create/', views.booking_create, name='booking_create'),
     path('delete/<int:pk>/', views.booking_delete, name='booking_delete'),
-    path('form/', views.booking_create, name='booking_form')
+    path('rooms/<int:hotel_id>/', views.rooms_for_hotel, name='rooms_for_hotel'),  # Add this route
 ]

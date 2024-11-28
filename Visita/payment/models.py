@@ -4,8 +4,8 @@ from booking.models import Booking
 class Payment(models.Model):
     id = models.AutoField(primary_key=True)  # Explicitly define id field
     booking = models.OneToOneField(
-        Booking, 
-        on_delete=models.CASCADE, 
+        Booking,
+        on_delete=models.CASCADE,
         related_name='payment',
         null=True,
         blank=True

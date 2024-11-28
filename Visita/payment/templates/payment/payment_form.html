@@ -61,7 +61,8 @@
 </head>
 <body>
     <h1>Payment Form</h1>
-    <form action="/submit-payment" method="post">
+    <form action="{% url 'payment:payment_create' booking.id %}" method="post">
+        {% csrf_token %}
         <div>
             <label for="paymentMethod">Payment Method:</label>
             <select id="paymentMethod" name="paymentMethod" required>

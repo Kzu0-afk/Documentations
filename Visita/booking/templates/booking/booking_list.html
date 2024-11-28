@@ -25,7 +25,6 @@
                                 <p><strong>Guests:</strong> {{ booking.number_of_guests }}</p>
                                 <p><strong>Check-in:</strong> {{ booking.check_in_date }}</p>
                                 <p><strong>Check-out:</strong> {{ booking.check_out_date }}</p>
-                                <a href="{% url 'booking_detail' booking.id %}" class="view-details">View Details</a>
                             </div>
                         </li>
                     {% endfor %}

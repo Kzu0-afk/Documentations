@@ -29,7 +29,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('hotel/', include('hotel.urls')),
     path('booking/', include('booking.urls')),
-    path('payment/', include('payment.urls')),
+    path('payment/', include('payment.urls', namespace='payment')),
     path('room/', include('room.urls')),
     path('', landing_page, name='home'),
 ]
