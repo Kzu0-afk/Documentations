@@ -20,4 +20,3 @@ class Booking(models.Model):
 
     def __str__(self):
         return f"Booking for {self.customer} in Room {self.room}"
-

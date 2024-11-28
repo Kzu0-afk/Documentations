@@ -134,7 +134,7 @@
                         <td>{{ payment.id }}</td>
                         <td>{{ payment.booking.id|default:"N/A" }}</td>
                         <td>{{ payment.paymentMethod }}</td>
-                        <td>${{ payment.paymentAmount }}</td>
+                        <td>₱{{ payment.paymentAmount }}</td>
                         <td>{{ payment.paymentDate }}</td>
                         <td>{{ payment.paymentStatus }}</td>
                         <td class="actions">

@@ -28,15 +28,17 @@
             margin-bottom: 5px;
             font-weight: bold;
         }
-        input[type="text"],
-        input[type="number"],
-        select {
+        select, .payment-amount, input[type="text"], input[type="number"] {
             width: 100%;
             padding: 8px;
             margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 4px;
             box-sizing: border-box;
+        }
+        .payment-amount {
+            background-color: #eee;
+            font-weight: bold;
         }
         input[type="submit"] {
             background-color: #3498db;
@@ -57,6 +59,9 @@
             margin-bottom: 10px;
             font-size: 14px;
         }
+        .card-details {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -73,9 +78,28 @@
                 <option value="bank_transfer">Bank Transfer</option>
             </select>
         </div>
+        <div class="card-details">
+            <div>
+                <label for="cardNumber">Card Number:</label>
+                <input type="text" id="cardNumber" name="cardNumber" pattern="\d{16}" title="Please enter a valid 16-digit card number" maxlength="16">
+            </div>
+            <div>
+                <label for="cardHolder">Card Holder Name:</label>
+                <input type="text" id="cardHolder" name="cardHolder">
+            </div>
+            <div>
+                <label for="expiryDate">Expiry Date (MM/YY):</label>
+                <input type="text" id="expiryDate" name="expiryDate" pattern="(0[1-9]|1[0-2])\/\d{2}" title="Please enter a valid expiry date in MM/YY format" maxlength="5">
+            </div>
+            <div>
+                <label for="cvv">CVV:</label>
+                <input type="number" id="cvv" name="cvv" min="100" max="9999">
+            </div>
+        </div>
         <div>
-            <label for="paymentAmount">Payment Amount ($):</label>
-            <input type="number" id="paymentAmount" name="paymentAmount" step="0.01" min="0" required>
+            <label for="paymentAmount">Payment Amount (₱):</label>
+            <div id="paymentAmount" class="payment-amount">{{ payment_amount|floatformat:2 }}</div>
+            <input type="hidden" name="paymentAmount" value="{{ payment_amount }}">
         </div>
         <div>
             <input type="submit" value="Submit Payment">
@@ -83,18 +107,34 @@
     </form>
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {
-            let amount = document.getElementById('paymentAmount').value;
             let method = document.getElementById('paymentMethod').value;
             if (!method) {
                 e.preventDefault();
                 alert('Please select a payment method.');
+                return;
             }
-            if (amount <= 0) {
-                e.preventDefault();
-                alert('Please enter a valid payment amount.');
+            
+            if (method === 'credit_card' || method === 'debit_card') {
+                let cardNumber = document.getElementById('cardNumber').value;
+                let cardHolder = document.getElementById('cardHolder').value;
+                let expiryDate = document.getElementById('expiryDate').value;
+                let cvv = document.getElementById('cvv').value;
+                
+                if (!cardNumber || !cardHolder || !expiryDate || !cvv) {
+                    e.preventDefault();
+                    alert('Please fill in all card details.');
+                }
+            }
+        });
+
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            let cardDetails = document.querySelector('.card-details');
+            if (this.value === 'credit_card' || this.value === 'debit_card') {
+                cardDetails.style.display = 'block';
+            } else {
+                cardDetails.style.display = 'none';
             }
         });
     </script>
 </body>
 </html>
-
