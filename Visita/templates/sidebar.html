@@ -17,14 +17,14 @@
             <a href="{% url 'customer_entity:profile' %}" class="visita-menu-item">
                 <span class="visita-menu-text">Profile</span>
             </a>
+            <a href="{% url 'hotel:hotel_homepage' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Hotels</span>
+            </a>
             <a href="{% url 'booking:booking_list' %}" class="visita-menu-item">
-                <span class="visita-menu-text">Booking History</span>
+                <span class="visita-menu-text">My Bookings</span>
             </a>
-            <a href="#" class="visita-menu-item">
+            <a href="{% url 'booking:booking_create' %}" class="visita-menu-item">
                 <span class="visita-menu-text">New Booking</span>
-            </a>
-            <a href="{% url 'room:room_list' %}" class="visita-menu-item">
-                <span class="visita-menu-text">Rooms</span>
             </a>
             <a href="{% url 'payment:payment_list' %}" class="visita-menu-item">
                 <span class="visita-menu-text">Payments</span>
@@ -32,6 +32,7 @@
             <a href="{% url 'customer_entity:logout' %}" class="visita-menu-item">
                 <span class="visita-menu-text">Sign-out</span>
             </a>
+
         </nav>
     </div>
 </div>

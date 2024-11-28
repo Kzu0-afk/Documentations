@@ -8,7 +8,7 @@
         <!-- Welcome Section -->
         <div class="welcome-section">
             <h1>Welcome, {{ user.username }}!</h1>
-            <p>Explore and manage your bookings with our comprehensive tools.</p>
+            <p>Explore and book our hotels easily with with our customer-centric site!</p>
         </div>
 
         <!-- Quick Actions Section -->
@@ -34,7 +34,103 @@
                 <p>View your payment history</p>
             </a>
         </div>
+   
+        <!--Hotel Section -->
+        <div class="hotel-section">
+            <h2>Featured Hotels</h2>
+            <div class="hotel-grid">
+                {% for hotel in featured_hotels %}
+                <div class="hotel-card">
+                    <div class="hotel-image placeholder"></div>
+                    <div class="hotel-content">
+                        <h3>{{ hotel.name }}</h3>
+                        <div class="hotel-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating">{{ hotel.rating|default:"4.5" }}</span>
+                        </div>
+                        <p class="hotel-price">From ₱{{ hotel.lowest_price|default:"2,000" }}/night</p>
+                        <div class="hotel-features">
+                            {% for feature in hotel.features|slice:":3" %}
+                                <span>{{ feature }}</span>
+                            {% empty %}
+                                <span>Pool</span>
+                                <span>WiFi</span>
+                                <span>Restaurant</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                {% for i in '123'|make_list %}
+                <div class="hotel-card">
+                    <div class="hotel-image placeholder"></div>
+                    <div class="hotel-content">
+                        <h3>Sample Hotel {{ i }}</h3>
+                        <div class="hotel-rating">
+                            <span class="stars">★★★★☆</span>
+                            <span class="rating">4.5</span>
+                        </div>
+                        <p class="hotel-price">From ₱2,000/night</p>
+                        <div class="hotel-features">
+                            <span>Pool</span>
+                            <span>WiFi</span>
+                            <span>Restaurant</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endfor %}
+            </div>
+        </div>
 
+        <!-- Safety and Precautions Section -->
+        <div class="safety-section">
+            <h2>Safety & Precautions</h2>
+            <div class="safety-cards">
+                <div class="safety-card">
+                    <div class="safety-icon">😷</div>
+                    <h3>Wear a Mask</h3>
+                    <p>Please wear a mask in all public areas of the hotel.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">🧼</div>
+                    <h3>Hand Hygiene</h3>
+                    <p>Wash your hands frequently and use provided sanitizers.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">🧍‍♂️↔️🧍‍♀️</div>
+                    <h3>Social Distancing</h3>
+                    <p>Maintain a safe distance from others in public spaces.</p>
+                </div>
+                <div class="safety-card">
+                    <div class="safety-icon">🌡️</div>
+                    <h3>Health Checks</h3>
+                    <p>Temperature checks may be conducted upon entry.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Us Section -->
+        <div class="about-section">
+            <h2>About VisitaCebu</h2>
+            <div class="about-content">
+                <div class="about-card">
+                    <div class="about-icon">🌟</div>
+                    <h3>Our Mission</h3>
+                    <p>To provide exceptional hotel booking experiences in Cebu, connecting travelers with the finest accommodations while ensuring comfort and convenience.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🤝</div>
+                    <h3>Customer First</h3>
+                    <p>We prioritize your satisfaction with 24/7 support, secure payments, and hassle-free booking management.</p>
+                </div>
+                <div class="about-card">
+                    <div class="about-icon">🏖️</div>
+                    <h3>Discover Cebu</h3>
+                    <p>Experience the best of Cebu's hospitality through our carefully curated selection of hotels and resorts.</p>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}
@@ -42,154 +138,523 @@
 <style>
 /* Root Variables */
 :root {
-  --primary-color: #007bff;
-  --primary-hover: #0056b3;
-  --danger-color: #dc3545;
-  --danger-hover: #a71d2a;
-  --background-color: #f5f7fa;
-  --card-background: #ffffff;
-  --text-primary: #333;
-  --text-secondary: #666;
-  --border-radius: 8px;
-  --spacing-unit: 1rem;
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
-  --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-  --transition: all 0.3s ease;
+    --primary-color: #ff9800;
+    --primary-hover: #f57c00;
+    --danger-color: #dc3545;
+    --danger-hover: #a71d2a;
+    --background-color: #f5f7fa;
+    --card-background: #ffffff;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --border-radius: 12px;
+    --spacing-unit: 1rem;
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --transition: all 0.3s ease;
+    --success-color: #28a745;
+    --warning-color: #ffc107;
 }
 
 /* Reset & Base Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background-color: var(--background-color);
-  color: var(--text-primary);
-  line-height: 1.5;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    line-height: 1.6;
 }
 
 /* Layout */
 .customer-landing-page {
-  min-height: 100vh;
-  padding-top: 60px; /* Height of top nav */
+    min-height: 100vh;
+    padding-top: 60px; /* Height of top nav */
 }
 
-/* Top Navigation */
-.top-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  background-color: var(--card-background);
-  box-shadow: var(--shadow-sm);
-  z-index: 1000;
-}
-
-.nav-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-unit);
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.nav-logo {
-  height: 32px;
-  width: auto;
-}
-
-.nav-links {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.nav-link {
-  color: var(--text-primary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: var(--transition);
-}
-
-.nav-link:hover {
-  color: var(--primary-color);
-}
-
-.nav-link-logout {
-  color: var(--danger-color);
-}
-
-.nav-link-logout:hover {
-  color: var(--danger-hover);
-}
-
-/* Main Content */
 .customer-main-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: var(--spacing-unit);
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-unit);
 }
 
+/* Section Styles */
+.welcome-section,
+.quick-actions,
+.hotel-section,
+.reminders-section,
+.safety-section,
+.about-section {
+    margin-bottom: 3rem;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    padding: 2rem;
+}
+
+h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.75rem;
+    text-align: center;
+}
+
+/* Welcome Section */
 .welcome-section {
-  text-align: center;
-  margin-bottom: 2rem;
+    text-align: center;
 }
 
 .welcome-section h1 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
 }
 
 /* Quick Actions */
 .quick-actions {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 1rem;
-  margin-bottom: 2rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
 }
 
 .action-card {
-  background: var(--card-background);
-  padding: 1.5rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-  color: var(--text-primary);
-  transition: var(--transition);
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: var(--transition);
+    text-align: center;
 }
 
 .action-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
 }
 
 .action-icon {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
 }
 
-.action-card h3 {
-  margin-bottom: 0.5rem;
+/* Hotel Section */
+.hotel-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
 }
 
-.action-card p {
-  color: var(--text-secondary);
-  font-size: 0.9rem;
+.hotel-card {
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
 }
 
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.hotel-image {
+    height: 200px;
+    background-color: #e9ecef;
+}
+
+.hotel-image.placeholder {
+    background: linear-gradient(45deg, #f0f0f0 25%, #e6e6e6 25%, #e6e6e6 50%, #f0f0f0 50%, #f0f0f0 75%, #e6e6e6 75%, #e6e6e6 100%);
+    background-size: 20px 20px;
+}
+
+.hotel-content {
+    padding: 1.5rem;
+}
+
+.hotel-rating {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+}
+
+.stars {
+    color: var(--warning-color);
+}
+
+.hotel-price {
+    font-weight: 600;
+    color: var(--primary-color);
+    margin: 0.5rem 0;
+}
+
+.hotel-features {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.hotel-features span {
+    background-color: var(--background-color);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.875rem;
+}
+
+/* Reminders Section */
+.reminder-cards {
+    display: grid;
+    gap: 1rem;
+}
+
+.reminder-card {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem;
+    background: var(--background-color);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.reminder-card:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-sm);
+}
+
+.reminder-icon {
+    font-size: 2.5rem;
+    margin-right: 1.5rem;
+}
+
+.reminder-content {
+    flex-grow: 1;
+}
+
+.reminder-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.check-in-date, .booking-id {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.reminder-status {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: var(--success-color);
+    color: white;
+    font-size: 0.9rem;
+}
+
+.reminder-status.approaching {
+    background: var(--warning-color);
+    color: var(--text-primary);
+}
+
+/* Safety Section */
+.safety-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.safety-card {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.safety-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.safety-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+/* About Section */
+.about-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.about-card {
+    background: var(--background-color);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.about-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.about-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quick-actions,
+    .hotel-grid,
+    .safety-cards,
+    .about-content {
+        grid-template-columns: 1fr;
+    }
+
+    .reminder-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .reminder-icon {
+        margin: 0 0 1rem 0;
+    }
+
+    .reminder-status {
+        margin-top: 1rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .welcome-section h1 {
+        font-size: 2rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+/* Focus States */
+a:focus,
+button:focus,
+.action-card:focus,
+.hotel-card:focus,
+.reminder-card:focus,
+.safety-card:focus,
+.about-card:focus {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .customer-landing-page {
+        padding-top: 0;
+    }
+    
+    .action-card,
+    .hotel-card,
+    .reminder-card,
+    .safety-card,
+    .about-card {
+        break-inside: avoid;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.welcome-section,
+.quick-actions,
+.hotel-section,
+.reminders-section,
+.safety-section,
+.about-section {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Additional UI Improvements */
+.action-card,
+.hotel-card,
+.reminder-card,
+.safety-card,
+.about-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.action-card::before,
+.hotel-card::before,
+.reminder-card::before,
+.safety-card::before,
+.about-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    transition: 0.5s;
+}
+
+.action-card:hover::before,
+.hotel-card:hover::before,
+.reminder-card:hover::before,
+.safety-card:hover::before,
+.about-card:hover::before {
+    transform: translateX(100%);
+}
+
+/* Improved Typography */
+body {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+h1, h2, h3 {
+    letter-spacing: 1px;
+}
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Enhanced Card Styles */
+.action-card,
+.hotel-card,
+.reminder-card,
+.safety-card,
+.about-card {
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Improved Button Styles */
+.action-card,
+.reminder-status,
+.hotel-features span {
+    cursor: pointer;
+    user-select: none;
+}
+
+/* Additional Hover Effects */
+.action-card:hover .action-icon,
+.safety-card:hover .safety-icon,
+.about-card:hover .about-icon {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
+
+/* Improved Spacing */
+.customer-main-content > div:not(:last-child) {
+    margin-bottom: 4rem;
+}
+
+/* Enhanced Hotel Card */
+.hotel-card .hotel-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+.hotel-card .hotel-rating {
+    font-size: 0.9rem;
+}
+
+/* Reminder Card Improvements */
+.reminder-card .reminder-status {
+    font-weight: bold;
+}
+
+/* Safety Card Enhancements */
+.safety-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* About Card Refinements */
+.about-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+/* Improved Accessibility */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
+
+/* Additional Color Contrast for Better Readability */
+.text-primary {
+    color: var(--primary-color);
+}
+
+.text-secondary {
+    color: var(--text-secondary);
+}
+
+.bg-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Improved Form Styles (if applicable) */
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: var(--primary-hover);
+}
+
+/* Additional Responsive Adjustments */
+@media (max-width: 480px) {
+    .customer-main-content {
+        padding: 1rem;
+    }
+
+    .welcome-section,
+    .quick-actions,
+    .hotel-section,
+    .reminders-section,
+    .safety-section,
+    .about-section {
+        padding: 1.5rem;
+    }
+}
 </style>
 
