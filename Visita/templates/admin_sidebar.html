@@ -1,0 +1,226 @@
+{% load static %}
+<div class="visita-sidebar-container">
+    <button class="visita-sidebar-toggle">
+        <img src="{% static 'images/sidebar-icon.png' %}" alt="Menu" class="visita-toggle-icon">
+    </button>
+    <div class="visita-sidebar">
+        <button class="visita-close-button">
+            <img src="{% static 'images/close-icon.png' %}" alt="Close" class="visita-close-icon">
+        </button>
+        <a href="{% url 'customer_entity:landing_page' %}" class="visita-logo-link">
+            <img src="{% static 'images/Logo.png' %}" alt="Logo" class="visita-sidebar-logo">
+        </a>
+        <nav class="visita-sidebar-menu">
+            <a href="{% url 'admin_entity:admin-dashboard' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Dashboard</span>
+            </a>
+            <a href="{% url 'hotel:hotel_create' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Add Hotels</span>
+            </a>
+            <a href="{% url 'hotel:hotel_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">List of Hotels</span>
+            </a>
+            <a href="{% url 'room:room_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Create Rooms</span>
+            </a>
+            <a href="{% url 'room:room_list' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Pending Payments</span>
+            </a>
+            <a href="{% url 'admin_entity:logout' %}" class="visita-menu-item">
+                <span class="visita-menu-text">Sign-out</span>
+            </a>
+
+        </nav>
+    </div>
+</div>
+
+<style>
+    /* General Sidebar Container */
+    .visita-sidebar-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: 1000;
+        pointer-events: none;
+    }
+
+    /* Sidebar Styles */
+    .visita-sidebar {
+        width: 280px;
+        background-color: #ffffff;
+        color: #1a1a1a;
+        height: 100%;
+        transform: translateX(-100%);
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        pointer-events: auto;
+    }
+
+    .visita-sidebar.active {
+        transform: translateX(0);
+    }
+
+    /* Logo Link */
+    .visita-logo-link {
+        display: block;
+        margin-bottom: 32px;
+        text-decoration: none;
+    }
+
+    .visita-sidebar-logo {
+        max-width: 160px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* Toggle Button and Icons */
+    .visita-sidebar-toggle {
+        position: fixed;
+        top: 16px;
+        left: 16px;
+        background-color: #ff9800;
+        border: none;
+        border-radius: 8px;
+        width: 40px;
+        height: 40px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        z-index: 1001;
+        pointer-events: auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        margin-bottom: -5px;
+    }
+
+    .visita-sidebar-toggle:hover {
+        background-color: #f57c00;
+        transform: translateY(-1px);
+    }
+
+    .visita-toggle-icon {
+        width: 24px;
+        height: 24px;
+        display: block;
+        object-fit: contain;
+    }
+
+    .visita-close-button {
+        background: none;
+        border: none;
+        padding: 8px;
+        position: absolute;
+        top: 12px;
+        right: 12px;
+        cursor: pointer;
+        opacity: 0.7;
+        transition: opacity 0.2s ease;
+    }
+
+    .visita-close-button:hover {
+        opacity: 1;
+    }
+
+    .visita-close-icon {
+        width: 20px;
+        height: 20px;
+        object-fit: contain;
+    }
+
+    .visita-sidebar-container.active .visita-sidebar-toggle {
+        display: none;
+    }
+
+    /* Sidebar Menu */
+    .visita-sidebar-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        margin-top: 8px;
+    }
+
+    .visita-menu-item {
+        display: flex;
+        align-items: center;
+        padding: 12px 16px;
+        text-decoration: none;
+        color: #1a1a1a;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        font-size: 15px;
+        font-weight: 500;
+    }
+
+    .visita-menu-item:hover {
+        background-color: #ff980020;
+        color: #ff9800;
+    }
+
+    .visita-menu-item:active {
+        background-color: #ff980040;
+    }
+
+    /* Overlay */
+    .visita-sidebar-container::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.3);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        pointer-events: none;
+        backdrop-filter: blur(2px);
+    }
+
+    .visita-sidebar-container.active::before {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const sidebarContainer = document.querySelector(".visita-sidebar-container");
+        const sidebar = document.querySelector(".visita-sidebar");
+        const toggleButton = document.querySelector(".visita-sidebar-toggle");
+        const closeButton = document.querySelector(".visita-close-button");
+
+        function openSidebar() {
+            sidebar.classList.add("active");
+            sidebarContainer.classList.add("active");
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove("active");
+            sidebarContainer.classList.remove("active");
+        }
+
+        toggleButton.addEventListener("click", openSidebar);
+        closeButton.addEventListener("click", closeSidebar);
+
+        // Close sidebar when clicking overlay
+        sidebarContainer.addEventListener("click", (e) => {
+            if (e.target === sidebarContainer) {
+                closeSidebar();
+            }
+        });
+
+        // Add escape key support
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape" && sidebar.classList.contains("active")) {
+                closeSidebar();
+            }
+        });
+    });
+</script>
