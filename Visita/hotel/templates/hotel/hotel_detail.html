@@ -1,0 +1,331 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ hotel.hotelName }} - VisitaCebu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff9800;
+            --primary-hover: #f57c00;
+            --text-color: #333;
+            --text-secondary: #666;
+            --background-color: #f8f9fa;
+            --card-background: #ffffff;
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hotel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .hotel-info {
+            flex: 1;
+        }
+
+        .hotel-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffc107;
+        }
+
+        .location {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .price-card {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: right;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .price-unit {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .overview {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .room-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .room-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .room-image {
+            width: 100%;
+            height: 200px;
+            background: #eee;
+        }
+
+        .room-details {
+            padding: 1.5rem;
+        }
+
+        .room-type {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .room-price {
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .book-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .book-button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .amenities {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .amenity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .amenity i {
+            color: var(--primary-color);
+        }
+
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            min-height: 500px;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .hotel-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .hotel-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item i {
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-image {
+                height: 300px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hotel-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .price-card {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
+    <div class="container">
+        <div class="hero-section">
+            <div class="hotel-content">
+                <div>
+                    <h1 class="hotel-name">{{ hotel.hotelName }}</h1>
+                    <div class="hotel-rating">
+                        <div class="stars">
+                            {% with ''|center:hotel.hotelRating as range %}
+                                {% for _ in range %}
+                                    <i class="fas fa-star"></i>
+                                {% endfor %}
+                            {% endwith %}
+                        </div>
+                        <span>{{ hotel.hotelRating }} Star Hotel</span>
+                    </div>
+                    <div class="location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>{{ hotel.location|default:"Location not available" }}</span>
+                    </div>
+                    <div class="hotel-stats">
+                        <div class="stat-item">
+                            <i class="fas fa-bed"></i>
+                            <span>{{ rooms.count }} Rooms</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-wifi"></i>
+                            <span>Free WiFi</span>
+                        </div>
+                        <div class="stat-item">
+                            <i class="fas fa-parking"></i>
+                            <span>Free Parking</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="price-card">
+                    <div class="price">₱{{ hotel.lowest_price|default:"15,000" }}</div>
+                    <div class="price-unit">/night</div>
+                </div>
+            </div>
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                 alt="{{ hotel.hotelName }}"
+                 class="hero-image">
+        </div>
+
+        <div class="overview">
+            <h2 class="section-title">Overview</h2>
+            <p>{{ hotel.hotelDescription }}</p>
+        </div>
+
+        <h2 class="section-title">Available Rooms</h2>
+        <div class="room-grid">
+            {% for room in rooms %}
+                <div class="room-card">
+                    <div class="room-image">
+                        <!-- Room image placeholder -->
+                    </div>
+                    <div class="room-details">
+                        <h3 class="room-type">{{ room.roomType }}</h3>
+                        <div class="room-price">₱{{ room.roomPrice }}/night</div>
+                        <form method="GET" action="{% url 'booking:booking_create' %}">
+                            <input type="hidden" name="hotel" value="{{ hotel.hotelID }}">
+                            <input type="hidden" name="room" value="{{ room.roomID }}">
+                            <button type="submit" class="book-button">Book Now</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="amenities">
+            <h2 class="section-title">Amenities</h2>
+            <div class="amenity">
+                <i class="fas fa-swimming-pool"></i>
+                <span>Outdoor pool</span>
+            </div>
+            <div class="amenity">
+                <i class="fas fa-dumbbell"></i>
+                <span>Fitness center</span>
+            </div>
+            <div class="amenity">
+                <i class="fas fa-wifi"></i>
+                <span>Free Wi-Fi</span>
+            </div>
+            <div class="amenity">
+                <i class="fas fa-utensils"></i>
+                <span>Restaurant</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

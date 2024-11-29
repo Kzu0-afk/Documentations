@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.timezone import now
 
-# Create your models here.
+# user_entity/models.py
 
 class User(AbstractUser):
     username = models.CharField(max_length=255, unique=True)

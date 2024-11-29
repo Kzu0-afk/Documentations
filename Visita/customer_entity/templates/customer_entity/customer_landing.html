@@ -1,5 +1,8 @@
 {% load static %}
 {% block content %}
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <div class="customer-landing-page">
     {% include 'header.html' %}
     {% include 'sidebar.html' %}
@@ -36,9 +39,7 @@
         </div>
    
         <!--Hotel Section -->
-        <div class="hotel-section">
-            <h2>Featured Hotels</h2>
-            <div class="hotel-grid">
+        <div class="hotel-grid">
                 {% for hotel in hotels %}
                     <article class="hotel-card">
                         <div class="hotel-image">
@@ -47,19 +48,56 @@
                             {% else %}
                                 <img src="{% static 'images/hotel-placeholder.jpg' %}" alt="Hotel image">
                             {% endif %}
-                        </div>
-                        <div class="hotel-content">
-                            <h3>{{ hotel.hotelName|default:"Hotel Name Not Available" }}</h3>
-                            <div class="hotel-rating">
-                                <span class="stars">
-                                    {% for _ in ''|center:5 %}
-                                        <i class="{% if forloop.counter <= hotel.hotelRating|default:4 %}fas{% else %}far{% endif %} fa-star"></i>
-                                    {% endfor %}
-                                </span>
-                                <span class="rating">{{ hotel.hotelRating|default:"4.0" }}</span>
+
+                            <div class="price-tag">
+                                From ₱{{ hotel.lowest_price|default:"2,000" }}/night
                             </div>
-                            <p>{{ hotel.hotelDescription|default:"No description available"|truncatewords:20 }}</p>
-                            <a href="{% url 'booking:booking_create' %}" class="view-details">Book Now</a>
+
+                        </div>
+
+                        <div class="hotel-content">
+                            <h2 class="hotel-name">{{ hotel.hotelName|default:"Hotel Name Not Available" }}</h2>
+
+                            <div class="hotel-location">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>{{ hotel.location|default:"Location not available" }}</span>
+                            </div>
+
+                            <p class="hotel-description">
+                                {{ hotel.description|default:"Description not available"|truncatewords:25 }}
+                            </p>
+
+                            <div class="hotel-rating">
+                                <div class="stars">
+                                    {% with ''|center:5 as range %}
+                                        {% for _ in range %}
+                                            <i class="{% if forloop.counter <= hotel.rating|default:4 %}fas{% else %}far{% endif %} fa-star star"></i>
+                                        {% endfor %}
+                                    {% endwith %}
+                                </div>
+                                <span class="rating-number">{{ hotel.rating|default:"4.0" }} / 5</span>
+                            </div>
+
+                            <div class="hotel-features">
+                                <span class="feature">
+                                    <i class="fas fa-wifi"></i>
+                                    Free WiFi
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-parking"></i>
+                                    Parking
+                                </span>
+                                <span class="feature">
+                                    <i class="fas fa-swimming-pool"></i>
+                                    Pool
+                                </span>
+                            </div>
+
+                            <div class="hotel-actions">
+                                <a href="{% url 'hotel:hotel_detail' hotel.pk %}" class="view-details">
+                                    View Details <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
                         </div>
                     </article>
                 {% empty %}
@@ -644,5 +682,235 @@ button:hover {
         padding: 1.5rem;
     }
 }
+
+/* Hotel Grid */
+        .hotel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        /* Hotel Card */
+        .hotel-card {
+            background: var(--card-background);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .hotel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .hotel-image {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            overflow: hidden;
+        }
+
+        .hotel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .hotel-card:hover .hotel-image img {
+            transform: scale(1.05);
+        }
+
+        .hotel-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hotel-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .hotel-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .hotel-location i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .hotel-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        /* Rating System */
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        /* Action Buttons */
+        .hotel-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .view-details {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+            gap: 0.5rem;
+        }
+
+        .view-details:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .view-details i {
+            font-size: 0.9rem;
+        }
+
+        /* Price Tag */
+        .price-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            color: var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Availability Badge */
+        .availability-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: white;
+        }
+
+        .available {
+            background-color: var(--success-color);
+        }
+
+        .not-available {
+            background-color: var(--danger-color);
+        }
+
+        .hotel-content {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .hotel-location {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .hotel-location i {
+            margin-right: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .hotel-description {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+            line-height: 1.6;
+        }
+
+        /* Rating System */
+        .hotel-rating {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            gap: 0.5rem;
+        }
+
+        .stars {
+            display: flex;
+            gap: 0.25rem;
+        }
+
+        .star {
+            color: var(--warning-color);
+            font-size: 1.1rem;
+        }
+
+        .rating-number {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-left: 0.5rem;
+        }
+
+        /* Hotel Features */
+        .hotel-features {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .feature i {
+            color: var(--primary-color);
+        }
+
+        /* Action Buttons */
+        .hotel-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
 </style>
 

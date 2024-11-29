@@ -2,8 +2,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% include 'header.html' %}
-    {% include 'sidebar.html' %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Booking - VisitaCebu</title>
@@ -116,85 +114,160 @@
         .btn-primary:hover {
             background-color: var(--primary-hover);
         }
+        
+        .selected-details {
+        margin-bottom: 2rem;
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        }
+
+        .hotel-preview {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+    
+        .preview-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+    
+        .preview-content {
+            flex: 1;
+        }
+    
+        .preview-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+    
+        .preview-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+    
+        .preview-content .price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .selected-details {
+        margin-bottom: 2rem;
+        background: var(--background-color);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        }
+    
+        .hotel-preview {
+            display: flex;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+    
+        .preview-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+    
+        .preview-content {
+            flex: 1;
+        }
+    
+        .preview-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+    
+        .preview-content p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+    
+        .preview-content .price {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        .room-preview {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .room-preview h2 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .room-preview p {
+            margin-bottom: 0.25rem;
+        }
     </style>
 </head>
 <body>
+    {% include 'header.html' %}
     <div class="container">
         <div class="card">
             <h1 class="page-title">Create Your Booking</h1>
-            <form method="post" id="booking-form">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label class="form-label" for="hotel-select">Select Hotel</label>
-                    <i class="fas fa-hotel form-icon"></i>
-                    <select class="form-control" id="hotel-select" name="hotel" required>
-                        <option value="" disabled selected>Choose a hotel</option>
-                        {% for hotel in hotels %}
-                            <option value="{{ hotel.hotelID }}">{{ hotel.hotelName }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
+        
+        <form method="post" id="booking-form">
+            {% csrf_token %}
+            <div class="room-preview">
+                <h2>{{ hotel.hotelName }}</h2>
+                <p><strong>Room Type:</strong> {{ room.roomType }}</p>
+                <p><strong>Price:</strong> ₱{{ room.roomPrice }}/night</p>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="room-select">Select Room</label>
-                    <i class="fas fa-bed form-icon"></i>
-                    <select class="form-control" id="room-select" name="room" required>
-                        <option value="" disabled selected>Choose a room</option>
-                    </select>
-                </div>
+            <!-- Hidden field to pass room data -->
+            <input type="hidden" name="room" value="{{ room.id }}">
 
-                <div class="form-group">
-                    <label class="form-label" for="number_of_guests">Number of Guests</label>
-                    <i class="fas fa-users form-icon"></i>
-                    <input type="number" class="form-control" id="number_of_guests" name="number_of_guests" min="1" required>
-                </div>
+            <div class="form-group">
+                <label class="form-label" for="number_of_guests">Number of Guests</label>
+                <i class="fas fa-users form-icon"></i>
+                <input type="number" class="form-control" id="number_of_guests" name="number_of_guests" min="1" required>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="check_in_date">Check-In Date</label>
-                    <i class="fas fa-calendar-alt form-icon"></i>
-                    <input type="date" class="form-control" id="check_in_date" name="check_in_date" required>
-                </div>
+            <div class="form-group">
+                <label class="form-label" for="check_in_date">Check-In Date</label>
+                <i class="fas fa-calendar-alt form-icon"></i>
+                <input type="date" class="form-control" id="check_in_date" name="check_in_date" required>
+            </div>
 
-                <div class="form-group">
-                    <label class="form-label" for="check_out_date">Check-Out Date</label>
-                    <i class="fas fa-calendar-alt form-icon"></i>
-                    <input type="date" class="form-control" id="check_out_date" name="check_out_date" required>
-                </div>
+            <div class="form-group">
+                <label class="form-label" for="check_out_date">Check-Out Date</label>
+                <i class="fas fa-calendar-alt form-icon"></i>
+                <input type="date" class="form-control" id="check_out_date" name="check_out_date" required>
+            </div>
 
-                <button type="submit" class="btn-primary">Confirm Booking</button>
-            </form>
+            <button type="submit" class="btn-primary">Confirm Booking</button>
+        </form>
+
         </div>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', function() {
         const form = document.getElementById('booking-form');
-        const hotelSelect = document.getElementById('hotel-select');
-        const roomSelect = document.getElementById('room-select');
         const checkInDate = document.getElementById('check_in_date');
         const checkOutDate = document.getElementById('check_out_date');
         const numberOfGuestsInput = document.getElementById("number_of_guests");
 
-        hotelSelect.addEventListener('change', function() {
-            const hotelId = this.value;
-            fetch(`/room/hotel/${hotelId}/`)
-                .then(response => response.json())
-                .then(data => {
-                    roomSelect.innerHTML = '<option value="" disabled selected>Choose a room</option>';
-                    data.rooms.forEach(room => {
-                        const option = document.createElement('option');
-                        option.value = room.id;
-                        option.textContent = `${room.roomType} - Room ${room.roomNumber}`;
-                        roomSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                });
-        });
-
         const today = new Date().toISOString().split("T")[0];
         checkInDate.min = today;
+        checkInDate.value = today;
 
         checkInDate.addEventListener("change", function () {
             const minCheckOut = new Date(this.value);
@@ -214,18 +287,6 @@
 
         form.addEventListener('submit', function(e) {
             let isValid = true;
-
-            // Validate hotel selection
-            if (!hotelSelect.value) {
-                isValid = false;
-                alert('Please select a hotel');
-            }
-
-            // Validate room selection
-            if (!roomSelect.value) {
-                isValid = false;
-                alert('Please select a room');
-            }
 
             // Validate number of guests
             if (numberOfGuestsInput.value < 1) {

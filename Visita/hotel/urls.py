@@ -10,4 +10,5 @@ urlpatterns = [
     path('<int:pk>/edit/', views.HotelUpdateView.as_view(), name='hotel_update'),
     path('<int:pk>/delete/', views.HotelDeleteView.as_view(), name='hotel_delete'),
     path('homepage/', views.hotel_homepage, name='hotel_homepage'),
+    path('<int:pk>/', views.hotel_detail, name='hotel_detail'),
 ]

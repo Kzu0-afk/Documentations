@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth import get_backends
 
 from django.apps import apps  # Dynamically import models
-
+#signals.py
 Customer = apps.get_model('customer_entity', 'Customer')
 AdminEntity = apps.get_model('admin_entity', 'AdminEntity')
 
