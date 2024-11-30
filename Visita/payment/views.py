@@ -1,16 +1,24 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.utils.decorators import method_decorator
 from .models import Payment
 from .forms import PaymentForm
 from booking.models import Booking
+from user_entity.utils import admin_required
 import logging
 
 logger = logging.getLogger(__name__)
 
 class PaymentListView(View):
+    @method_decorator(login_required)
     def get(self, request):
         payments = Payment.objects.all()
-        return render(request, 'payment/payment_list.html', {'payments': payments})
+        is_admin = admin_required(request.user)  # Check if the user is an admin
+        return render(request, 'payment/payment_list.html', {
+            'payments': payments,
+            'is_admin': is_admin
+        })
 
 
 class PaymentCreateView(View):
