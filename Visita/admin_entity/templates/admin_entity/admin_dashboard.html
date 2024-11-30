@@ -1,295 +1,292 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VisitaCebu - Administrator Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <title>Admin Dashboard - VisitaCebu</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* General Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --primary-color: #ff9800;
+            --secondary-color: #f57c00;
+            --success-color: #4CAF50;
+            --danger-color: #f44336;
+            --warning-color: #ff9800;
+            --info-color: #2196F3;
+            --background-color: #f5f7fa;
+            --card-background: #ffffff;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
         }
 
         body {
-            font-family: 'Roboto', Arial, sans-serif;
-            background-color: #f9f9f9;
-            color: #333;
+            font-family: 'Arial', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-primary);
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        h1, h3 {
-            font-weight: bold;
-        }
-
-        /* Sidebar Styles */
-        .sidebar {
-            width: 260px;
-            background-color: #fff;
-            color: #555555;
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .dashboard-container {
             display: flex;
-            flex-direction: column;
-            padding: 30px 20px;
+            min-height: 100vh;
         }
 
-        .sidebar h1 {
-            font-size: 26px;
-            color: #ff9800;
-            margin-bottom: 20px;
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            margin-left: 250px;
+            margin-top: 64px;
         }
 
-        .sidebar ul {
-            list-style: none;
-            margin-top: 20px;
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
-        .sidebar ul li {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            padding: 15px;
-            font-size: 16px;
-            border-radius: 8px;
-            transition: all 0.3s ease;
+        .stat-card {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
 
-        .sidebar ul li:hover {
-            background-color: #ff9800;
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
         }
 
-        .sidebar ul li i {
-            color: #000000;
-            font-size: 18px;
+        .stat-title {
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
         }
 
-        /* Main Content Styles */
-        .main {
-            margin-left: 280px;
-            padding: 20px;
+        .stat-value {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 600;
         }
 
-        .header {
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-container {
+            background: var(--card-background);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .chart-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 1rem;
         }
 
-        .header input {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            outline: none;
+        .chart-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
         }
 
-        .header .welcome {
-            font-weight: bold;
-            font-size: 18px;
-            color: #555;
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
-        /* Dashboard Cards */
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease;
+        .stat-card, .chart-container {
+            animation: fadeIn 0.3s ease-out;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-        }
-
-        .card h3 {
-            font-size: 18px;
-            color: #777;
-            margin-bottom: 10px;
-        }
-
-        .card p {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* Room Cards */
-        .room-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .room-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .room-card:hover {
-            background-color: #f8f8f8;
-        }
-
-        .room-card .deals {
-            background-color: #ff9800;
-            color: #fff;
-            padding: 5px 12px;
-            border-radius: 16px;
-            font-size: 12px;
-            display: inline-block;
-            margin-bottom: 8px;
-        }
-
-        .room-card h3 {
-            font-size: 16px;
-            color: #555;
-        }
-
-        .room-card p {
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        /* Room Status & Stats */
-        .stats {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-            margin-top: 30px;
-        }
-
-        .stats .room-status,
-        .stats .chart {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .room-status table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .room-status th, .room-status td {
-            padding: 10px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .room-status th {
-            color: #666;
-        }
-
-        .room-status td {
-            font-size: 14px;
-        }
-
-        .stats .chart canvas {
-            width: 100%;
-            height: 180px;
+        @media print {
+            .dashboard-container { display: block; }
+            .main-content { margin-left: 0; }
         }
     </style>
 </head>
 <body>
-
-    <!-- Main Content -->
-    <div class="main">
-        {% include 'header.html' %}
+    <div class="dashboard-container">
+        {% include 'admin_header.html' %}
         {% include 'admin_sidebar.html' %}
-        <div class="header">
-            <input type="text" placeholder="Search for rooms and offers">
-            <span class="welcome">Welcome, Admin!</span>
-        </div>
+       
+        <main class="main-content">
+            <h1 class="text-2xl font-bold mb-6">Admin Dashboard</h1>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-title">Total Hotels</div>
+                    <div class="stat-value">{{ total_hotels }}</div>
+                </div>
 
-        <!-- Dashboard Overview -->
-        <div class="dashboard">
-            <div class="card">
-                <h3>Today's Check-in</h3>
-                <p>23</p>
-            </div>
-            <div class="card">
-                <h3>Today's Check-out</h3>
-                <p>13</p>
-            </div>
-            <div class="card">
-                <h3>Total in Hotel</h3>
-                <p>60</p>
-            </div>
-        </div>
+                <div class="stat-card">
+                    <div class="stat-title">Total Bookings</div>
+                    <div class="stat-value">{{ total_bookings }}</div>
+                </div>
 
-        <!-- Room Cards / Placeholders only -->
-        <div class="room-cards">
-            <div class="room-card">
-                <span class="deals">2 Deals</span>
-                <h3>Single Sharing</h3>
-                <p>P568.00 | Day</p>    
-            </div>
-            <div class="room-card">
-                <span class="deals">2 Deals</span>
-                <h3>Double Sharing</h3>
-                <p>P1,068.00 | Day</p>
-            </div>
-            <div class="room-card">
-                <span class="deals">2 Deals</span>
-                <h3>Triple Sharing</h3>
-                <p>P1,568.00 | Day</p>
-            </div>
-            <div class="room-card">
-                <span class="deals">4 Deals</span>
-                <h3>VIP Suite</h3>  
-                <p>P2,568.00 | Day</p>
-            </div>
-        </div>
+                <div class="stat-card">
+                    <div class="stat-title">Available Rooms</div>
+                    <div class="stat-value">{{ available_rooms }}</div>
+                </div>
 
-        <!-- Room Status & Stats -->
-        <div class="stats">
-            <div class="room-status">
-                <h3>Room Status</h3>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Status</th>
-                            <th>Count</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Occupied Rooms</td>
-                            <td>104</td>
-                        </tr>
-                        <tr>
-                            <td>Available Rooms</td>
-                            <td>20</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>  
-            <div class="chart">
-                <h3>Occupancy Statistics</h3>
-                <canvas id="occupancyChart"></canvas>
+                <div class="stat-card">
+                    <div class="stat-title">Unavailable Rooms</div>
+                    <div class="stat-value">{{ unavailable_rooms }}</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-title">Total Users</div>
+                    <div class="stat-value">{{ total_guests }}</div>
+                </div>
             </div>
-        </div>
-    </>
+
+            <div class="charts-grid">
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Room Availability</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="roomAvailabilityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Booking Overview</h3>
+                    </div>
+                    <div style="height: 300px;">
+                        <canvas id="bookingOverviewChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3 class="chart-title">Overall Statistics</h3>
+                </div>
+                <div style="height: 300px;">
+                    <canvas id="overallStatisticsChart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>
+        // Ensure Django template variables are safely converted for JavaScript
+        const roomAvailabilityCtx = document.getElementById('roomAvailabilityChart').getContext('2d');
+        const bookingOverviewCtx = document.getElementById('bookingOverviewChart').getContext('2d');
+        const overallStatisticsCtx = document.getElementById('overallStatisticsChart').getContext('2d');
+    
+        // Parse data from Django template
+        const availableRooms = parseInt('{{ available_rooms|default:0 }}');
+        const unavailableRooms = parseInt('{{ unavailable_rooms|default:0 }}');
+        const totalBookings = parseInt('{{ total_bookings|default:0 }}');
+        const totalHotels = parseInt('{{ total_hotels|default:0 }}');
+        const totalUsers = parseInt('{{ total_guests|default:0 }}');
+    
+        // Room Availability Chart
+        new Chart(roomAvailabilityCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Available Rooms', 'Unavailable Rooms'],
+                datasets: [{
+                    data: [availableRooms, unavailableRooms],
+                    backgroundColor: ['#4CAF50', '#f44336']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    
+        // Booking Overview Chart
+        new Chart(bookingOverviewCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Bookings', 'Available Rooms'],
+                datasets: [{
+                    label: 'Count',
+                    data: [totalBookings, availableRooms],
+                    backgroundColor: ['#ff9800', '#2196F3']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    
+        // Overall Statistics Chart
+        new Chart(overallStatisticsCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Total Hotels', 'Total Bookings', 'Available Rooms', 'Unavailable Rooms', 'Total Users'],
+                datasets: [{
+                    label: 'Count',
+                    data: [totalHotels, totalBookings, availableRooms, unavailableRooms, totalUsers],
+                    backgroundColor: [
+                        '#ff9800',
+                        '#2196F3',
+                        '#4CAF50',
+                        '#f44336',
+                        '#9C27B0'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>    
+</body>
+</html>

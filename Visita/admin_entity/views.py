@@ -6,6 +6,10 @@ from django.contrib.auth.decorators import login_required
 from user_entity.backends import AdminBackend
 from .forms import AdminSignupForm, UpdateAdminForm
 from .models import AdminEntity
+from booking.models import Booking
+from room.models import Room
+from hotel.models import Hotel
+from customer_entity.models import Customer
 # Create your views here.
 
 def admin_home(request):
@@ -15,6 +19,20 @@ def admin_dashboard(request):
     # You can pass context if needed
     return render(request, 'admin_entity/admin_dashboard.html')
 
+def admin_dashboard(request):
+    total_hotels = Hotel.objects.count()  # Count total hotels
+    total_bookings = Booking.objects.count()  # Count total bookings
+    available_rooms = Room.objects.filter(isAvailable=True).count()  # Count available rooms
+    unavailable_rooms = Room.objects.filter(isAvailable=False).count()  # Count unavailable rooms
+    total_users = Customer.objects.count()  # Count total guests
+
+    return render(request, 'admin_entity/admin_dashboard.html', {
+        'total_hotels': total_hotels,
+        'total_bookings': total_bookings,
+        'available_rooms': available_rooms,
+        'unavailable_rooms': unavailable_rooms,
+        'total_guests': total_users,
+    })
 
 def admin_signup_view(request):
     if request.method == 'POST':

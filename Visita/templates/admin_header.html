@@ -1,0 +1,252 @@
+{% load static %}
+<header class="visita-cebu-header">
+    <nav class="visita-cebu-nav">
+        <div class="visita-cebu-nav-container">
+            <!-- Left side - Logo and Brand -->
+            <div class="visita-cebu-brand">
+                <button class="visita-cebu-sidebar-toggle" aria-label="Toggle Sidebar">
+                   
+                </button>
+                <a href="{% url 'admin_entity:admin-dashboard' %}" class="visita-cebu-logo-link">
+                    <img src="{% static 'images/logo.png' %}" alt="VisitaCebu Logo" class="visita-cebu-logo">
+                  
+                </a>
+            </div>
+
+            <!-- Right side - Navigation and User Info -->
+            <div class="visita-cebu-nav-right">
+               
+                
+                {% if user.is_authenticated %}
+                <div class="visita-cebu-user-menu">
+                    <div class="visita-cebu-user-info">
+                        <span class="visita-cebu-welcome-text">Welcome,</span>
+                        <span class="visita-cebu-username">{{ user.username }}!</span>
+                    </div>
+                    
+                </div>
+                {% else %}
+                <div class="visita-cebu-auth-buttons">
+                    <a href="{% url 'customer_entity:login' %}" class="visita-cebu-nav-button visita-cebu-login-btn">Login</a>
+                    <a href="{% url 'customer_entity:signup' %}" class="visita-cebu-nav-button visita-cebu-register-btn">Register</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+</header>
+
+<style>
+:root {
+    --visita-cebu-primary: #ff7f27;
+    --visita-cebu-primary-hover: #e56710;
+    --visita-cebu-background: #f5f7fa;
+    --visita-cebu-text: #333333;
+    --visita-cebu-text-light: #666666;
+    --visita-cebu-card-bg: #ffffff;
+    --visita-cebu-border-radius: 8px;
+    --visita-cebu-transition: all 0.3s ease;
+    --visita-cebu-shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+    --visita-cebu-shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.visita-cebu-header {
+    background-color: var(--visita-cebu-card-bg);
+    box-shadow: var(--visita-cebu-shadow-sm);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.visita-cebu-nav {
+    height: 60px;
+}
+
+.visita-cebu-nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* Brand and Logo Styles */
+.visita-cebu-brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.visita-cebu-logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    gap: 0.5rem;
+}
+
+.visita-cebu-logo {
+    height: 32px;
+    width: auto;
+}
+
+.visita-cebu-brand-text {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--visita-cebu-primary);
+}
+
+.visita-cebu-sidebar-toggle {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    color: var(--visita-cebu-text);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Navigation and User Menu */
+.visita-cebu-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.visita-cebu-nav-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.visita-cebu-nav-button {
+    padding: 0.5rem 1rem;
+    border-radius: var(--visita-cebu-border-radius);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-register-btn {
+    background-color: var(--visita-cebu-primary);
+    color: white;
+}
+
+.visita-cebu-register-btn:hover {
+    background-color: var(--visita-cebu-primary-hover);
+}
+
+.visita-cebu-login-btn {
+    color: var(--visita-cebu-text);
+}
+
+.visita-cebu-login-btn:hover {
+    background-color: var(--visita-cebu-background);
+}
+
+/* User Menu Styles */
+.visita-cebu-user-menu {
+    position: relative;
+    padding: 0.5rem 0;
+}
+
+.visita-cebu-user-info {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem;
+    border-radius: var(--visita-cebu-border-radius);
+    transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-welcome-text {
+    color: var(--visita-cebu-text-light);
+    font-size: 0.9rem;
+}
+
+.visita-cebu-username {
+    color: var(--visita-cebu-primary);
+    font-weight: 600;
+}
+
+.visita-cebu-user-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: var(--visita-cebu-card-bg);
+    border-radius: var(--visita-cebu-border-radius);
+    box-shadow: var(--visita-cebu-shadow-md);
+    min-width: 200px;
+    padding: 0.5rem;
+    display: none;
+}
+
+.visita-cebu-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: var(--visita-cebu-text);
+    text-decoration: none;
+    border-radius: var(--visita-cebu-border-radius);
+    transition: var(--visita-cebu-transition);
+}
+
+.visita-cebu-dropdown-item:hover {
+    background-color: var(--visita-cebu-background);
+}
+
+.visita-cebu-dropdown-item i {
+    font-size: 1rem;
+    color: var(--visita-cebu-text-light);
+}
+
+.visita-cebu-logout {
+    color: #dc3545;
+}
+
+.visita-cebu-logout:hover {
+    background-color: #dc35451a;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .visita-cebu-welcome-text {
+        display: none;
+    }
+
+    .visita-cebu-nav-links {
+        display: none;
+    }
+
+    .visita-cebu-brand-text {
+        display: none;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}
+
+.visita-cebu-nav-button:focus,
+.visita-cebu-sidebar-toggle:focus,
+.visita-cebu-dropdown-item:focus {
+    outline: 2px solid var(--visita-cebu-primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .visita-cebu-header {
+        position: static;
+        box-shadow: none;
+    }
+}
+</style>
