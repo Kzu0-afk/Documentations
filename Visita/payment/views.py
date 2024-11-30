@@ -72,32 +72,46 @@ class PaymentUpdateView(View):
         payment = get_object_or_404(Payment, pk=pk)
         form = PaymentForm(instance=payment)
         return render(request, 'payment/payment_form.html', {
-            'form': form, 
+            'form': form,
             'booking': payment.booking,
-            'payment_amount': payment.paymentAmount
+            'payment_amount': payment.paymentAmount,
+            'payment': payment
         })
 
     def post(self, request, pk):
         payment = get_object_or_404(Payment, pk=pk)
         form = PaymentForm(request.POST, instance=payment)
         if form.is_valid():
+            # Save the form instance without committing it yet
             payment = form.save(commit=False)
             payment.paymentMethod = request.POST.get('paymentMethod')
-            
+
             # Handle card details if payment method is credit or debit card
             if payment.paymentMethod in ['credit_card', 'debit_card']:
                 payment.cardNumber = request.POST.get('cardNumber')
                 payment.cardHolder = request.POST.get('cardHolder')
                 payment.expiryDate = request.POST.get('expiryDate')
                 payment.cvv = request.POST.get('cvv')
-            
+
+            # Update the payment status manually
+            payment_status = request.POST.get('paymentStatus')
+            if payment_status:
+                payment.paymentStatus = payment_status
+
+            # Save the payment instance
             payment.save()
+            logger.info(f"Payment updated: {payment}")
+
+            # Redirect to the payment list to reflect changes
             return redirect('payment:payment_list')
+
+        logger.error(f"Payment form invalid: {form.errors}")
         return render(request, 'payment/payment_form.html', {
-            'form': form, 
+            'form': form,
             'booking': payment.booking,
             'payment_amount': payment.paymentAmount
         })
+
 
 class PaymentDeleteView(View):
     def get(self, request, pk):
