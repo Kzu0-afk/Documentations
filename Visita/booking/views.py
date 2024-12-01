@@ -9,6 +9,8 @@ from django.urls import reverse
 from user_entity.utils import customer_required
 from django.contrib.auth.decorators import login_required, user_passes_test
 
+@login_required
+@user_passes_test(customer_required, login_url='/customer_entity/login/')
 def booking_list(request):
     bookings = Booking.objects.all()
     return render(request, 'booking/booking_list.html', {'bookings': bookings})
@@ -50,6 +52,8 @@ def booking_create(request):
         'room': room,
     })
 
+@login_required
+@user_passes_test(customer_required, login_url='/customer_entity/login/')
 def booking_delete(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     if request.method == "POST":
@@ -57,9 +61,13 @@ def booking_delete(request, pk):
         return redirect('booking:booking_list')
     return render(request, 'booking/booking_confirm_delete.html', {'booking': booking})
 
+@login_required
+@user_passes_test(customer_required, login_url='/customer_entity/login/')
 def booking_home(request):
     return render(request, 'booking/booking_home.html')
 
+@login_required
+@user_passes_test(customer_required, login_url='/customer_entity/login/')
 def rooms_for_hotel(request, hotel_id):
     hotel = get_object_or_404(Hotel, id=hotel_id)
     rooms = Room.objects.filter(hotel=hotel, isAvailable=True)  # Only available rooms

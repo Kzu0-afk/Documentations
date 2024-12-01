@@ -16,9 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from django.http import HttpResponse
 from hotel.views import landing_page
+from django.shortcuts import render
 
+def custom_404(request, exception):
+    return render(request, '404.html', status=404)
+
+handler404 = 'Visita.urls.custom_404'
 urlpatterns = [
     path('admin/', include('admin_entity.urls')),  # Make sure this matches exactly
     #admin_django for the main admin if you want to edit the database
