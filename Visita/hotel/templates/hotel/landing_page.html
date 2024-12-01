@@ -7,11 +7,12 @@
 <!-- Hero Section -->
 <section class="hero" aria-label="Welcome section">
     <div class="hero-slideshow" id="heroSlideshow">
-        {% for image in hero_images %}
-        <div class="hero-slide{% if forloop.first %} active{% endif %}" 
-             style="background-image: url('{% static mountain.png %}')">
-        </div>
-        {% endfor %}
+        <div class="hero-slide active" style="background-image: url('{% static 'images/cebu1.jpg' %}')"></div>
+        <div class="hero-slide" style="background-image: url('{% static 'images/cebu2.jpg' %}')"></div>
+        <div class="hero-slide" style="background-image: url('{% static 'images/cebu3.jpg' %}')"></div>
+        <div class="hero-slide" style="background-image: url('{% static 'images/cebu4.jpg' %}')"></div>
+        <div class="hero-slide" style="background-image: url('{% static 'images/cebu5.jpg' %}')"></div>
+        <div class="hero-slide" style="background-image: url('{% static 'images/cebu6.jpg' %}')"></div>
     </div>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -73,26 +74,29 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 <script>
-    // Navbar Scroll Effect
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.classList.add('scrolled');
-        } else {
-            navbar.classList.remove('scrolled');
-        }
-    });
-
-    // Mobile Menu Toggle
-    const mobileMenuButton = document.querySelector('.mobile-menu-button');
-    const navbarLinks = document.getElementById('navbarLinks');
-    
-    mobileMenuButton.addEventListener('click', () => {
-        navbarLinks.classList.toggle('active');
-    });
-
-    // Hero Slideshow
     document.addEventListener('DOMContentLoaded', function() {
+        // Navbar Scroll Effect
+        const navbar = document.querySelector('.navbar');
+        if (navbar) {
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        }
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.querySelector('.mobile-menu-button');
+        const navbarLinks = document.querySelector('.navbar-links');
+        if (mobileMenuButton && navbarLinks) {
+            mobileMenuButton.addEventListener('click', () => {
+                navbarLinks.classList.toggle('active');
+            });
+        }
+
+        // Hero Slideshow
         const slides = document.querySelectorAll('.hero-slide');
         let currentSlide = 0;
 
@@ -106,40 +110,31 @@
             showSlide(currentSlide);
         }
 
-        // Preload images for smooth transitions
-        slides.forEach(slide => {
-            const bgImage = slide.style.backgroundImage.match(/url$$['"]?([^'"]+)['"]?$$/)[1];
-            const img = new Image();
-            img.src = bgImage;
-        });
-
         // Auto-advance slides every 5 seconds
-        if (slides.length > 1) {
-            setInterval(nextSlide, 5000);
-        }
-    });
+        setInterval(nextSlide, 5000);
 
-    // Intersection Observer for animations
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
+        // Intersection Observer for animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
 
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards and founder cards
+        document.querySelectorAll('.feature-card, .founder-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            observer.observe(card);
         });
-    }, observerOptions);
-
-    // Observe feature cards and founder cards
-    document.querySelectorAll('.feature-card, .founder-card').forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        observer.observe(card);
     });
 </script>
 
