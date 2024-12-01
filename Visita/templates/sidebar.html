@@ -7,9 +7,11 @@
         <button class="visita-close-button">
             <img src="{% static 'images/close-icon.png' %}" alt="Close" class="visita-close-icon">
         </button>
+
         <a href="{% url 'customer_entity:landing_page' %}" class="visita-logo-link">
             <img src="{% static 'images/Logo.png' %}" alt="Logo" class="visita-sidebar-logo">
         </a>
+
         <nav class="visita-sidebar-menu">
             <a href="{% url 'customer_entity:landing_page' %}" class="visita-menu-item">
                 <span class="visita-menu-text">Dashboard</span>
@@ -22,9 +24,6 @@
             </a>
             <a href="{% url 'booking:booking_list' %}" class="visita-menu-item">
                 <span class="visita-menu-text">My Bookings</span>
-            </a>
-            <a href="{% url 'booking:booking_create' %}" class="visita-menu-item">
-                <span class="visita-menu-text">New Booking</span>
             </a>
             <a href="{% url 'payment:payment_list' %}" class="visita-menu-item">
                 <span class="visita-menu-text">Payments</span>
