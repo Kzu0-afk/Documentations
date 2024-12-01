@@ -15,10 +15,12 @@ from customer_entity.models import Customer
 def admin_home(request):
     return HttpResponse("Admin home page")
 
+@login_required
 def admin_dashboard(request):
     # You can pass context if needed
     return render(request, 'admin_entity/admin_dashboard.html')
 
+@login_required
 def admin_dashboard(request):
     total_hotels = Hotel.objects.count()  # Count total hotels
     total_bookings = Booking.objects.count()  # Count total bookings
