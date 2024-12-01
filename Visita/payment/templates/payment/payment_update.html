@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include 'header.html' %}
+    {% include 'admin_sidebar.html' %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Update</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        select, .payment-amount, input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .payment-amount {
+            background-color: #eee;
+            font-weight: bold;
+        }
+        input[type="submit"], button[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+        input[type="submit"]:hover, button[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+        .error {
+            color: #e74c3c;
+            margin-top: -15px;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        .card-details {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Payment Update</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <label for="paymentStatus">Payment Status</label>
+        <select name="paymentStatus" id="paymentStatus">
+            <option value="Pending" {% if payment.paymentStatus == "Pending" %}selected{% endif %}>Pending</option>
+            <option value="Completed" {% if payment.paymentStatus == "Completed" %}selected{% endif %}>Completed</option>
+            <option value="Failed" {% if payment.paymentStatus == "Failed" %}selected{% endif %}>Failed</option>
+            <option value="Refunded" {% if payment.paymentStatus == "Refunded" %}selected{% endif %}>Refunded</option>
+        </select>
+        <button type="submit">Update Payment</button>
+    </form>
+</body>
+</html>

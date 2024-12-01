@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% include 'header.html' %}
+    {% include 'sidebar.html' %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Form</title>
@@ -16,6 +18,7 @@
         h1 {
             color: #2c3e50;
             text-align: center;
+            margin-top: 50px;
         }
         form {
             background-color: #f9f9f9;
@@ -105,18 +108,7 @@
             <input type="submit" value="Submit Payment">
         </div>
     </form>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <label for="paymentStatus">Payment Status</label>
-        <select name="paymentStatus" id="paymentStatus">
-            <option value="Pending" {% if payment.paymentStatus == "Pending" %}selected{% endif %}>Pending</option>
-            <option value="Completed" {% if payment.paymentStatus == "Completed" %}selected{% endif %}>Completed</option>
-            <option value="Failed" {% if payment.paymentStatus == "Failed" %}selected{% endif %}>Failed</option>
-            <option value="Refunded" {% if payment.paymentStatus == "Refunded" %}selected{% endif %}>Refunded</option>
-        </select>
-        <button type="submit">Update Payment</button>
-    </form>
+    
     
     <script>
         document.querySelector('form').addEventListener('submit', function(e) {

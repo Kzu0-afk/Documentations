@@ -71,7 +71,7 @@ class PaymentUpdateView(View):
     def get(self, request, pk):
         payment = get_object_or_404(Payment, pk=pk)
         form = PaymentForm(instance=payment)
-        return render(request, 'payment/payment_form.html', {
+        return render(request, 'payment/payment_update.html', {
             'form': form,
             'booking': payment.booking,
             'payment_amount': payment.paymentAmount,
@@ -106,7 +106,7 @@ class PaymentUpdateView(View):
             return redirect('payment:payment_list')
 
         logger.error(f"Payment form invalid: {form.errors}")
-        return render(request, 'payment/payment_form.html', {
+        return render(request, 'payment/payment_update.html', {
             'form': form,
             'booking': payment.booking,
             'payment_amount': payment.paymentAmount
