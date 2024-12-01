@@ -98,6 +98,19 @@ class PaymentUpdateView(View):
             if payment_status:
                 payment.paymentStatus = payment_status
 
+                # Sync booking status with payment status
+                if payment.booking:
+                    payment.booking.booking_status = payment_status
+                    payment.booking.save()
+
+                    # Update room availability if payment is completed
+                    if payment_status == "Completed":
+                        room = payment.booking.room
+                        if room:
+                            room.isAvailable = False
+                            room.save()
+                            logger.info(f"Room {room.roomNumber} is now unavailable.")
+
             # Save the payment instance
             payment.save()
             logger.info(f"Payment updated: {payment}")
@@ -116,5 +129,15 @@ class PaymentUpdateView(View):
 class PaymentDeleteView(View):
     def get(self, request, pk):
         payment = get_object_or_404(Payment, pk=pk)
+
+        # Update the associated booking status to "Failed" if a payment is deleted
+        if payment.booking:
+            booking = payment.booking
+            booking.booking_status = "Failed"
+            booking.save()
+
+        # Delete the payment
         payment.delete()
+        logger.info(f"Payment with ID {pk} deleted, associated booking status set to 'Failed'.")
+
         return redirect('payment:payment_list')
