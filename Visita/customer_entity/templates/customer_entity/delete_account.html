@@ -1,15 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Delete Customer Account</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #e0f7ff;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-top: 50px;
+        }
+        form {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        button[type="submit"], a {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 16px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            width: calc(50% - 10px);
+            box-sizing: border-box;
+        }
+        button[type="submit"] {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #c0392b;
+        }
+        a {
+            background-color: #3498db;
+            color: white;
+            margin-left: 20px;
+        }
+        a:hover {
+            background-color: #2980b9;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1>Delete Account</h1>
     <form method="post">
         {% csrf_token %}
         <p>Are you sure you want to delete your account?</p>
-        <button type="submit">Yes, Delete</button>
-        <a href="{% url 'customer_entity:profile' %}">Cancel</a>
+        <div class="form-actions">
+            <button type="submit">Yes, Delete</button>
+            <a href="{% url 'customer_entity:profile' %}">Cancel</a>
+        </div>
     </form>
 </body>
 </html>
