@@ -104,6 +104,12 @@
             transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        .admin-link {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
         .learn-more-btn:hover {
             background-color: var(--accent-color);
             transform: translateY(-2px);
@@ -303,9 +309,9 @@
         <div class="left-column">
             <div class="info">
                 <h1>VisitaCebu Admin</h1>
-                <h2>Did you know?</h2>
-                <p>Cebu is known as the "Queen City of the South" and was the first capital of the Philippines!</p>
-                <button class="learn-more-btn">Learn More</button>
+                <h2>Log in as Customer</h2>
+                <p>Want to explore and check out more hotels here at Cebu? Log in here now!</p>
+                <button class="learn-more-btn"><a href="{% url 'customer_entity:login' %}" class="admin-link">Login as Customer</a></button>
             </div>
         </div>
         <div class="right-column">

@@ -100,23 +100,23 @@
         }
 
         .learn-more-btn {
-    background-color: transparent;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    font-weight: 500;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-decoration: none;
-    text-shadow: none;
-}
+            background-color: transparent;
+            border: 2px solid var(--primary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+            font-weight: 500;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
 
         .learn-more-btn:hover {
             background-color: var(--primary-color);
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+            text-decoration: none;
         }
 
         .right-column {
@@ -199,6 +199,11 @@
             box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
         }
 
+        .admin-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
         .login-link {
             text-align: center;
             color: var(--text-light);
@@ -305,9 +310,9 @@
             <div class="left-overlay"></div>
             <div class="info">
                 <h1>VisitaCebu</h1>
-                <h2>Did you know?</h2>
-                <p>Cebu is the birthplace of Christianity in the Philippines. Visit the Magellan's Cross!</p>
-                <button class="learn-more-btn"><a href="{% url 'admin_entity:login' %}">Login as Admin</a></button>
+                <h2>Log in as VCAdmin</h2>
+                <p>Already have an Admin account? Check it out here to view our latest hotel dashboards!</p>
+                <button class="learn-more-btn"><a href="{% url 'admin_entity:login' %}" class="admin-link">Login as Admin</a></button>
             </div>
         </div>
         <div class="right-column">
