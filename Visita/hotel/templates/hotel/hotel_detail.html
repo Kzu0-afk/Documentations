@@ -301,24 +301,36 @@
         </div>
 
         <h2 class="section-title">Available Rooms</h2>
-        <div class="room-grid">
-            {% for room in rooms %}
-                <div class="room-card">
-                    <div class="room-image">
-                        <img src="{% static 'images/nice_room.jpg' %}" alt="Gym Room">
+            <div class="room-grid">
+                {% for room in rooms %}
+                    <div class="room-card">
+                        <div class="room-image">
+                            <img src="{% static 'images/nice_room.jpg' %}" alt="Room Image">
+                        </div>
+                        <div class="room-details">
+                            <h3 class="room-type">{{ room.roomType }}</h3>
+                            <div class="room-price">₱{{ room.roomPrice }}/night</div>
+                            <p class="room-status">
+                                <strong>Status:</strong>
+                                {% if room.isAvailable %}
+                                    <span style="color: green;">Vacant</span>
+                                {% else %}
+                                    <span style="color: red;">Occupied</span>
+                                {% endif %}
+                            </p>
+                            <form method="GET" action="{% url 'booking:booking_create' %}">
+                                <input type="hidden" name="hotel" value="{{ hotel.hotelID }}">
+                                <input type="hidden" name="room" value="{{ room.roomID }}">
+                                <button type="submit"
+                                        class="book-button"
+                                        {% if not room.isAvailable %}disabled style="background-color: #ccc; cursor: not-allowed;"{% endif %}>
+                                    Book Now
+                                </button>
+                            </form>
+                        </div>
                     </div>
-                    <div class="room-details">
-                        <h3 class="room-type">{{ room.roomType }}</h3>
-                        <div class="room-price">₱{{ room.roomPrice }}/night</div>
-                        <form method="GET" action="{% url 'booking:booking_create' %}">
-                            <input type="hidden" name="hotel" value="{{ hotel.hotelID }}">
-                            <input type="hidden" name="room" value="{{ room.roomID }}">
-                            <button type="submit" class="book-button">Book Now</button>
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
-        </div>
+                {% endfor %}
+            </div>
 
         <div class="amenities">
             <h2 class="section-title">Amenities</h2>
