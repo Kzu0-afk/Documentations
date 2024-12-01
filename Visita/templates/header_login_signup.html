@@ -5,15 +5,7 @@
         <div class="visita-cebu-nav-container">
             <!-- Left side - Logo and Brand -->
             <div class="visita-cebu-brand">
-                <a href="{% if user.is_authenticated %}
-                            {% if user|customer_required %}
-                                {% url 'customer_entity:landing_page' %}
-                            {% elif user|admin_required %}
-                                {% url 'admin_entity:admin-dashboard' %}
-                            {% endif %}
-                          {% else %}
-                            {% url 'customer_entity:login' %}
-                          {% endif %}"
+                <a href="{% url 'hotel:landing_page' %}"
                    class="visita-cebu-logo-link">
                     <img src="{% static 'images/logo.png' %}" alt="VisitaCebu Logo" class="visita-cebu-logo">
                 </a>
@@ -21,41 +13,10 @@
 
             <!-- Right side - Navigation and User Info -->
             <div class="visita-cebu-nav-right">
-                {% if user.is_authenticated %}
-                <div class="visita-cebu-user-menu">
-                    <div class="visita-cebu-user-info">
-                        <span class="visita-cebu-welcome-text">Welcome,</span>
-                        <span class="visita-cebu-username">{{ user.username }}!</span>
-                    </div>
-                    <div class="visita-cebu-user-dropdown">
-                        <a href="{% if user.is_authenticated %}
-                            {% if user|customer_required %}
-                                {% url 'customer_entity:profile' %}
-                            {% elif user|admin_required %}
-                                {% url 'admin_entity:profile' %}
-                            {% endif %}
-                          {% endif %}" class="visita-cebu-dropdown-item">
-                            <i class="fas fa-user"></i> Profile
-                        </a>
-
-                        {% if user|customer_required %}
-                        <a href="{% url 'booking:booking_list' %}" class="visita-cebu-dropdown-item">
-                            <i class="fas fa-calendar"></i> My Bookings
-                        </a>
-                        {% endif %}
-
-                        <a href="{% url 'customer_entity:logout' %}" class="visita-cebu-dropdown-item visita-cebu-logout">
-                            <i class="fas fa-sign-out-alt"></i> Logout
-                        </a>
-
-                    </div>
-                </div>
-                {% else %}
                 <div class="visita-cebu-auth-buttons">
                     <a href="{% url 'customer_entity:login' %}" class="visita-cebu-nav-button visita-cebu-login-btn">Login</a>
                     <a href="{% url 'customer_entity:signup' %}" class="visita-cebu-nav-button visita-cebu-register-btn">Register</a>
                 </div>
-                {% endif %}
             </div>
         </div>
     </nav>
@@ -103,7 +64,7 @@
     display: flex;
     align-items: center;
     gap: 0.5rem; /* Ensures spacing between elements inside the brand */
-    margin-left: 3rem; /* Removes any additional left margin */
+    margin-left: 0; /* Removes any additional left margin */
 }
 
 .visita-cebu-logo-link {

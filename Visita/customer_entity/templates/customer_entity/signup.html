@@ -1,5 +1,5 @@
 {% load static %}
-{% include 'header_landingpage.html' %}
+{% include 'header_login_signup.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,17 +100,18 @@
         }
 
         .learn-more-btn {
-            background-color: transparent;
-            border: 2px solid var(--primary-color);
-            color: white;
-            padding: 0.8rem 2rem;
-            font-size: 1rem;
-            font-weight: 500;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-        }
+    background-color: transparent;
+    border: 2px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    text-shadow: none;
+}
 
         .learn-more-btn:hover {
             background-color: var(--primary-color);
@@ -137,6 +138,7 @@
             opacity: 0;
             transform: translateX(20px);
             animation: slideIn 0.8s forwards;
+            margin: 50px auto;
         }
 
         .signup-form h1 {
@@ -305,7 +307,7 @@
                 <h1>VisitaCebu</h1>
                 <h2>Did you know?</h2>
                 <p>Cebu is the birthplace of Christianity in the Philippines. Visit the Magellan's Cross!</p>
-                <button class="learn-more-btn">Learn More</button>
+                <button class="learn-more-btn"><a href="{% url 'admin_entity:login' %}">Login as Admin</a></button>
             </div>
         </div>
         <div class="right-column">
