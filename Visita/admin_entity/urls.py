@@ -4,7 +4,6 @@ from . import views
 app_name = 'admin_entity'
 
 urlpatterns = [
-    path('', views.admin_home, name='admin_home'),
     path('admin-dashboard/', views.admin_dashboard, name='admin-dashboard'),
     path('signup/', views.admin_signup_view, name='signup'),
     path('login/', views.admin_login_view, name='login'),
