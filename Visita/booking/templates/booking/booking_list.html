@@ -105,7 +105,7 @@
             font-weight: 500;
         }
 
-        .status-paid {
+        .status-completed {
             background-color: rgba(16, 185, 129, 0.1);
             color: var(--success-color);
         }
@@ -119,6 +119,7 @@
             background-color: rgba(239, 68, 68, 0.1);
             color: var(--danger-color);
         }
+        
 
         .booking-content {
             padding: 1.25rem;
@@ -255,7 +256,7 @@
                     <div class="booking-card">
                         <div class="booking-header">
                             <span class="booking-id">Booking #{{ booking.id }}</span>
-                            <span class="booking-status status-{% if booking.booking_status == 'Paid' %}paid{% elif booking.booking_status == 'Pending' %}pending{% else %}cancelled{% endif %}">
+                            <span class="booking-status status-{% if booking.booking_status == 'Completed' %}completed{% elif booking.booking_status == 'Pending' %}pending{% else %}cancelled{% endif %}">
                                 {{ booking.booking_status }}
                             </span>
                         </div>

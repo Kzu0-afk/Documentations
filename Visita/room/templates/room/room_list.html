@@ -102,16 +102,19 @@
         }
 
         .image-placeholder {
-            width: 100%;
-            height: 200px;
-            background-image: repeating-linear-gradient(
-                45deg,
-                #f0f0f0,
-                #f0f0f0 10px,
-                #f8f8f8 10px,
-                #f8f8f8 20px
-            );
-        }
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f0f0f0;
+}
+
+.image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
 
         .hotel-name {
             font-size: 1.25rem;
@@ -244,6 +247,7 @@
                 grid-template-columns: 1fr;
                 padding: 0.5rem;
             }
+
         }
     </style>
 <body>
@@ -254,14 +258,15 @@
             {% for room in rooms %}
                 <div class="room-card">
                     <div class="image-container">
-                        <div class="image-placeholder"></div>
+                        <div class="image-placeholder">
+                            <img src="{% static 'images/nice_room.jpg' %}" alt="room image">
+                        </div>
                     </div>
                     <div class="room-details">
-                        <h2 class="hotel-name">{{ room.hotel.hotelName }}</h2>
-                        <div class="room-type">{{ room.roomType }}</div>
+                        <h2 class="hotel-name">Room Name: {{ room.roomType }}</h2>
+                        <div class="room-type">Hotel Name: {{ room.hotel.hotelName }}</div>
                         <div class="rating">
-                            <div class="stars">★★★★☆</div>
-                            <span class="rating-number">4.5</span>
+                            <span class="rating-number"># {{ room.roomNumber }}</span>
                         </div>
                         <div class="room-price">From ₱{{ room.roomPrice }}/night</div>
                         <div class="amenities">
