@@ -208,6 +208,12 @@
             transition: color 0.3s ease;
         }
 
+        .admin-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
         .signup-link a:hover {
             color: var(--primary-dark);
             text-decoration: underline;
@@ -303,9 +309,11 @@
             <div class="left-overlay"></div>
             <div class="info">
                 <h1>VisitaCebu</h1>
-                <h2>Did you know?</h2>
-                <p>Cebu is known as the "Queen City of the South" and was the first capital of the Philippines!</p>
-                <button class="learn-more-btn">Learn More</button>
+                <h2>Log in as VCAdmin</h2>
+                <p>Already have an Admin account? Check it out here to view our latest hotel dashboards!</p>
+                <button class="learn-more-btn">
+                    <a href="{% url 'admin_entity:login' %}" class="admin-link">Login as Admin</a>
+                </button>
             </div>
         </div>
         <div class="right-column">
