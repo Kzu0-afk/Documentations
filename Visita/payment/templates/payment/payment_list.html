@@ -1,5 +1,5 @@
-{% include 'header.html' %}
-{% include 'sidebar.html' %}
+{% load user_filters %}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -106,6 +106,12 @@
 </head>
 <body>
     <div class="container">
+        {% include 'header.html' %}
+        {% if user|customer_required %}
+            {% include 'sidebar.html' %}
+        {% elif user|admin_required %}
+            {% include 'admin_sidebar.html' %}
+        {% endif %}
         <h1>Payment List</h1>
 
         {% if messages %}
@@ -154,7 +160,6 @@
             </tbody>
         </table>
 
-        <a href="{% url 'booking:booking_list' %}" class="create-button">Create New Payment</a>
     </div>
 </body>
 </html>
