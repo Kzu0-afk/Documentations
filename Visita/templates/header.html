@@ -44,7 +44,14 @@
                         </a>
                         {% endif %}
 
-                        <a href="{% url 'customer_entity:logout' %}" class="visita-cebu-dropdown-item visita-cebu-logout">
+
+                        <a href="{% if user.is_authenticated %}
+                            {% if user|customer_required %}
+                                {% url 'hotel:landing_page' %}
+                            {% elif user|admin_required %}
+                                {% url 'admin_entity:login' %}
+                            {% endif %}
+                          {% endif %}" class="visita-cebu-dropdown-item visita-cebu-logout">
                             <i class="fas fa-sign-out-alt"></i> Logout
                         </a>
 

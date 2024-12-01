@@ -110,17 +110,29 @@
         }
 
         .room-card {
-            background: var(--card-background);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
 
-        .room-image {
-            width: 100%;
-            height: 200px;
-            background: #eee;
-        }
+.room-image {
+    width: 100%;
+    height: 200px;
+    background: #eee;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.room-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
         .room-details {
             padding: 1.5rem;
@@ -293,7 +305,7 @@
             {% for room in rooms %}
                 <div class="room-card">
                     <div class="room-image">
-                        <!-- Room image placeholder -->
+                        <img src="{% static 'images/nice_room.jpg' %}" alt="Gym Room">
                     </div>
                     <div class="room-details">
                         <h3 class="room-type">{{ room.roomType }}</h3>
