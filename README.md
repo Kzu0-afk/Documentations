@@ -1,2 +1,2 @@
-# Documentations
-This is a Documentations Repository containing the Functional Requirements, Gantt Charts, ERD, and UI/UX Design. Progress will be checked consistently.
+# VisitaCebu
+VisitaCebu is a Django-based Web Application for a Hotel Booking Platform.
